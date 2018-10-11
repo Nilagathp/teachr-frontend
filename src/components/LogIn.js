@@ -1,5 +1,10 @@
 import React from "react";
-import { Button, Input, Form, Container } from "semantic-ui-react";
+import { connect } from "react-redux";
+import TextField from "@material-ui/core/TextField";
+import RaisedButton from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+
+import { updateUser } from "../redux/actions/userActions";
 
 class LogIn extends React.Component {
   state = {
@@ -7,11 +12,12 @@ class LogIn extends React.Component {
     password: ""
   };
 
-  handleChange = (e, { name, value }) => {
-    this.setState({ [name]: value });
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value });
   };
 
-  handleSubmit = () => {
+  handleSubmit = event => {
+    event.preventDefault();
     const url = "http://localhost:3000/login";
     const params = {
       email: this.state.email,
@@ -28,38 +34,51 @@ class LogIn extends React.Component {
       .then(r => r.json())
       .then(response => {
         localStorage.setItem("token", response.jwt);
+        this.props.updateUser(response.user);
+        this.setState({ email: "", password: "" });
       });
   };
 
   render() {
     return (
-      <Container>
-        <Form onSubmit={this.handleSubmit}>
-          <h2>Log In</h2>
-          <Form.Field inline>
-            <label>Email</label>
-            <Input
-              width={8}
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </Form.Field>
-          <Form.Field inline>
-            <label>Password</label>
-            <Input
-              width={8}
-              name="password"
-              type="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-          </Form.Field>
-          <Button type="submit">Log In</Button>
-        </Form>
-      </Container>
+      <Grid container justify="center">
+        <form onSubmit={this.handleSubmit}>
+          <TextField
+            style={{ display: "block" }}
+            required
+            label="Email"
+            name="email"
+            type="email"
+            value={this.state.email}
+            onChange={this.handleChange("email")}
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            style={{ display: "block" }}
+            required
+            label="Password"
+            name="password"
+            type="password"
+            value={this.state.password}
+            onChange={this.handleChange("password")}
+            margin="normal"
+            variant="outlined"
+          />
+          <RaisedButton
+            style={{ display: "block" }}
+            variant="outlined"
+            type="submit"
+          >
+            Log In
+          </RaisedButton>
+        </form>
+      </Grid>
     );
   }
 }
 
-export default LogIn;
+export default connect(
+  null,
+  { updateUser }
+)(LogIn);

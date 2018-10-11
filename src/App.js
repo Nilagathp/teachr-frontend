@@ -3,10 +3,14 @@ import LogIn from "./components/LogIn";
 import NavBar from "./components/Navbar";
 
 class App extends Component {
+  logout = () => {
+    localStorage.clear();
+  };
+
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar logout={this.logout} />
         <LogIn />
       </div>
     );
