@@ -5,19 +5,19 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-const Navbar = ({ logout }) => {
+const Navbar = ({ loggedIn, logout }) => {
   return (
     <AppBar position="static" color="default">
       <Toolbar>
         <Typography
-          variant="h3"
+          variant="h6"
           component={NavLink}
           style={{ textDecoration: "none" }}
           to="/"
         >
           Mod5Project
         </Typography>
-        <Button onClick={logout}>Logout</Button>
+        {loggedIn ? <Button onClick={logout}>Logout</Button> : null}
       </Toolbar>
     </AppBar>
   );

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Switch, Route, withRouter } from "react-router-dom";
+
 import LogIn from "./components/LogIn";
 import NavBar from "./components/Navbar";
-
+import Home from "./components/Home";
 import { updateUser } from "./redux/actions/userActions";
 
 class App extends Component {
@@ -14,14 +16,25 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar logout={this.logout} />
-        <LogIn />
+        <NavBar loggedIn={!!this.props.user} logout={this.logout} />
+        <Switch>
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/" component={LogIn} />
+        </Switch>
       </div>
     );
   }
 }
 
-export default connect(
-  null,
-  { updateUser }
-)(App);
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { updateUser }
+  )(App)
+);

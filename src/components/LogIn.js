@@ -36,6 +36,7 @@ class LogIn extends React.Component {
         localStorage.setItem("token", response.jwt);
         this.props.updateUser(response.user);
         this.setState({ email: "", password: "" });
+        this.props.history.push("/home");
       });
   };
 
