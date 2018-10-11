@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import RaisedButton from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -35,7 +36,6 @@ class LogIn extends React.Component {
       .then(response => {
         localStorage.setItem("token", response.jwt);
         this.props.updateUser(response.user);
-        this.setState({ email: "", password: "" });
         this.props.history.push("/home");
       });
   };
@@ -79,7 +79,9 @@ class LogIn extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  { updateUser }
-)(LogIn);
+export default withRouter(
+  connect(
+    null,
+    { updateUser }
+  )(LogIn)
+);

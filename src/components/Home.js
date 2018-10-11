@@ -3,27 +3,26 @@ import { connect } from "react-redux";
 
 import TeacherHome from "./TeacherHome";
 import StudentHome from "./StudentHome";
+import LogIn from "./LogIn";
 
 class Home extends React.Component {
   render() {
-    if (this.props.userRole === "teacher") {
-      return <TeacherHome />;
+    if (this.props.user) {
+      if (this.props.user.role === "teacher") {
+        return <TeacherHome user={this.props.user} />;
+      } else {
+        return <StudentHome />;
+      }
     } else {
-      return <StudentHome />;
+      return <LogIn />;
     }
   }
 }
 
 const mapStateToProps = state => {
-  if (state.user) {
-    return {
-      userRole: state.user.role
-    };
-  } else {
-    return {
-      userRole: null
-    };
-  }
+  return {
+    user: state.user
+  };
 };
 
 export default connect(mapStateToProps)(Home);
