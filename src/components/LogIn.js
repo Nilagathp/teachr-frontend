@@ -10,7 +10,8 @@ import { updateUser } from "../redux/actions/userActions";
 class LogIn extends React.Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    errorMessage: ""
   };
 
   handleChange = name => event => {
@@ -34,9 +35,15 @@ class LogIn extends React.Component {
     })
       .then(r => r.json())
       .then(response => {
-        localStorage.setItem("token", response.jwt);
-        this.props.updateUser(response.user);
-        this.props.history.push("/home");
+        if (response.jwt) {
+          localStorage.setItem("token", response.jwt);
+          this.props.updateUser(response.user);
+          this.props.history.push("/home");
+        } else {
+          this.setState({
+            errorMessage: response.message
+          });
+        }
       });
   };
 
@@ -44,6 +51,7 @@ class LogIn extends React.Component {
     return (
       <Grid container justify="center">
         <form onSubmit={this.handleSubmit}>
+          {this.state.errorMessage ? <p>{this.state.errorMessage}</p> : null}
           <TextField
             style={{ display: "block" }}
             required
