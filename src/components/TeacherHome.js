@@ -29,7 +29,7 @@ const TeacherHome = ({ user, classes }) => {
         <Grid item xs={4}>
           {teacher.courses.map(course => (
             <Card key={course.id} className={classes.card}>
-              <CardActionArea component={Link} to="/course">
+              <CardActionArea component={Link} to={`/course/${course.id}`}>
                 <CardContent>
                   <Typography
                     variant="h4"

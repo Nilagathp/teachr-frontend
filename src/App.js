@@ -5,7 +5,7 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import LogIn from "./components/LogIn";
 import NavBar from "./components/Navbar";
 import Home from "./components/Home";
-import Course from "./components/Course";
+import TeacherCourse from "./components/TeacherCourse";
 import { updateUser, getUserFromToken } from "./redux/actions/userActions";
 
 class App extends Component {
@@ -34,7 +34,9 @@ class App extends Component {
         <Switch>
           <Route exact path="/home" component={Home} />
           <Route exact path="/" component={LogIn} />
-          <Route exact path="/course" component={Course} />
+          {this.props.user && this.props.user.person.teacher ? (
+            <Route exact path="/course/:id" component={TeacherCourse} />
+          ) : null}
         </Switch>
       </div>
     );
