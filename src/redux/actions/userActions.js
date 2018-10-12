@@ -4,7 +4,6 @@ function updateUser(user) {
 
 function getUserFromToken(token) {
   return function(dispatch) {
-    console.log(dispatch);
     fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
