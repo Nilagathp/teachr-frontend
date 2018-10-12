@@ -1,13 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
-class Course extends React.Component {
+class TeacherCourse extends React.Component {
   render() {
-    return "Course";
+    return <h4>{this.props.course.name}</h4>;
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(state);
+  console.log(ownProps);
   let courses = state.user.person.teacher.courses;
   let courseId = parseInt(ownProps.match.params.id);
   return {
@@ -15,4 +18,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(Course);
+export default withRouter(connect(mapStateToProps)(TeacherCourse));
