@@ -14,6 +14,9 @@ const styles = {
   card: {
     maxWidth: 345,
     margin: "20px"
+  },
+  paper: {
+    margin: "20px"
   }
 };
 
@@ -22,7 +25,7 @@ const TeacherHome = ({ user, classes }) => {
   return (
     <div>
       <Grid container spacing={24}>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           {teacher.courses.map(course => (
             <Card key={course.id} className={classes.card}>
               <CardActionArea onClick={() => console.log("click")}>
@@ -48,8 +51,8 @@ const TeacherHome = ({ user, classes }) => {
             </Card>
           ))}
         </Grid>
-        <Grid item xs={6}>
-          <Paper>Feed</Paper>
+        <Grid item xs={8}>
+          <Paper className={classes.paper}>Assignments</Paper>
         </Grid>
       </Grid>
     </div>
