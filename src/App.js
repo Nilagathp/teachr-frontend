@@ -10,12 +10,12 @@ import { updateUser, getUserFromToken } from "./redux/actions/userActions";
 class App extends Component {
   componentDidMount() {
     const token = localStorage.getItem("token");
-    getUserFromToken(token);
+    this.props.getUserFromToken(token);
   }
 
   logout = () => {
     localStorage.clear();
-    updateUser(null);
+    this.props.updateUser(null);
   };
 
   render() {

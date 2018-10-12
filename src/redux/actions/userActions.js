@@ -12,7 +12,7 @@ function getUserFromToken(token) {
       }
     })
       .then(response => response.json())
-      .then(user => dispatch(updateUser(user)));
+      .then(json => dispatch(updateUser(json.user)));
   };
 }
 
