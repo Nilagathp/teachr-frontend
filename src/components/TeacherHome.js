@@ -21,7 +21,6 @@ const TeacherHome = ({ user, classes }) => {
   const teacher = user.person.teacher;
   return (
     <div>
-      <h3>{teacher.name}</h3>
       <Grid container spacing={24}>
         <Grid item xs={6}>
           {teacher.courses.map(course => (

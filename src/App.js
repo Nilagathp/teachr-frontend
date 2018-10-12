@@ -10,7 +10,9 @@ import { updateUser, getUserFromToken } from "./redux/actions/userActions";
 class App extends Component {
   componentDidMount() {
     const token = localStorage.getItem("token");
-    this.props.getUserFromToken(token);
+    if (token) {
+      this.props.getUserFromToken(token);
+    }
   }
 
   logout = () => {
@@ -21,7 +23,13 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar loggedIn={!!this.props.user} logout={this.logout} />
+        {this.props.user ? (
+          <NavBar
+            loggedIn={!!this.props.user}
+            logout={this.logout}
+            user={this.props.user}
+          />
+        ) : null}
         <Switch>
           <Route exact path="/home" component={Home} />
           <Route exact path="/" component={LogIn} />
