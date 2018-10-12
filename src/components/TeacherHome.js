@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -28,7 +29,7 @@ const TeacherHome = ({ user, classes }) => {
         <Grid item xs={4}>
           {teacher.courses.map(course => (
             <Card key={course.id} className={classes.card}>
-              <CardActionArea onClick={() => console.log("click")}>
+              <CardActionArea component={Link} to="/course">
                 <CardContent>
                   <Typography
                     variant="h4"

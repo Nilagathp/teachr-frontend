@@ -14,7 +14,7 @@ const Navbar = ({ user, loggedIn, logout }) => {
             variant="h6"
             component={NavLink}
             style={{ textDecoration: "none" }}
-            to="/"
+            to="/home"
           >
             {user.person.teacher.name}
           </Typography>
