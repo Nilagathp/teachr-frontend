@@ -5,12 +5,17 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import LogIn from "./components/LogIn";
 import NavBar from "./components/Navbar";
 import Home from "./components/Home";
-import { updateUser } from "./redux/actions/userActions";
+import { updateUser, getUserFromToken } from "./redux/actions/userActions";
 
 class App extends Component {
+  componentDidMount() {
+    const token = localStorage.getItem("token");
+    getUserFromToken(token);
+  }
+
   logout = () => {
     localStorage.clear();
-    this.props.updateUser(null);
+    updateUser(null);
   };
 
   render() {
@@ -35,6 +40,6 @@ const mapStateToProps = state => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { updateUser }
+    { updateUser, getUserFromToken }
   )(App)
 );
