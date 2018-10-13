@@ -72,7 +72,15 @@ const TeacherHome = ({ teacher, classes }) => {
             <Divider />
             <List>
               {teacher.assignments.map(assignment => (
-                <ListItem key={assignment.id} divider button>
+                <ListItem
+                  key={assignment.id}
+                  divider
+                  button
+                  component={Link}
+                  to={`/course/${assignment.course_id}/assignment/${
+                    assignment.id
+                  }`}
+                >
                   <ListItemText
                     primary={assignment.name}
                     secondary={courses[assignment.course_id]}

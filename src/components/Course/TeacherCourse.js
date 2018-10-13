@@ -5,8 +5,6 @@ import { withRouter, Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
@@ -60,7 +58,13 @@ const TeacherCourse = ({ course, assignments, classes }) => {
             <List>
               {assignments
                 ? assignments.map(assignment => (
-                    <ListItem key={assignment.id} divider button>
+                    <ListItem
+                      key={assignment.id}
+                      divider
+                      button
+                      component={Link}
+                      to={`/course/${course.id}/assignment/${assignment.id}`}
+                    >
                       <ListItemText primary={assignment.name} />
                       <ListItemSecondaryAction>
                         <Button>Due on:</Button>

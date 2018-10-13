@@ -4,8 +4,9 @@ import { Switch, Route, withRouter } from "react-router-dom";
 
 import LogIn from "./components/LogIn";
 import NavBar from "./components/Navbar";
-import Home from "./components/Home";
-import Course from "./components/Course";
+import Home from "./components/Home/Home";
+import Course from "./components/Course/Course";
+import Assignment from "./components/Assignment/Assignment";
 import { updateUser, getUserFromToken } from "./redux/actions/userActions";
 
 class App extends Component {
@@ -21,9 +22,10 @@ class App extends Component {
       <div>
         {this.props.user ? <NavBar /> : null}
         <Switch>
+          <Route path="/course/:id/assignment/:id" component={Assignment} />
+          <Route path="/course/:id" component={Course} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/" component={LogIn} />
-          <Route exact path="/course/:id" component={Course} />
         </Switch>
       </div>
     );

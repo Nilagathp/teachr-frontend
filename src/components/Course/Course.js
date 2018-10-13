@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import TeacherCourse from "./TeacherCourse";
 import StudentCourse from "./StudentCourse";
-import LogIn from "./LogIn";
+import LogIn from "../LogIn";
 
 const Course = ({ user }) => {
   if (user) {
