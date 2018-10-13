@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import RaisedButton from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
-import { updateUser } from "../redux/actions/userActions";
+import { logInUser } from "../redux/actions/userActions";
 
 class LogIn extends React.Component {
   state = {
@@ -20,31 +20,12 @@ class LogIn extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const url = "http://localhost:3000/login";
-    const params = {
+    const userParams = {
       email: this.state.email,
       password: this.state.password
     };
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify({ user: params }),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      }
-    })
-      .then(r => r.json())
-      .then(response => {
-        if (response.jwt) {
-          localStorage.setItem("token", response.jwt);
-          this.props.updateUser(response.user);
-          this.props.history.push("/home");
-        } else {
-          this.setState({
-            errorMessage: response.message
-          });
-        }
-      });
+    this.props.logInUser(userParams);
+    this.props.history.push("/home");
   };
 
   render() {
@@ -90,6 +71,6 @@ class LogIn extends React.Component {
 export default withRouter(
   connect(
     null,
-    { updateUser }
+    { logInUser }
   )(LogIn)
 );
