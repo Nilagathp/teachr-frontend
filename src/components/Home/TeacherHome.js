@@ -83,7 +83,10 @@ const TeacherHome = ({ teacher, classes }) => {
                 >
                   <ListItemText
                     primary={assignment.name}
-                    secondary={courses[assignment.course_id]}
+                    secondary={`
+                      ${courses[assignment.course_id]} - ${
+                      assignment.category
+                    }`}
                   />
                   <ListItemSecondaryAction>
                     <Button>Due on:</Button>
