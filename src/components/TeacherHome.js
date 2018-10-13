@@ -74,7 +74,6 @@ const TeacherHome = ({ teacher, classes }) => {
               {teacher.assignments.map(assignment => (
                 <ListItem key={assignment.id} divider button>
                   <ListItemText
-                    // disableTypography
                     primary={assignment.name}
                     secondary={courses[assignment.course_id]}
                   />
