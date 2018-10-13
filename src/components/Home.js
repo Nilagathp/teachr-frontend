@@ -5,19 +5,17 @@ import TeacherHome from "./TeacherHome";
 import StudentHome from "./StudentHome";
 import LogIn from "./LogIn";
 
-class Home extends React.Component {
-  render() {
-    if (this.props.user) {
-      if (this.props.user.role === "teacher") {
-        return <TeacherHome user={this.props.user} />;
-      } else {
-        return <StudentHome />;
-      }
+const Home = ({ user }) => {
+  if (user) {
+    if (user.role === "teacher") {
+      return <TeacherHome teacher={user.person.teacher} />;
     } else {
-      return <LogIn />;
+      return <StudentHome />;
     }
+  } else {
+    return <LogIn />;
   }
-}
+};
 
 const mapStateToProps = state => {
   return {

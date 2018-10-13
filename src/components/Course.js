@@ -5,19 +5,17 @@ import TeacherCourse from "./TeacherCourse";
 import StudentCourse from "./StudentCourse";
 import LogIn from "./LogIn";
 
-class Course extends React.Component {
-  render() {
-    if (this.props.user) {
-      if (this.props.user.role === "teacher") {
-        return <TeacherCourse user={this.props.user} />;
-      } else {
-        return <StudentCourse />;
-      }
+const Course = ({ user }) => {
+  if (user) {
+    if (user.role === "teacher") {
+      return <TeacherCourse user={user} />;
     } else {
-      return <LogIn />;
+      return <StudentCourse />;
     }
+  } else {
+    return <LogIn />;
   }
-}
+};
 
 const mapStateToProps = state => {
   return {

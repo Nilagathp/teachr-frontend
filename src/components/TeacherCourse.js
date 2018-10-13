@@ -12,21 +12,18 @@ const styles = {
   }
 };
 
-class TeacherCourse extends React.Component {
-  render() {
-    const { course, classes } = this.props;
-    return (
-      <Grid container spacing={24}>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>{course.name}</Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>Assignments</Paper>
-        </Grid>
+const TeacherCourse = ({ course, classes }) => {
+  return (
+    <Grid container spacing={24}>
+      <Grid item xs={6}>
+        <Paper className={classes.paper}>{course.name}</Paper>
       </Grid>
-    );
-  }
-}
+      <Grid item xs={6}>
+        <Paper className={classes.paper}>Assignments</Paper>
+      </Grid>
+    </Grid>
+  );
+};
 
 const mapStateToProps = (state, ownProps) => {
   let courses = state.user.person.teacher.courses;

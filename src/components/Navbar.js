@@ -1,28 +1,38 @@
 import React from "react";
+import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-const Navbar = ({ user, loggedIn, logout }) => {
+import { logOutUser } from "../redux/actions/userActions";
+
+const Navbar = ({ person, logOutUser }) => {
   return (
     <AppBar position="static" color="default">
       <Toolbar>
-        {user && user.person.teacher ? (
+        {person.teacher ? (
           <Typography
             variant="h6"
             component={NavLink}
             style={{ textDecoration: "none" }}
             to="/home"
           >
-            {user.person.teacher.name}
+            {person.teacher.name}
           </Typography>
         ) : null}
-        {loggedIn ? <Button onClick={logout}>Logout</Button> : null}
+        {person ? <Button onClick={logOutUser}>Logout</Button> : null}
       </Toolbar>
     </AppBar>
   );
 };
 
-export default Navbar;
+const mapStateToProps = state => {
+  return { person: state.user.person };
+};
+
+export default connect(
+  mapStateToProps,
+  { logOutUser }
+)(Navbar);

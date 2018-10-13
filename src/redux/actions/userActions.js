@@ -22,6 +22,13 @@ function logInUser(userParams) {
   };
 }
 
+function logOutUser() {
+  return function(dispatch) {
+    localStorage.clear();
+    dispatch(updateUser(null));
+  };
+}
+
 function getUserFromToken(token) {
   return function(dispatch) {
     fetch("http://localhost:3000/profile", {
@@ -34,4 +41,4 @@ function getUserFromToken(token) {
   };
 }
 
-export { updateUser, logInUser, getUserFromToken };
+export { updateUser, logInUser, logOutUser, getUserFromToken };

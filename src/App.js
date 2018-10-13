@@ -16,21 +16,10 @@ class App extends Component {
     }
   }
 
-  logout = () => {
-    localStorage.clear();
-    this.props.updateUser(null);
-  };
-
   render() {
     return (
       <div>
-        {this.props.user ? (
-          <NavBar
-            loggedIn={!!this.props.user}
-            logout={this.logout}
-            user={this.props.user}
-          />
-        ) : null}
+        {this.props.user ? <NavBar /> : null}
         <Switch>
           <Route exact path="/home" component={Home} />
           <Route exact path="/" component={LogIn} />

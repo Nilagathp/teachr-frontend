@@ -21,8 +21,7 @@ const styles = {
   }
 };
 
-const TeacherHome = ({ user, classes }) => {
-  const teacher = user.person.teacher;
+const TeacherHome = ({ teacher, classes }) => {
   return (
     <div>
       <Grid container spacing={24}>

@@ -10,8 +10,7 @@ import { logInUser } from "../redux/actions/userActions";
 class LogIn extends React.Component {
   state = {
     email: "",
-    password: "",
-    errorMessage: ""
+    password: ""
   };
 
   handleChange = name => event => {
@@ -32,7 +31,6 @@ class LogIn extends React.Component {
     return (
       <Grid container justify="center">
         <form onSubmit={this.handleSubmit}>
-          {this.state.errorMessage ? <p>{this.state.errorMessage}</p> : null}
           <TextField
             style={{ display: "block" }}
             required
