@@ -10,6 +10,11 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import Divider from "@material-ui/core/Divider";
 
 const styles = {
   card: {
@@ -18,10 +23,18 @@ const styles = {
   },
   paper: {
     margin: "20px"
+  },
+  heading: {
+    paddingTop: "20px",
+    paddingLeft: "20px"
   }
 };
 
 const TeacherHome = ({ teacher, classes }) => {
+  //Courses hash to look up name of course from course_id on assignment
+  let courses = {};
+  teacher.courses.map(course => (courses[course.id] = course.name));
+
   return (
     <div>
       <Grid container spacing={24}>
@@ -52,7 +65,26 @@ const TeacherHome = ({ teacher, classes }) => {
           ))}
         </Grid>
         <Grid item xs={8}>
-          <Paper className={classes.paper}>Assignments</Paper>
+          <Paper className={classes.paper}>
+            <Typography variant="h4" className={classes.heading}>
+              Assignments
+            </Typography>
+            <Divider />
+            <List>
+              {teacher.assignments.map(assignment => (
+                <ListItem key={assignment.id} divider button>
+                  <ListItemText
+                    // disableTypography
+                    primary={assignment.name}
+                    secondary={courses[assignment.course_id]}
+                  />
+                  <ListItemSecondaryAction>
+                    <Button>Due on:</Button>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+            </List>
+          </Paper>
         </Grid>
       </Grid>
     </div>
