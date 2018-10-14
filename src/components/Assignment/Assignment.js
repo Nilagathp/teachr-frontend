@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import TeacherViewAssignment from "./TeacherViewAssignment";
 import StudentViewAssignment from "./StudentViewAssignment";
-import LogIn from "../LogIn";
 
 const Assignment = ({ user, assignment }) => {
   if (user) {
@@ -13,7 +12,7 @@ const Assignment = ({ user, assignment }) => {
       return <StudentViewAssignment />;
     }
   } else {
-    return <LogIn />;
+    return null;
   }
 };
 

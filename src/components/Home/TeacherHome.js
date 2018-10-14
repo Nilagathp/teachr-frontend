@@ -60,7 +60,7 @@ const TeacherHome = ({ teacher, classes }) => {
                   component={Link}
                   to={`/course/${course.id}/assignment/create`}
                 >
-                  Add Assignment
+                  Create Assignment
                 </Button>
                 <Button size="small" color="primary">
                   Send Message

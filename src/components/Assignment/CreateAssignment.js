@@ -10,6 +10,8 @@ import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 
+import { createAssignment } from "../../redux/actions/assignmentActions";
+
 const styles = {
   paper: {
     margin: "20px",
@@ -67,12 +69,12 @@ class CreateAssignment extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     const assignmentParams = {
-      courseId: this.state.courseId,
+      course_id: this.state.courseId,
       name: this.state.name,
       points: this.state.points,
       category: this.state.category
     };
-    console.log(assignmentParams);
+    this.props.createAssignment(assignmentParams, this.props.history.push);
   };
 
   render() {
@@ -157,4 +159,9 @@ const mapStateToProps = state => {
 };
 
 const styledCreateAssignment = withStyles(styles)(CreateAssignment);
-export default withRouter(connect(mapStateToProps)(styledCreateAssignment));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { createAssignment }
+  )(styledCreateAssignment)
+);

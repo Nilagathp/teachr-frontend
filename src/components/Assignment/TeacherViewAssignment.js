@@ -21,19 +21,23 @@ const styles = {
 };
 
 const TeacherViewAssignment = ({ assignment, classes }) => {
-  return (
-    <React.Fragment>
-      <Typography variant="h4" className={classes.heading}>
-        {assignment.name}
-        <Button className={classes.button} color="primary">
-          Edit
-        </Button>
-        <Button className={classes.button} color="primary">
-          Assign
-        </Button>
-      </Typography>
-    </React.Fragment>
-  );
+  if (assignment) {
+    return (
+      <React.Fragment>
+        <Typography variant="h4" className={classes.heading}>
+          {assignment.name}
+          <Button className={classes.button} color="primary">
+            Edit
+          </Button>
+          <Button className={classes.button} color="primary">
+            Assign
+          </Button>
+        </Typography>
+      </React.Fragment>
+    );
+  } else {
+    return null;
+  }
 };
 
 export default withStyles(styles)(TeacherViewAssignment);

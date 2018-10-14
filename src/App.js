@@ -21,7 +21,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        {this.props.user ? <NavBar /> : null}
+        {this.props.user ? <NavBar /> : <LogIn />}
         <Switch>
           <Route
             path="/course/:id/assignment/create"
@@ -30,7 +30,6 @@ class App extends Component {
           <Route path="/course/:id/assignment/:id" component={Assignment} />
           <Route path="/course/:id" component={Course} />
           <Route exact path="/home" component={Home} />
-          <Route exact path="/" component={LogIn} />
         </Switch>
       </div>
     );

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import TeacherCourse from "./TeacherCourse";
 import StudentCourse from "./StudentCourse";
-import LogIn from "../LogIn";
 
 const Course = ({ user }) => {
   if (user) {
@@ -13,7 +12,7 @@ const Course = ({ user }) => {
       return <StudentCourse />;
     }
   } else {
-    return <LogIn />;
+    return null;
   }
 };
 
