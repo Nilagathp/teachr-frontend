@@ -40,4 +40,22 @@ function updateAssignment(assignmentId, assignmentParams, push) {
   };
 }
 
-export { createAssignment, updateAssignment };
+function deleteAssignment(assignmentId, push) {
+  return function(dispatch) {
+    const token = localStorage.getItem("token");
+    fetch(`http://localhost:3000/assignments/${assignmentId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(r => r.json())
+      .then(json => {
+        console.log(json);
+        dispatch(getUserFromToken(token));
+        push(`/home`);
+      });
+  };
+}
+
+export { createAssignment, updateAssignment, deleteAssignment };

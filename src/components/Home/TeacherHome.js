@@ -58,9 +58,9 @@ const TeacherHome = ({ teacher, courses, classes }) => {
                 >
                   Create Assignment
                 </Button>
-                <Button size="small" color="primary">
+                {/* <Button size="small" color="primary">
                   Send Message
-                </Button>
+                </Button> */}
               </CardActions>
             </Card>
           ))}
@@ -89,9 +89,9 @@ const TeacherHome = ({ teacher, courses, classes }) => {
                       assignment.category
                     }`}
                   />
-                  <ListItemSecondaryAction>
+                  {/* <ListItemSecondaryAction>
                     <Button>Due on:</Button>
-                  </ListItemSecondaryAction>
+                  </ListItemSecondaryAction> */}
                 </ListItem>
               ))}
             </List>
