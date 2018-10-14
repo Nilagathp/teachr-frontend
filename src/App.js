@@ -7,6 +7,7 @@ import NavBar from "./components/Navbar";
 import Home from "./components/Home/Home";
 import Course from "./components/Course/Course";
 import Assignment from "./components/Assignment/Assignment";
+import CreateAssignment from "./components/Assignment/CreateAssignment";
 import { updateUser, getUserFromToken } from "./redux/actions/userActions";
 
 class App extends Component {
@@ -22,6 +23,10 @@ class App extends Component {
       <div>
         {this.props.user ? <NavBar /> : null}
         <Switch>
+          <Route
+            path="/course/:id/assignment/create"
+            component={CreateAssignment}
+          />
           <Route path="/course/:id/assignment/:id" component={Assignment} />
           <Route path="/course/:id" component={Course} />
           <Route exact path="/home" component={Home} />

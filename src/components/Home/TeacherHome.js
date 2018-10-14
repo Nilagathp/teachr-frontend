@@ -36,7 +36,7 @@ const TeacherHome = ({ teacher, classes }) => {
   teacher.courses.map(course => (courses[course.id] = course.name));
 
   return (
-    <div>
+    <React.Fragment>
       <Grid container spacing={24}>
         <Grid item xs={4}>
           {teacher.courses.map(course => (
@@ -54,7 +54,12 @@ const TeacherHome = ({ teacher, classes }) => {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button size="small" color="primary">
+                <Button
+                  size="small"
+                  color="primary"
+                  component={Link}
+                  to={`/course/${course.id}/assignment/create`}
+                >
                   Add Assignment
                 </Button>
                 <Button size="small" color="primary">
@@ -97,7 +102,7 @@ const TeacherHome = ({ teacher, classes }) => {
           </Paper>
         </Grid>
       </Grid>
-    </div>
+    </React.Fragment>
   );
 };
 

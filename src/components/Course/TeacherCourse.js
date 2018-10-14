@@ -34,11 +34,16 @@ const TeacherCourse = ({ course, assignments, classes }) => {
     <React.Fragment>
       <Typography variant="h4" className={classes.heading}>
         {course.name}
-        <Button className={classes.button} color="primary">
-          Send message
+        <Button
+          className={classes.button}
+          color="primary"
+          component={Link}
+          to={`/course/${course.id}/assignment/create`}
+        >
+          Create Assignment
         </Button>
         <Button className={classes.button} color="primary">
-          Create Assignment
+          Send message
         </Button>
       </Typography>
       <Grid container spacing={24}>
