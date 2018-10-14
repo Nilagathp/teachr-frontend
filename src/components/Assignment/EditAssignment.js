@@ -46,21 +46,17 @@ const categories = [
 ];
 
 class EditAssignment extends React.Component {
-  state = {
-    courseId: "",
-    name: "",
-    points: 10,
-    category: 0
-  };
+  state = {};
 
-  static getDerivedStateFromProps(props) {
-    if (props.assignment) {
+  static getDerivedStateFromProps(props, state) {
+    if (props.assignment && props.assignment.id !== state.assignmentId) {
       let categoryHash = { CW: 0, HW: 1, TQP: 2 };
       return {
         courseId: props.assignment.course_id,
         name: props.assignment.name,
         points: props.assignment.points,
-        category: categoryHash[props.assignment.category]
+        category: categoryHash[props.assignment.category],
+        assignmentId: props.assignment.id
       };
     } else {
       return null;
