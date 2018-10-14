@@ -30,11 +30,7 @@ const styles = {
   }
 };
 
-const TeacherHome = ({ teacher, classes }) => {
-  //Courses hash to look up name of course from course_id on assignment
-  let courses = {};
-  teacher.courses.map(course => (courses[course.id] = course.name));
-
+const TeacherHome = ({ teacher, courses, classes }) => {
   return (
     <React.Fragment>
       <Grid container spacing={24}>

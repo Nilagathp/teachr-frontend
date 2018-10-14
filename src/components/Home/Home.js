@@ -7,7 +7,13 @@ import StudentHome from "./StudentHome";
 const Home = ({ user }) => {
   if (user) {
     if (user.role === "teacher") {
-      return <TeacherHome teacher={user.person.teacher} />;
+      //Courses hash to look up name of course from course_id on assignment
+      let courses = {};
+      user.person.teacher.courses.map(
+        course => (courses[course.id] = course.name)
+      );
+
+      return <TeacherHome teacher={user.person.teacher} courses={courses} />;
     } else {
       return <StudentHome />;
     }

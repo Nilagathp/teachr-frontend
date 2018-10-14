@@ -13,14 +13,18 @@ const styles = {
     maxWidth: 400
   },
   heading: {
-    padding: "20px"
+    marginLeft: "20px",
+    marginTop: "20px"
   },
   button: {
     paddingLeft: "20px"
+  },
+  text: {
+    marginLeft: "20px"
   }
 };
 
-const TeacherViewAssignment = ({ assignment, classes }) => {
+const TeacherViewAssignment = ({ user, course, assignment, classes }) => {
   if (assignment) {
     return (
       <React.Fragment>
@@ -32,6 +36,11 @@ const TeacherViewAssignment = ({ assignment, classes }) => {
           <Button className={classes.button} color="primary">
             Assign
           </Button>
+        </Typography>
+        <Typography variant="subtitle1" className={classes.text}>
+          {`${course.name} - ${assignment.category} - ${
+            assignment.points
+          } points`}
         </Typography>
       </React.Fragment>
     );
