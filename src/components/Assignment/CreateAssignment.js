@@ -12,32 +12,49 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 const styles = {
   paper: {
-    margin: "20px"
-  },
-  card: {
     margin: "20px",
-    maxWidth: 400
+    maxWidth: 1000
   },
   heading: {
     padding: "20px"
   },
   button: {
-    paddingLeft: "20px"
+    padding: "20px",
+    marginLeft: "430px"
   },
   textField: {
-    marginLeft: "10px"
+    marginLeft: "20px",
+    marginTop: "20px"
   }
 };
 
+const categories = [
+  {
+    value: 0,
+    label: "CW"
+  },
+  {
+    value: 1,
+    label: "HW"
+  },
+  {
+    value: 2,
+    label: "TQP"
+  }
+];
+
 class CreateAssignment extends React.Component {
   state = {
-    course: ""
+    courseId: "",
+    name: "",
+    points: 10,
+    category: 0
   };
 
   componentDidMount() {
     const courseId = parseInt(this.props.match.url.split("/")[2]);
     this.setState({
-      course: courseId
+      courseId: courseId
     });
   }
 
@@ -45,6 +62,17 @@ class CreateAssignment extends React.Component {
     this.setState({
       [name]: event.target.value
     });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const assignmentParams = {
+      courseId: this.state.courseId,
+      name: this.state.name,
+      points: this.state.points,
+      category: this.state.category
+    };
+    console.log(assignmentParams);
   };
 
   render() {
@@ -55,14 +83,15 @@ class CreateAssignment extends React.Component {
           Create Assignment
         </Typography>
         <Divider />
-        <Typography variant="h5" className={classes.heading}>
-          Course:
+        <form onSubmit={this.handleSubmit}>
           <TextField
             select
+            label="Course"
             className={classes.textField}
-            value={this.state.course}
-            onChange={this.handleChange("course")}
+            value={this.state.courseId}
+            onChange={this.handleChange("courseId")}
             SelectProps={{ MenuProps: { className: classes.menu } }}
+            margin="normal"
           >
             {courses.map(option => (
               <MenuItem key={option.id} value={option.id}>
@@ -70,7 +99,48 @@ class CreateAssignment extends React.Component {
               </MenuItem>
             ))}
           </TextField>
-        </Typography>
+          <TextField
+            label="Assignment Name"
+            value={this.state.name}
+            onChange={this.handleChange("name")}
+            className={classes.textField}
+            margin="normal"
+          />
+          <TextField
+            select
+            label="Category"
+            className={classes.textField}
+            value={this.state.category}
+            onChange={this.handleChange("category")}
+            SelectProps={{ MenuProps: { className: classes.menu } }}
+            margin="normal"
+          >
+            {categories.map(option => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            label="Points"
+            value={this.state.points}
+            onChange={this.handleChange("points")}
+            type="number"
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true
+            }}
+            InputProps={{
+              inputProps: {
+                min: 0
+              }
+            }}
+            margin="normal"
+          />
+          <Button className={classes.button} type="submit">
+            Create Assignment
+          </Button>
+        </form>
       </Paper>
     ) : null;
   }
