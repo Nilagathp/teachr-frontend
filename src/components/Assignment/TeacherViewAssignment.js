@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -30,14 +31,19 @@ const TeacherViewAssignment = ({ user, course, assignment, classes }) => {
       <React.Fragment>
         <Typography variant="h4" className={classes.heading}>
           {assignment.name}
-          <Button className={classes.button} color="primary">
+          <Button
+            className={classes.button}
+            color="primary"
+            component={Link}
+            to={`/course/${course.id}/assignment/${assignment.id}/edit`}
+          >
             Edit
           </Button>
           <Button className={classes.button} color="primary">
             Assign
           </Button>
         </Typography>
-        <Typography variant="subtitle1" className={classes.text}>
+        <Typography variant="h6" className={classes.text}>
           {`${course.name} - ${assignment.category} - ${
             assignment.points
           } points`}
