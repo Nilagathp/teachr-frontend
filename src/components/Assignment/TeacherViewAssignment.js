@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -101,14 +102,22 @@ class TeacherViewAssignment extends React.Component {
               assignment.points
             } points`}
           </Typography>
-          <Typography className={classes.text}>
-            {assignment.directions}
-          </Typography>
-          <Typography className={classes.text}>{assignment.content}</Typography>
-
-          {assignment.questions.map(question => (
-            <Typography className={classes.text}>{question}</Typography>
-          ))}
+          <Paper>
+            <Typography className={classes.heading} variant="subtitle1">
+              Directions: {assignment.directions}
+            </Typography>
+            <Typography className={classes.heading}>
+              {assignment.content}
+            </Typography>
+            <Typography variant="subtitle1" className={classes.heading}>
+              Questions:
+              {assignment.questions.map((question, index) => (
+                <Typography key={index} className={classes.text}>
+                  {`${index + 1}. ${question}`}
+                </Typography>
+              ))}
+            </Typography>
+          </Paper>
         </React.Fragment>
       );
     } else {
