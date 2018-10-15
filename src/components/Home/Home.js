@@ -15,7 +15,12 @@ const Home = ({ user }) => {
 
       return <TeacherHome teacher={user.person.teacher} courses={courses} />;
     } else {
-      return <StudentHome student={user.person.student} />;
+      let courses = {};
+      user.person.student.courses.map(
+        course => (courses[course.id] = course.name)
+      );
+
+      return <StudentHome student={user.person.student} courses={courses} />;
     }
   } else {
     return null;

@@ -30,7 +30,7 @@ const styles = {
   }
 };
 
-const StudentHome = ({ student, classes }) => {
+const StudentHome = ({ student, courses, classes }) => {
   return (
     <React.Fragment>
       <Grid container spacing={24}>
@@ -59,8 +59,7 @@ const StudentHome = ({ student, classes }) => {
         </Grid>
         <Grid item xs={8}>
           <Paper className={classes.paper}>
-            Assignments
-            {/* <Typography variant="h4" className={classes.heading}>
+            <Typography variant="h4" className={classes.heading}>
               Assignments
             </Typography>
             <Divider />
@@ -85,9 +84,9 @@ const StudentHome = ({ student, classes }) => {
                   {/* <ListItemSecondaryAction>
                     <Button>Due on:</Button>
                   </ListItemSecondaryAction> */}
-            {/* </ListItem>
+                </ListItem>
               ))}
-            </List> */}
+            </List>
           </Paper>
         </Grid>
       </Grid>
