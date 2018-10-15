@@ -5,10 +5,10 @@ import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
+// import MenuItem from "@material-ui/core/MenuItem";
 
 import { submitStudentAssignment } from "../../redux/actions/assignmentActions";
 
@@ -20,7 +20,8 @@ const styles = {
     flexWrap: "wrap"
   },
   heading: {
-    padding: "20px"
+    marginLeft: "20px",
+    paddingTop: "20px"
   },
   button: {
     padding: "20px",
@@ -28,26 +29,23 @@ const styles = {
   },
   textField: {
     marginLeft: "20px",
-    marginTop: "20px",
     marginRight: "20px",
-    maxWidth: "93%"
+    marginBottom: "10px",
+    maxWidth: "95%"
+  },
+  text: {
+    marginLeft: "20px",
+    paddingBottom: "10px"
+  },
+  content: {
+    marginLeft: "20px",
+    paddingBottom: "10px",
+    paddingTop: "10px"
+  },
+  question: {
+    marginLeft: "20px"
   }
 };
-
-const categories = [
-  {
-    value: 0,
-    label: "CW"
-  },
-  {
-    value: 1,
-    label: "HW"
-  },
-  {
-    value: 2,
-    label: "TQP"
-  }
-];
 
 class StudentAssignment extends React.Component {
   render() {
@@ -58,27 +56,45 @@ class StudentAssignment extends React.Component {
           <div>
             <Typography variant="h4" className={classes.heading}>
               {assignment.name}
-              <Typography variant="h6" className={classes.text}>
-                {`${course.name} - ${assignment.category} - ${
-                  assignment.points
-                } points`}
-              </Typography>
+            </Typography>
+            <Typography variant="h6" className={classes.text}>
+              {`${course.name} - ${assignment.category} - ${
+                assignment.points
+              } points`}
             </Typography>
           </div>
-          <Typography className={classes.heading} variant="subtitle1">
-            Directions: {assignment.directions}
-          </Typography>
-          <Typography className={classes.heading}>
-            {assignment.content}
-          </Typography>
-          <Typography variant="subtitle1" className={classes.heading}>
-            Questions:
+          <div>
+            <Typography className={classes.content} variant="subtitle1">
+              Directions: {assignment.directions}
+            </Typography>
+            <Divider />
+            <Typography className={classes.content}>
+              {assignment.content}
+            </Typography>
+            <Typography variant="subtitle1" className={classes.text}>
+              Questions:
+            </Typography>
             {assignment.questions.map((question, index) => (
-              <Typography key={index} className={classes.text}>
-                {`${index + 1}. ${question}`}
-              </Typography>
+              <React.Fragment key={index}>
+                <Typography
+                  key={`question-${index}`}
+                  className={classes.question}
+                >
+                  {`${index + 1}. ${question}`}{" "}
+                </Typography>
+                <TextField
+                  multiline
+                  fullWidth
+                  variant="outlined"
+                  key={`answer-${index}`}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </React.Fragment>
             ))}
-          </Typography>
+          </div>
         </Paper>
       );
     } else {
