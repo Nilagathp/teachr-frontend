@@ -81,9 +81,9 @@ const TeacherCourse = ({ course, assignments, sections, classes }) => {
                       to={`/course/${course.id}/assignment/${assignment.id}`}
                     >
                       <ListItemText primary={assignment.name} />
-                      <ListItemSecondaryAction>
+                      {/* <ListItemSecondaryAction>
                         <Button>Due on:</Button>
-                      </ListItemSecondaryAction>
+                      </ListItemSecondaryAction> */}
                     </ListItem>
                   ))
                 : null}
