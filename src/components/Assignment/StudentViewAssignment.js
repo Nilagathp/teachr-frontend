@@ -31,30 +31,38 @@ const styles = {
 
 class StudentViewAssignment extends React.Component {
   render() {
-    const { user, course, assignment, classes } = this.props;
+    const { user, course, assignment, studentAssignment, classes } = this.props;
     if (assignment) {
       return (
         <React.Fragment>
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
-            <Button
-              className={classes.button}
-              color="primary"
-              onClick={() =>
-                this.props.createStudentAssignment(
-                  user.person.student.id,
-                  assignment.id,
-                  course.id,
-                  this.props.history.push
-                )
-              }
-              // component={Link}
-              // to={`/course/${course.id}/assignment/${assignment.id}/student/${
-              //   user.id
-              // }`}
-            >
-              Begin Assignment
-            </Button>
+            {studentAssignment ? (
+              <Button
+                color="primary"
+                component={Link}
+                to={`/course/${course.id}/assignment/${assignment.id}/student/${
+                  user.id
+                }`}
+              >
+                Continue Assignment
+              </Button>
+            ) : (
+              <Button
+                className={classes.button}
+                color="primary"
+                onClick={() =>
+                  this.props.createStudentAssignment(
+                    user.person.student.id,
+                    assignment.id,
+                    course.id,
+                    this.props.history.push
+                  )
+                }
+              >
+                Begin Assignment
+              </Button>
+            )}
           </Typography>
           <Typography variant="h6" className={classes.text}>
             {`${course.name} - ${assignment.category} - ${

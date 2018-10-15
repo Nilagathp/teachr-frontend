@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import TeacherViewAssignment from "./TeacherViewAssignment";
 import StudentViewAssignment from "./StudentViewAssignment";
 
-const Assignment = ({ user, course, assignment }) => {
+const Assignment = ({ user, course, assignment, studentAssignment }) => {
   if (user) {
     if (user.role === "teacher") {
       return (
@@ -20,6 +20,7 @@ const Assignment = ({ user, course, assignment }) => {
           user={user}
           course={course}
           assignment={assignment}
+          studentAssignment={studentAssignment}
         />
       );
     }
@@ -31,6 +32,7 @@ const Assignment = ({ user, course, assignment }) => {
 const mapStateToProps = (state, ownProps) => {
   let assignment;
   let course;
+  let studentAssignment;
   const assignmentId = parseInt(ownProps.match.params.id);
   const courseId = parseInt(ownProps.match.url.split("/")[2]);
   if (state.user && state.user.person.teacher) {
@@ -50,11 +52,15 @@ const mapStateToProps = (state, ownProps) => {
     course = state.user.person.student.courses.find(
       course => course.id === courseId
     );
+    studentAssignment = state.user.person.student.student_assignments.find(
+      student_assignment => assignmentId === student_assignment.assignment_id
+    );
   }
   return {
     user: state.user,
     course: course,
-    assignment: assignment
+    assignment: assignment,
+    studentAssignment: studentAssignment
   };
 };
 
