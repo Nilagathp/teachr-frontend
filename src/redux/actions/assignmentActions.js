@@ -84,9 +84,14 @@ function createStudentAssignment(studentId, assignmentId, courseId, push) {
   };
 }
 
+function submitStudentAssignment() {
+  console.log("submitted");
+}
+
 export {
   createAssignment,
   updateAssignment,
   deleteAssignment,
-  createStudentAssignment
+  createStudentAssignment,
+  submitStudentAssignment
 };
