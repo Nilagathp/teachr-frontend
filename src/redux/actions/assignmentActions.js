@@ -51,7 +51,6 @@ function deleteAssignment(assignmentId, push) {
     })
       .then(r => r.json())
       .then(json => {
-        console.log(json);
         dispatch(getUserFromToken(token));
         push(`/home`);
       });

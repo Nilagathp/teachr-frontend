@@ -47,7 +47,7 @@ class TeacherViewAssignment extends React.Component {
   };
 
   render() {
-    const { user, course, assignment, classes } = this.props;
+    const { course, assignment, classes } = this.props;
     if (assignment) {
       return (
         <React.Fragment>
@@ -101,6 +101,14 @@ class TeacherViewAssignment extends React.Component {
               assignment.points
             } points`}
           </Typography>
+          <Typography className={classes.text}>
+            {assignment.directions}
+          </Typography>
+          <Typography className={classes.text}>{assignment.content}</Typography>
+
+          {assignment.questions.map(question => (
+            <Typography className={classes.text}>{question}</Typography>
+          ))}
         </React.Fragment>
       );
     } else {

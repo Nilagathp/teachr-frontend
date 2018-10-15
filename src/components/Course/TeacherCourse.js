@@ -42,9 +42,9 @@ const TeacherCourse = ({ course, assignments, classes }) => {
         >
           Create Assignment
         </Button>
-        <Button className={classes.button} color="primary">
+        {/* <Button className={classes.button} color="primary">
           Send message
-        </Button>
+        </Button> */}
       </Typography>
       <Grid container spacing={24}>
         <Grid item xs={4}>
