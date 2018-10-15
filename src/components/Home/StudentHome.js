@@ -35,8 +35,7 @@ const StudentHome = ({ student, classes }) => {
     <React.Fragment>
       <Grid container spacing={24}>
         <Grid item xs={4}>
-          Courses
-          {/* {student.courses.map(course => (
+          {student.courses.map(course => (
             <Card key={course.id} className={classes.card}>
               <CardActionArea component={Link} to={`/course/${course.id}`}>
                 <CardContent>
@@ -51,21 +50,13 @@ const StudentHome = ({ student, classes }) => {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button
-                  size="small"
-                  color="primary"
-                  component={Link}
-                  to={`/course/${course.id}/assignment/create`}
-                >
-                  Create Assignment
-                </Button>
                 {/* <Button size="small" color="primary">
                   Send Message
                 </Button> */}
-          {/* </CardActions>
+              </CardActions>
             </Card>
-          ))} */}
-        </Grid>{" "}
+          ))}
+        </Grid>
         <Grid item xs={8}>
           <Paper className={classes.paper}>
             Assignments
