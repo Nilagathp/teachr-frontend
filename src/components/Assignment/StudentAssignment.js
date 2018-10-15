@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-// import Button from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 // import MenuItem from "@material-ui/core/MenuItem";
@@ -48,6 +48,31 @@ const styles = {
 };
 
 class StudentAssignment extends React.Component {
+  state = {
+    answers: []
+  };
+
+  handleChange = name => event => {
+    let newAnswers = this.state.answers;
+    newAnswers[event.target.id] = event.target.value;
+    this.setState({
+      [name]: newAnswers
+    });
+  };
+
+  handleSubmit = event => {
+    console.log("submit");
+    console.log(this.state.answers);
+    const studentAssignmentId = this.props.studentAssignment.id;
+    const answers = this.state.answers;
+    this.props.submitStudentAssignment(
+      studentAssignmentId,
+      answers,
+      this.props.course.id,
+      this.props.history.push
+    );
+  };
+
   render() {
     const { assignment, course, classes } = this.props;
     if (assignment) {
@@ -83,6 +108,7 @@ class StudentAssignment extends React.Component {
                   {`${index + 1}. ${question}`}{" "}
                 </Typography>
                 <TextField
+                  id={`${index}`}
                   multiline
                   fullWidth
                   variant="outlined"
@@ -91,9 +117,13 @@ class StudentAssignment extends React.Component {
                   InputLabelProps={{
                     shrink: true
                   }}
+                  onChange={this.handleChange("answers")}
                 />
               </React.Fragment>
             ))}
+            <Button color="primary" onClick={this.handleSubmit}>
+              Submit Assignment
+            </Button>
           </div>
         </Paper>
       );
@@ -106,6 +136,7 @@ class StudentAssignment extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   let assignment;
   let course;
+  let studentAssignment;
   if (state.user && state.user.person.student) {
     const assignmentId = parseInt(ownProps.match.url.split("/")[4]);
     const courseId = parseInt(ownProps.match.url.split("/")[2]);
@@ -115,10 +146,14 @@ const mapStateToProps = (state, ownProps) => {
     course = state.user.person.student.courses.find(
       course => course.id === courseId
     );
+    studentAssignment = state.user.person.student.student_assignments.find(
+      studentAssignment => studentAssignment.assignment_id === assignmentId
+    );
   }
   return {
     assignment: assignment,
-    course: course
+    course: course,
+    studentAssignment: studentAssignment
   };
 };
 
