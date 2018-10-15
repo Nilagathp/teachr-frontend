@@ -42,8 +42,9 @@ class StudentViewAssignment extends React.Component {
               color="primary"
               onClick={() =>
                 this.props.createStudentAssignment(
-                  user.student.id,
+                  user.person.student.id,
                   assignment.id,
+                  course.id,
                   this.props.history.push
                 )
               }

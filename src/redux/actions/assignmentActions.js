@@ -57,8 +57,7 @@ function deleteAssignment(assignmentId, push) {
   };
 }
 
-function createStudentAssignment(studentId, assignmentId, push) {
-  console.log("student id", studentId, "assignment id", assignmentId);
+function createStudentAssignment(studentId, assignmentId, courseId, push) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
     fetch("http://localhost:3000/student_assignments", {
@@ -75,10 +74,11 @@ function createStudentAssignment(studentId, assignmentId, push) {
     })
       .then(r => r.json())
       .then(json => {
-        console.log(json);
         dispatch(getUserFromToken(token));
         push(
-          `/course/${json.course.id}/assignment/${json.id}/student/${studentId}`
+          `/course/${courseId}/assignment/${
+            json.assignment_id
+          }/student/${studentId}`
         );
       });
   };
