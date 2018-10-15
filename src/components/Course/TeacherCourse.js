@@ -29,7 +29,7 @@ const styles = {
   }
 };
 
-const TeacherCourse = ({ course, assignments, classes }) => {
+const TeacherCourse = ({ course, assignments, sections, classes }) => {
   return (
     <React.Fragment>
       <Typography variant="h4" className={classes.heading}>
@@ -52,6 +52,16 @@ const TeacherCourse = ({ course, assignments, classes }) => {
             <Typography variant="h4" className={classes.heading}>
               Sections
             </Typography>
+            <Divider />
+            <List>
+              {sections
+                ? sections.map(section => (
+                    <ListItem key={section.id} divider>
+                      <ListItemText primary={`Period ${section.period}`} />
+                    </ListItem>
+                  ))
+                : null}
+            </List>
           </Paper>
         </Grid>
         <Grid item xs={8}>
@@ -88,10 +98,12 @@ const TeacherCourse = ({ course, assignments, classes }) => {
 const mapStateToProps = (state, ownProps) => {
   let courses = state.user.person.teacher.courses;
   let assignments = state.user.person.teacher.assignments;
+  let sections = state.user.person.teacher.sections;
   let courseId = parseInt(ownProps.match.params.id);
   return {
     course: courses.find(c => c.id === courseId),
-    assignments: assignments.filter(a => a.course_id === courseId)
+    assignments: assignments.filter(a => a.course_id === courseId),
+    sections: sections.filter(s => s.course_id === courseId)
   };
 };
 
