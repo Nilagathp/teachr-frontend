@@ -21,7 +21,16 @@ const Navbar = ({ person, logOutUser }) => {
           >
             {person.teacher.name}
           </Typography>
-        ) : null}
+        ) : (
+          <Typography
+            variant="h6"
+            component={NavLink}
+            style={{ textDecoration: "none" }}
+            to="/home"
+          >
+            {person.student.name}
+          </Typography>
+        )}
         {person ? <Button onClick={logOutUser}>Logout</Button> : null}
       </Toolbar>
     </AppBar>
