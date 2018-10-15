@@ -76,15 +76,12 @@ class EditAssignment extends React.Component {
     });
   };
 
-  handleChangeQuestion = name => event => {
-    const questions = this.state.questions;
-    console.log(event.target.key);
-    console.log(questions);
-    questions[event.target.key] = event.target.value;
-    console.log(questions);
-    // this.setState({
-    //   questions: [...this.state.questions, event.target.value]
-    // });
+  handleChangeQuestions = name => event => {
+    let newQuestions = this.state.questions;
+    newQuestions[event.target.id] = event.target.value;
+    this.setState({
+      [name]: newQuestions
+    });
   };
 
   handleSubmit = event => {
@@ -197,9 +194,10 @@ class EditAssignment extends React.Component {
               multiline
               fullWidth
               key={index}
+              id={`${index}`}
               label={`Question ${index + 1}`}
               value={question}
-              onChange={this.handleChange("question")}
+              onChange={this.handleChangeQuestions("questions")}
               className={classes.textField}
               margin="normal"
               InputLabelProps={{
