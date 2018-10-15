@@ -50,7 +50,10 @@ class CreateAssignment extends React.Component {
     courseId: "",
     name: "",
     points: 10,
-    category: 0
+    category: 0,
+    directions: "",
+    content: "",
+    questions: ["", "", ""]
   };
 
   componentDidMount() {
@@ -72,7 +75,10 @@ class CreateAssignment extends React.Component {
       course_id: this.state.courseId,
       name: this.state.name,
       points: this.state.points,
-      category: this.state.category
+      category: this.state.category,
+      directions: this.state.directions,
+      content: this.state.content,
+      questions: this.state.questions
     };
     this.props.createAssignment(assignmentParams, this.props.history.push);
   };
@@ -139,6 +145,45 @@ class CreateAssignment extends React.Component {
             }}
             margin="normal"
           />
+          <TextField
+            multiline
+            fullWidth
+            label="Directions"
+            value={this.state.directions}
+            onChange={this.handleChange("directions")}
+            className={classes.textField}
+            margin="normal"
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+          <TextField
+            multiline
+            fullWidth
+            label="Content"
+            value={this.state.content}
+            onChange={this.handleChange("content")}
+            className={classes.textField}
+            margin="normal"
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+          {this.state.questions.map((question, index) => (
+            <TextField
+              multiline
+              fullWidth
+              key={index}
+              label={`Question ${index + 1}`}
+              value={question}
+              onChange={this.handleChangeQuestion}
+              className={classes.textField}
+              margin="normal"
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
+          ))}
           <Button className={classes.button} type="submit">
             Create Assignment
           </Button>

@@ -76,16 +76,16 @@ class EditAssignment extends React.Component {
     });
   };
 
-  // handleChangeQuestion = event => {
-  //   const questions = this.state.questions;
-  //   console.log(event.target.key);
-  //   console.log(questions);
-  //   questions[event.target.key] = event.target.value;
-  //   console.log(questions);
-  //   // this.setState({
-  //   //   questions: [...this.state.questions, event.target.value]
-  //   // });
-  // };
+  handleChangeQuestion = name => event => {
+    const questions = this.state.questions;
+    console.log(event.target.key);
+    console.log(questions);
+    questions[event.target.key] = event.target.value;
+    console.log(questions);
+    // this.setState({
+    //   questions: [...this.state.questions, event.target.value]
+    // });
+  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -94,7 +94,10 @@ class EditAssignment extends React.Component {
       course_id: this.state.courseId,
       name: this.state.name,
       points: this.state.points,
-      category: this.state.category
+      category: this.state.category,
+      directions: this.state.directions,
+      content: this.state.content,
+      questions: this.state.questions
     };
     this.props.updateAssignment(
       assignmentId,
@@ -196,7 +199,7 @@ class EditAssignment extends React.Component {
               key={index}
               label={`Question ${index + 1}`}
               value={question}
-              onChange={this.handleChangeQuestion}
+              onChange={this.handleChange("question")}
               className={classes.textField}
               margin="normal"
               InputLabelProps={{
