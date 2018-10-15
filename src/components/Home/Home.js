@@ -15,7 +15,7 @@ const Home = ({ user }) => {
 
       return <TeacherHome teacher={user.person.teacher} courses={courses} />;
     } else {
-      return <StudentHome />;
+      return <StudentHome student={user.person.student} />;
     }
   } else {
     return null;
