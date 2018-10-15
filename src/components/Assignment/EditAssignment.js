@@ -15,18 +15,22 @@ import { updateAssignment } from "../../redux/actions/assignmentActions";
 const styles = {
   paper: {
     margin: "20px",
-    maxWidth: 1000
+    maxWidth: "95%",
+    display: "flex",
+    flexWrap: "wrap"
   },
   heading: {
     padding: "20px"
   },
   button: {
     padding: "20px",
-    marginLeft: "430px"
+    marginLeft: "80%"
   },
   textField: {
     marginLeft: "20px",
-    marginTop: "20px"
+    marginTop: "20px",
+    marginRight: "20px",
+    maxWidth: "93%"
   }
 };
 
@@ -56,6 +60,9 @@ class EditAssignment extends React.Component {
         name: props.assignment.name,
         points: props.assignment.points,
         category: categoryHash[props.assignment.category],
+        directions: props.assignment.directions,
+        content: props.assignment.content,
+        questions: props.assignment.questions,
         assignmentId: props.assignment.id
       };
     } else {
@@ -68,6 +75,17 @@ class EditAssignment extends React.Component {
       [name]: event.target.value
     });
   };
+
+  // handleChangeQuestion = event => {
+  //   const questions = this.state.questions;
+  //   console.log(event.target.key);
+  //   console.log(questions);
+  //   questions[event.target.key] = event.target.value;
+  //   console.log(questions);
+  //   // this.setState({
+  //   //   questions: [...this.state.questions, event.target.value]
+  //   // });
+  // };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -147,6 +165,45 @@ class EditAssignment extends React.Component {
             }}
             margin="normal"
           />
+          <TextField
+            multiline
+            fullWidth
+            label="Directions"
+            value={this.state.directions}
+            onChange={this.handleChange("directions")}
+            className={classes.textField}
+            margin="normal"
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+          <TextField
+            multiline
+            fullWidth
+            label="Content"
+            value={this.state.content}
+            onChange={this.handleChange("content")}
+            className={classes.textField}
+            margin="normal"
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+          {this.state.questions.map((question, index) => (
+            <TextField
+              multiline
+              fullWidth
+              key={index}
+              label={`Question ${index + 1}`}
+              value={question}
+              onChange={this.handleChangeQuestion}
+              className={classes.textField}
+              margin="normal"
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
+          ))}
           <Button className={classes.button} type="submit">
             Update Assignment
           </Button>
