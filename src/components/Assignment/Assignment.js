@@ -15,7 +15,13 @@ const Assignment = ({ user, course, assignment }) => {
         />
       );
     } else {
-      return <StudentViewAssignment />;
+      return (
+        <StudentViewAssignment
+          user={user}
+          course={course}
+          assignment={assignment}
+        />
+      );
     }
   } else {
     return null;
@@ -25,14 +31,23 @@ const Assignment = ({ user, course, assignment }) => {
 const mapStateToProps = (state, ownProps) => {
   let assignment;
   let course;
+  const assignmentId = parseInt(ownProps.match.params.id);
+  const courseId = parseInt(ownProps.match.url.split("/")[2]);
   if (state.user && state.user.person.teacher) {
-    const assignmentId = parseInt(ownProps.match.params.id);
-    const courseId = parseInt(ownProps.match.url.split("/")[2]);
     assignment = state.user.person.teacher.assignments.find(
       assignment =>
         assignment.id === assignmentId && assignment.course_id === courseId
     );
     course = state.user.person.teacher.courses.find(
+      course => course.id === courseId
+    );
+  }
+  if (state.user && state.user.person.student) {
+    assignment = state.user.person.student.assignments.find(
+      assignment =>
+        assignment.id === assignmentId && assignment.course_id === courseId
+    );
+    course = state.user.person.student.courses.find(
       course => course.id === courseId
     );
   }
