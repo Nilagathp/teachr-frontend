@@ -24,13 +24,15 @@ const styles = {
   },
   heading: {
     marginLeft: "20px",
-    marginTop: "20px"
+    marginTop: "20px",
+    paddingTop: "20px"
   },
   button: {
     paddingLeft: "20px"
   },
   text: {
-    marginLeft: "20px"
+    marginLeft: "20px",
+    paddingBottom: "10px"
   }
 };
 
@@ -51,7 +53,7 @@ class TeacherViewAssignment extends React.Component {
     const { course, assignment, classes } = this.props;
     if (assignment) {
       return (
-        <React.Fragment>
+        <Paper className={classes.paper}>
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
             <Button
@@ -103,13 +105,13 @@ class TeacherViewAssignment extends React.Component {
             } points`}
           </Typography>
           <Paper>
-            <Typography className={classes.heading} variant="subtitle1">
+            <Typography className={classes.text} variant="subtitle1">
               Directions: {assignment.directions}
             </Typography>
-            <Typography className={classes.heading}>
+            <Typography className={classes.text}>
               {assignment.content}
             </Typography>
-            <Typography variant="subtitle1" className={classes.heading}>
+            <Typography variant="subtitle1" className={classes.text}>
               Questions:
               {assignment.questions.map((question, index) => (
                 <Typography key={index} className={classes.text}>
@@ -118,7 +120,7 @@ class TeacherViewAssignment extends React.Component {
               ))}
             </Typography>
           </Paper>
-        </React.Fragment>
+        </Paper>
       );
     } else {
       return null;

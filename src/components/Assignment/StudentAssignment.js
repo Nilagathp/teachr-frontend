@@ -51,8 +51,39 @@ const categories = [
 
 class StudentAssignment extends React.Component {
   render() {
-    const { classes } = this.props;
-    return <Paper className={classes.paper}>Assignment</Paper>;
+    const { assignment, course, classes } = this.props;
+    if (assignment) {
+      return (
+        <Paper className={classes.paper}>
+          <div>
+            <Typography variant="h4" className={classes.heading}>
+              {assignment.name}
+              <Typography variant="h6" className={classes.text}>
+                {`${course.name} - ${assignment.category} - ${
+                  assignment.points
+                } points`}
+              </Typography>
+            </Typography>
+          </div>
+          <Typography className={classes.heading} variant="subtitle1">
+            Directions: {assignment.directions}
+          </Typography>
+          <Typography className={classes.heading}>
+            {assignment.content}
+          </Typography>
+          <Typography variant="subtitle1" className={classes.heading}>
+            Questions:
+            {assignment.questions.map((question, index) => (
+              <Typography key={index} className={classes.text}>
+                {`${index + 1}. ${question}`}
+              </Typography>
+            ))}
+          </Typography>
+        </Paper>
+      );
+    } else {
+      return null;
+    }
   }
 }
 

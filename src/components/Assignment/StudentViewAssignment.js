@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-// import Paper from "@material-ui/core/Paper";
+import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 
 import { createStudentAssignment } from "../../redux/actions/assignmentActions";
@@ -19,13 +19,15 @@ const styles = {
   },
   heading: {
     marginLeft: "20px",
-    marginTop: "20px"
+    marginTop: "20px",
+    paddingTop: "20px"
   },
   button: {
     paddingLeft: "20px"
   },
   text: {
-    marginLeft: "20px"
+    marginLeft: "20px",
+    paddingBottom: "10px"
   }
 };
 
@@ -34,7 +36,7 @@ class StudentViewAssignment extends React.Component {
     const { user, course, assignment, studentAssignment, classes } = this.props;
     if (assignment) {
       return (
-        <React.Fragment>
+        <Paper className={classes.paper}>
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
             {studentAssignment ? (
@@ -69,7 +71,7 @@ class StudentViewAssignment extends React.Component {
               assignment.points
             } points`}
           </Typography>
-        </React.Fragment>
+        </Paper>
       );
     } else {
       return null;
