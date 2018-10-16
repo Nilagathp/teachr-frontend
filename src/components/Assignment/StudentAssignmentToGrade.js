@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
+import Chip from "@material-ui/core/Chip";
 
 import { gradeStudentAssignment } from "../../redux/actions/assignmentActions";
 
@@ -80,6 +81,12 @@ class StudentAssignmentToGrade extends React.Component {
           <div>
             <Typography variant="h4" className={classes.heading}>
               {assignment.name}
+              <Chip
+                color="primary"
+                label={`${studentAssignment.status}`}
+                className={classes.question}
+                variant="outlined"
+              />
             </Typography>
             <Typography variant="h6" className={classes.text}>
               {`${course.name} - ${assignment.category} - ${
