@@ -40,7 +40,8 @@ class StudentViewAssignment extends React.Component {
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
             {studentAssignment ? (
-              studentAssignment.status === "in_progress" ? (
+              studentAssignment.status === "in_progress" ||
+              studentAssignment.status === "not_started" ? (
                 <Button
                   color="primary"
                   component={Link}
