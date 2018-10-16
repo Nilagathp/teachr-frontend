@@ -50,12 +50,23 @@ class StudentAssignmentCompleted extends React.Component {
         <div>
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
-            <Chip
-              color="primary"
-              label={`${studentAssignment.status}`}
-              className={classes.question}
-              variant="outlined"
-            />
+            {studentAssignment.status === "graded" ? (
+              <Chip
+                color="primary"
+                label={`grade: ${studentAssignment.points_earned}/${
+                  assignment.points
+                }`}
+                className={classes.question}
+                variant="outlined"
+              />
+            ) : (
+              <Chip
+                color="primary"
+                label={`${studentAssignment.status}`}
+                className={classes.question}
+                variant="outlined"
+              />
+            )}
           </Typography>
           <Typography variant="h6" className={classes.text}>
             {`${course.name} - ${assignment.category} - ${
