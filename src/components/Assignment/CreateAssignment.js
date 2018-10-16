@@ -69,6 +69,14 @@ class CreateAssignment extends React.Component {
     });
   };
 
+  handleChangeQuestions = name => event => {
+    let newQuestions = this.state.questions;
+    newQuestions[event.target.id] = event.target.value;
+    this.setState({
+      [name]: newQuestions
+    });
+  };
+
   handleSubmit = event => {
     event.preventDefault();
     const assignmentParams = {
@@ -174,9 +182,10 @@ class CreateAssignment extends React.Component {
               multiline
               fullWidth
               key={index}
+              id={`${index}`}
               label={`Question ${index + 1}`}
               value={question}
-              onChange={this.handleChangeQuestion}
+              onChange={this.handleChangeQuestions("questions")}
               className={classes.textField}
               margin="normal"
               InputLabelProps={{

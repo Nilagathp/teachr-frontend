@@ -22,4 +22,4 @@ function getStudents(teacherId) {
   };
 }
 
-export { getStudents };
+export { updateStudents, getStudents };

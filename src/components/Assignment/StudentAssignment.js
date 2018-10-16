@@ -61,8 +61,6 @@ class StudentAssignment extends React.Component {
   };
 
   handleSubmit = event => {
-    console.log("submit");
-    console.log(this.state.answers);
     const studentAssignmentId = this.props.studentAssignment.id;
     const answers = this.state.answers;
     this.props.submitStudentAssignment(

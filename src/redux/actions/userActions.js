@@ -1,3 +1,5 @@
+import { updateStudents } from "./studentsActions";
+
 function updateUser(user) {
   return { type: "UPDATE_USER", user };
 }
@@ -26,6 +28,7 @@ function logOutUser() {
   return function(dispatch) {
     localStorage.clear();
     dispatch(updateUser(null));
+    dispatch(updateStudents(null));
   };
 }
 

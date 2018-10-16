@@ -87,7 +87,6 @@ function createStudentAssignment(studentId, assignmentId, courseId, push) {
 function submitStudentAssignment(studentAssignmentId, answers, courseId, push) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    console.log(answers);
     fetch(`http://localhost:3000/student_assignments/${studentAssignmentId}`, {
       method: "PATCH",
       body: JSON.stringify({
@@ -102,8 +101,6 @@ function submitStudentAssignment(studentAssignmentId, answers, courseId, push) {
     })
       .then(r => r.json())
       .then(json => {
-        console.log(json);
-        console.log(json.student_id);
         dispatch(getUserFromToken(token));
         push(`/course/${courseId}/assignment/${json.assignment_id}`);
       });

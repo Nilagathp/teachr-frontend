@@ -15,7 +15,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-// import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 
 import { getStudents } from "../../redux/actions/studentsActions";
 
@@ -39,7 +39,7 @@ class TeacherHome extends React.Component {
   }
 
   render() {
-    const { teacher, courses, classes } = this.props;
+    const { teacher, courses, students, classes } = this.props;
     return (
       <React.Fragment>
         <Grid container spacing={24}>
@@ -98,9 +98,18 @@ class TeacherHome extends React.Component {
                         assignment.category
                       }`}
                     />
-                    {/* <ListItemSecondaryAction>
-                    <Button>Due on:</Button>
-                  </ListItemSecondaryAction> */}
+                    {/* <p>Student Assignments</p> */}
+                    <ListItemSecondaryAction>
+                      <Button
+                        color="primary"
+                        component={Link}
+                        to={`/course/${assignment.course_id}/assignment/${
+                          assignment.id
+                        }/grade`}
+                      >
+                        Grade
+                      </Button>
+                    </ListItemSecondaryAction>
                   </ListItem>
                 ))}
               </List>
@@ -112,7 +121,13 @@ class TeacherHome extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    students: state.students
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { getStudents }
 )(withStyles(styles)(TeacherHome));
