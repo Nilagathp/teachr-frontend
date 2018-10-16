@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
+import Chip from "@material-ui/core/Chip";
 
 import { submitStudentAssignment } from "../../redux/actions/assignmentActions";
 import { saveStudentAssignment } from "../../redux/actions/assignmentActions";
@@ -82,12 +83,18 @@ class StudentAssignment extends React.Component {
   };
 
   render() {
-    const { assignment, course, classes } = this.props;
+    const { studentAssignment, assignment, course, classes } = this.props;
     return (
       <Paper className={classes.paper}>
         <div>
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
+            <Chip
+              color="primary"
+              label={`${studentAssignment.status.split("_").join(" ")}`}
+              className={classes.question}
+              variant="outlined"
+            />
           </Typography>
           <Typography variant="h6" className={classes.text}>
             {`${course.name} - ${assignment.category} - ${

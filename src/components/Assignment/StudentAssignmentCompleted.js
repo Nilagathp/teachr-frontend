@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
+import Chip from "@material-ui/core/Chip";
 
 const styles = {
   paper: {
@@ -48,7 +49,13 @@ class StudentAssignmentCompleted extends React.Component {
       <Paper className={classes.paper}>
         <div>
           <Typography variant="h4" className={classes.heading}>
-            {`${assignment.name} ${studentAssignment.status}`}
+            {assignment.name}
+            <Chip
+              color="primary"
+              label={`${studentAssignment.status}`}
+              className={classes.question}
+              variant="outlined"
+            />
           </Typography>
           <Typography variant="h6" className={classes.text}>
             {`${course.name} - ${assignment.category} - ${
