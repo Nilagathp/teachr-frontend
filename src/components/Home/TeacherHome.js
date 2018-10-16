@@ -34,10 +34,6 @@ const styles = {
 };
 
 class TeacherHome extends React.Component {
-  componentDidMount() {
-    this.props.getStudents(this.props.teacher.id);
-  }
-
   render() {
     const { teacher, courses, students, classes } = this.props;
     return (

@@ -1,4 +1,4 @@
-import { updateStudents } from "./studentsActions";
+import { getStudents, updateStudents } from "./studentsActions";
 
 function updateUser(user) {
   return { type: "UPDATE_USER", user };
@@ -18,6 +18,9 @@ function logInUser(userParams) {
       .then(json => {
         if (json.jwt) {
           localStorage.setItem("token", json.jwt);
+          if (json.user.role === "teacher") {
+            dispatch(getStudents(json.user.person.teacher.id));
+          }
           dispatch(updateUser(json.user));
         }
       });
@@ -40,7 +43,12 @@ function getUserFromToken(token) {
       }
     })
       .then(r => r.json())
-      .then(json => dispatch(updateUser(json.user)));
+      .then(json => {
+        if (json.user.role === "teacher") {
+          dispatch(getStudents(json.user.person.teacher.id));
+        }
+        dispatch(updateUser(json.user));
+      });
   };
 }
 

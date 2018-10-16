@@ -29,14 +29,56 @@ const styles = {
   }
 };
 
-const AssignmentsToGrade = ({ studentAssignments }) => {
-  return <React.Fragment />;
+const AssignmentsToGrade = ({
+  user,
+  assignment,
+  studentAssignments,
+  students,
+  classes
+}) => {
+  return user ? (
+    <Paper className={classes.paper}>
+      <Typography variant="h4" className={classes.heading}>
+        {assignment.name}
+      </Typography>
+      <Divider />
+      <List>
+        {studentAssignments
+          ? studentAssignments.map(assignment => (
+              <ListItem
+                key={assignment.id}
+                divider
+                button
+                // component={Link}
+                // to={`/course/${course.id}/assignment/${assignment.id}`}
+              >
+                <ListItemText
+                  primary={
+                    students.find(
+                      student => student.id == assignment.student_id
+                    ).name
+                  }
+                  secondary={`Status: ${assignment.status}`}
+                />
+                {/* <ListItemSecondaryAction>
+                    <Button>Due on:</Button>
+                  </ListItemSecondaryAction> */}
+              </ListItem>
+            ))
+          : null}
+      </List>
+    </Paper>
+  ) : null;
 };
 
 const mapStateToProps = (state, ownProps) => {
+  let assignment;
   let studentAssignments;
   if (state.user && state.user.person.teacher) {
     const assignmentId = parseInt(ownProps.match.url.split("/")[4]);
+    assignment = state.user.person.teacher.assignments.find(
+      assignment => assignment.id === assignmentId
+    );
     studentAssignments = state.students
       .map(student => student.student_assignments)
       .flat()
@@ -45,7 +87,10 @@ const mapStateToProps = (state, ownProps) => {
       );
   }
   return {
-    studentAssignments: studentAssignments
+    user: state.user,
+    assignment: assignment,
+    studentAssignments: studentAssignments,
+    students: state.students
   };
 };
 
