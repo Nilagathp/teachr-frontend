@@ -93,7 +93,7 @@ class StudentAssignmentToGrade extends React.Component {
               ) : (
                 <Chip
                   color="primary"
-                  label={`${studentAssignment.status}`}
+                  label={`${studentAssignment.status.split("_").join(" ")}`}
                   className={classes.question}
                   variant="outlined"
                 />
