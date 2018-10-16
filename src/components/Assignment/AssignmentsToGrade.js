@@ -47,6 +47,14 @@ const AssignmentsToGrade = ({
     <Paper className={classes.paper}>
       <Typography variant="h4" className={classes.heading}>
         {assignment.name}
+        <Button
+          className={classes.button}
+          color="primary"
+          component={Link}
+          to={`/course/${course.id}/assignment/${assignment.id}/edit`}
+        >
+          Edit
+        </Button>
       </Typography>
       <Typography variant="h6" className={classes.text}>
         {`${course.name} - ${assignment.category} - ${
