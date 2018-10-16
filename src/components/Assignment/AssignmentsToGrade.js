@@ -29,23 +29,21 @@ const styles = {
   }
 };
 
-const AssignmentsToGrade = () => {
+const AssignmentsToGrade = ({ studentAssignments }) => {
   return <React.Fragment />;
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const assignmentId = parseInt(ownProps.match.url.split("/")[4]);
-  console.log(assignmentId);
-  const allStudentAssignments = state.students.map(
-    student => student.student_assignments
-  );
-  console.log(allStudentAssignments);
-  const studentAssignments = allStudentAssignments.filter(
-    studentAssignment => studentAssignment.assignment_id === assignmentId
-  );
-  // .filter(
-  //   studentAssignment => studentAssignment.assignment_id === assignmentId
-  // );
+  let studentAssignments;
+  if (state.user && state.user.person.teacher) {
+    const assignmentId = parseInt(ownProps.match.url.split("/")[4]);
+    studentAssignments = state.students
+      .map(student => student.student_assignments)
+      .flat()
+      .filter(
+        studentAssignment => studentAssignment.assignment_id === assignmentId
+      );
+  }
   return {
     studentAssignments: studentAssignments
   };
