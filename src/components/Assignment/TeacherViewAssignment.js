@@ -60,6 +60,14 @@ class TeacherViewAssignment extends React.Component {
               className={classes.button}
               color="primary"
               component={Link}
+              to={`/course/${course.id}/assignment/${assignment.id}/grade`}
+            >
+              Grade
+            </Button>
+            <Button
+              className={classes.button}
+              color="primary"
+              component={Link}
               to={`/course/${course.id}/assignment/${assignment.id}/edit`}
             >
               Edit
