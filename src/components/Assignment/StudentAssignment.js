@@ -1,157 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 
-import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
-import TextField from "@material-ui/core/TextField";
-// import MenuItem from "@material-ui/core/MenuItem";
+import StudentAssignmentWorking from "./StudentAssignmentWorking";
 
-import { submitStudentAssignment } from "../../redux/actions/assignmentActions";
-import { saveStudentAssignment } from "../../redux/actions/assignmentActions";
-
-const styles = {
-  paper: {
-    margin: "20px",
-    maxWidth: "95%",
-    display: "flex",
-    flexWrap: "wrap"
-  },
-  heading: {
-    marginLeft: "20px",
-    paddingTop: "20px"
-  },
-  button: {
-    padding: "20px"
-  },
-  textField: {
-    marginLeft: "20px",
-    marginRight: "20px",
-    marginBottom: "10px",
-    maxWidth: "95%"
-  },
-  text: {
-    marginLeft: "20px",
-    paddingBottom: "10px"
-  },
-  content: {
-    marginLeft: "20px",
-    paddingBottom: "10px",
-    paddingTop: "10px"
-  },
-  question: {
-    marginLeft: "20px"
-  }
-};
-
-class StudentAssignment extends React.Component {
-  state = {
-    answers: []
-  };
-
-  handleChange = name => event => {
-    let newAnswers = this.state.answers;
-    newAnswers[event.target.id] = event.target.value;
-    this.setState({
-      [name]: newAnswers
-    });
-  };
-
-  handleSave = event => {
-    const studentAssignmentId = this.props.studentAssignment.id;
-    const answers = this.state.answers;
-    this.props.saveStudentAssignment(
-      studentAssignmentId,
-      answers,
-      this.props.course.id,
-      this.props.history.push
-    );
-  };
-
-  handleSubmit = event => {
-    const studentAssignmentId = this.props.studentAssignment.id;
-    const answers = this.state.answers;
-    this.props.submitStudentAssignment(
-      studentAssignmentId,
-      answers,
-      this.props.course.id,
-      this.props.history.push
-    );
-  };
-
-  render() {
-    const { assignment, course, classes } = this.props;
-    if (assignment) {
+const StudentAssignment = ({ studentAssignment, assignment, course }) => {
+  if (studentAssignment) {
+    if (
+      studentAssignment.status === "not_started" ||
+      studentAssignment.status === "in_progress"
+    ) {
       return (
-        <Paper className={classes.paper}>
-          <div>
-            <Typography variant="h4" className={classes.heading}>
-              {assignment.name}
-            </Typography>
-            <Typography variant="h6" className={classes.text}>
-              {`${course.name} - ${assignment.category} - ${
-                assignment.points
-              } points`}
-            </Typography>
-          </div>
-          <div>
-            <Typography className={classes.content} variant="subtitle1">
-              Directions: {assignment.directions}
-            </Typography>
-            <Divider />
-            <Typography className={classes.content}>
-              {assignment.content}
-            </Typography>
-            <Typography variant="subtitle1" className={classes.text}>
-              Questions:
-            </Typography>
-            {assignment.questions.map((question, index) => (
-              <React.Fragment key={index}>
-                <Typography
-                  key={`question-${index}`}
-                  className={classes.question}
-                >
-                  {`${index + 1}. ${question}`}{" "}
-                </Typography>
-                <TextField
-                  id={`${index}`}
-                  multiline
-                  fullWidth
-                  variant="outlined"
-                  key={`answer-${index}`}
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  onChange={this.handleChange("answers")}
-                />
-              </React.Fragment>
-            ))}
-            <Button
-              color="primary"
-              className={classes.button}
-              onClick={this.handleSave}
-            >
-              Save and Finish Later
-            </Button>
-            <Button
-              color="primary"
-              className={classes.button}
-              onClick={this.handleSubmit}
-            >
-              Submit Assignment
-            </Button>
-          </div>
-        </Paper>
+        <StudentAssignmentWorking
+          studentAssignment={studentAssignment}
+          assignment={assignment}
+          course={course}
+        />
       );
     } else {
-      return null;
+      return "render StudentAssignmentCompleted";
     }
+  } else {
+    return null;
   }
-}
+};
 
 const mapStateToProps = (state, ownProps) => {
   let assignment;
@@ -177,10 +48,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const styledStudentAssignment = withStyles(styles)(StudentAssignment);
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { saveStudentAssignment, submitStudentAssignment }
-  )(styledStudentAssignment)
-);
+export default connect(mapStateToProps)(StudentAssignment);
