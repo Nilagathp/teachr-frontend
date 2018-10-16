@@ -2,7 +2,7 @@ function updateStudents(students) {
   return { type: "UPDATE_STUDENTS", students };
 }
 
-function getStudents(userParams) {
+function getStudents(teacherId) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
     fetch("http://localhost:3000/students", {
@@ -14,7 +14,10 @@ function getStudents(userParams) {
     })
       .then(r => r.json())
       .then(json => {
-        dispatch(updateStudents(json));
+        let currentStudents = json.filter(student =>
+          student.courses.map(course => course.teacher_id).includes(teacherId)
+        );
+        dispatch(updateStudents(currentStudents));
       });
   };
 }
