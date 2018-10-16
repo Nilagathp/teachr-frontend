@@ -80,7 +80,9 @@ const AssignmentsToGrade = ({
                       student => student.id === assignment.student_id
                     ).name
                   }
-                  secondary={`Status: ${assignment.status}`}
+                  secondary={`Status: ${assignment.status
+                    .split("_")
+                    .join(" ")}`}
                 />
                 {/* <ListItemSecondaryAction>
                     <Button>Due on:</Button>
