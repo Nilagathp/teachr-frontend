@@ -232,10 +232,9 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const styledEditAssignment = withStyles(styles)(EditAssignment);
-export default withRouter(
+export default withStyles(styles)(
   connect(
     mapStateToProps,
     { updateAssignment }
-  )(styledEditAssignment)
+  )(EditAssignment)
 );

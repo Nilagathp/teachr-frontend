@@ -107,10 +107,34 @@ function submitStudentAssignment(studentAssignmentId, answers, courseId, push) {
   };
 }
 
+function gradeStudentAssignment(studentAssignmentId, points, courseId, push) {
+  return function(dispatch) {
+    const token = localStorage.getItem("token");
+    fetch(`http://localhost:3000/student_assignments/${studentAssignmentId}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        points: points,
+        status: "graded"
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(r => r.json())
+      .then(json => {
+        dispatch(getUserFromToken(token));
+        push(`/course/${courseId}/assignment/${json.assignment_id}`);
+      });
+  };
+}
+
 export {
   createAssignment,
   updateAssignment,
   deleteAssignment,
   createStudentAssignment,
-  submitStudentAssignment
+  submitStudentAssignment,
+  gradeStudentAssignment
 };

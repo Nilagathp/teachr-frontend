@@ -136,10 +136,9 @@ class TeacherViewAssignment extends React.Component {
   }
 }
 
-const styledTeacherViewAssignment = withStyles(styles)(TeacherViewAssignment);
-export default withRouter(
+export default withStyles(styles)(
   connect(
     null,
     { deleteAssignment }
-  )(styledTeacherViewAssignment)
+  )(TeacherViewAssignment)
 );

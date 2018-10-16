@@ -212,10 +212,9 @@ const mapStateToProps = state => {
   };
 };
 
-const styledCreateAssignment = withStyles(styles)(CreateAssignment);
-export default withRouter(
+export default withStyles(styles)(
   connect(
     mapStateToProps,
     { createAssignment }
-  )(styledCreateAssignment)
+  )(CreateAssignment)
 );

@@ -123,5 +123,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const styledAssignmentsToGrade = withStyles(styles)(AssignmentsToGrade);
-export default withRouter(connect(mapStateToProps)(styledAssignmentsToGrade));
+export default withStyles(styles)(connect(mapStateToProps)(AssignmentsToGrade));
