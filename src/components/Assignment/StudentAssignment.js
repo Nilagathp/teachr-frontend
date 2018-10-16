@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import StudentAssignmentWorking from "./StudentAssignmentWorking";
+import StudentAssignmentCompleted from "./StudentAssignmentCompleted";
 
 const StudentAssignment = ({ studentAssignment, assignment, course }) => {
   if (studentAssignment) {
@@ -17,7 +18,13 @@ const StudentAssignment = ({ studentAssignment, assignment, course }) => {
         />
       );
     } else {
-      return "render StudentAssignmentCompleted";
+      return (
+        <StudentAssignmentCompleted
+          studentAssignment={studentAssignment}
+          assignment={assignment}
+          course={course}
+        />
+      );
     }
   } else {
     return null;
