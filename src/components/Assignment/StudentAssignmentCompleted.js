@@ -53,7 +53,7 @@ class StudentAssignmentCompleted extends React.Component {
             {studentAssignment.status === "graded" ? (
               <Chip
                 color="primary"
-                label={`grade: ${studentAssignment.points_earned}/${
+                label={`graded: ${studentAssignment.points_earned}/${
                   assignment.points
                 }`}
                 className={classes.question}

@@ -81,12 +81,23 @@ class StudentAssignmentToGrade extends React.Component {
           <div>
             <Typography variant="h4" className={classes.heading}>
               {assignment.name}
-              <Chip
-                color="primary"
-                label={`${studentAssignment.status}`}
-                className={classes.question}
-                variant="outlined"
-              />
+              {studentAssignment.status === "graded" ? (
+                <Chip
+                  color="primary"
+                  label={`graded: ${studentAssignment.points_earned}/${
+                    assignment.points
+                  }`}
+                  className={classes.question}
+                  variant="outlined"
+                />
+              ) : (
+                <Chip
+                  color="primary"
+                  label={`${studentAssignment.status}`}
+                  className={classes.question}
+                  variant="outlined"
+                />
+              )}
             </Typography>
             <Typography variant="h6" className={classes.text}>
               {`${course.name} - ${assignment.category} - ${
@@ -128,29 +139,33 @@ class StudentAssignmentToGrade extends React.Component {
                 />
               </React.Fragment>
             ))}
-            <InputLabel shrink className={classes.points}>{`Points out of ${
-              assignment.points
-            }`}</InputLabel>
-            <TextField
-              value={this.state.points}
-              onChange={this.handleChange("points")}
-              type="number"
-              className={classes.points}
-              InputProps={{
-                inputProps: {
-                  min: 0,
-                  max: 10
-                }
-              }}
-              margin="normal"
-            />
-            <Button
-              color="primary"
-              className={classes.button}
-              onClick={this.handleSubmit}
-            >
-              Submit Grade
-            </Button>
+            {studentAssignment.status === "submitted" ? (
+              <React.Fragment>
+                <InputLabel shrink className={classes.points}>{`Points out of ${
+                  assignment.points
+                }`}</InputLabel>
+                <TextField
+                  value={this.state.points}
+                  onChange={this.handleChange("points")}
+                  type="number"
+                  className={classes.points}
+                  InputProps={{
+                    inputProps: {
+                      min: 0,
+                      max: 10
+                    }
+                  }}
+                  margin="normal"
+                />
+                <Button
+                  color="primary"
+                  className={classes.button}
+                  onClick={this.handleSubmit}
+                >
+                  Submit Grade
+                </Button>
+              </React.Fragment>
+            ) : null}
           </div>
         </Paper>
       );
