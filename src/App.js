@@ -11,6 +11,7 @@ import CreateAssignment from "./components/Assignment/CreateAssignment";
 import EditAssignment from "./components/Assignment/EditAssignment";
 import StudentAssignment from "./components/Assignment/StudentAssignment";
 import AssignmentsToGrade from "./components/Assignment/AssignmentsToGrade";
+import StudentAssignmentToGrade from "./components/Assignment/StudentAssignmentToGrade";
 import { updateUser, getUserFromToken } from "./redux/actions/userActions";
 
 class App extends Component {
@@ -33,6 +34,10 @@ class App extends Component {
           <Route
             path="/course/:id/assignment/:id/student/:id"
             component={StudentAssignment}
+          />
+          <Route
+            path="/course/:id/assignment/:id/grade/student/:id"
+            component={StudentAssignmentToGrade}
           />
           <Route
             path="/course/:id/assignment/:id/grade"

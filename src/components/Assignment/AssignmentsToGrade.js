@@ -69,13 +69,15 @@ const AssignmentsToGrade = ({
                 key={assignment.id}
                 divider
                 button
-                // component={Link}
-                // to={`/course/${course.id}/assignment/${assignment.id}`}
+                component={Link}
+                to={`/course/${course.id}/assignment/${
+                  assignment.assignment_id
+                }/grade/student/${assignment.student_id}`}
               >
                 <ListItemText
                   primary={
                     students.find(
-                      student => student.id == assignment.student_id
+                      student => student.id === assignment.student_id
                     ).name
                   }
                   secondary={`Status: ${assignment.status}`}
