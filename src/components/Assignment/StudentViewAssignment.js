@@ -40,15 +40,27 @@ class StudentViewAssignment extends React.Component {
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
             {studentAssignment ? (
-              <Button
-                color="primary"
-                component={Link}
-                to={`/course/${course.id}/assignment/${assignment.id}/student/${
-                  user.id
-                }`}
-              >
-                Continue Assignment
-              </Button>
+              studentAssignment.status === "in_progress" ? (
+                <Button
+                  color="primary"
+                  component={Link}
+                  to={`/course/${course.id}/assignment/${
+                    assignment.id
+                  }/student/${user.id}`}
+                >
+                  Continue Assignment
+                </Button>
+              ) : (
+                <Button
+                  color="primary"
+                  component={Link}
+                  to={`/course/${course.id}/assignment/${
+                    assignment.id
+                  }/student/${user.id}`}
+                >
+                  View Assignment
+                </Button>
+              )
             ) : (
               <Button
                 className={classes.button}

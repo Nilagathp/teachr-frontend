@@ -11,6 +11,7 @@ import TextField from "@material-ui/core/TextField";
 // import MenuItem from "@material-ui/core/MenuItem";
 
 import { submitStudentAssignment } from "../../redux/actions/assignmentActions";
+import { saveStudentAssignment } from "../../redux/actions/assignmentActions";
 
 const styles = {
   paper: {
@@ -24,8 +25,7 @@ const styles = {
     paddingTop: "20px"
   },
   button: {
-    padding: "20px",
-    marginLeft: "80%"
+    padding: "20px"
   },
   textField: {
     marginLeft: "20px",
@@ -58,6 +58,17 @@ class StudentAssignment extends React.Component {
     this.setState({
       [name]: newAnswers
     });
+  };
+
+  handleSave = event => {
+    const studentAssignmentId = this.props.studentAssignment.id;
+    const answers = this.state.answers;
+    this.props.saveStudentAssignment(
+      studentAssignmentId,
+      answers,
+      this.props.course.id,
+      this.props.history.push
+    );
   };
 
   handleSubmit = event => {
@@ -119,7 +130,18 @@ class StudentAssignment extends React.Component {
                 />
               </React.Fragment>
             ))}
-            <Button color="primary" onClick={this.handleSubmit}>
+            <Button
+              color="primary"
+              className={classes.button}
+              onClick={this.handleSave}
+            >
+              Save and Finish Later
+            </Button>
+            <Button
+              color="primary"
+              className={classes.button}
+              onClick={this.handleSubmit}
+            >
               Submit Assignment
             </Button>
           </div>
@@ -159,6 +181,6 @@ const styledStudentAssignment = withStyles(styles)(StudentAssignment);
 export default withRouter(
   connect(
     mapStateToProps,
-    { submitStudentAssignment }
+    { saveStudentAssignment, submitStudentAssignment }
   )(styledStudentAssignment)
 );
