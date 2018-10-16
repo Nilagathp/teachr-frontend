@@ -17,8 +17,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 
-import { getStudents } from "../../redux/actions/studentsActions";
-
 const styles = {
   card: {
     maxWidth: 345,
@@ -123,7 +121,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { getStudents }
-)(withStyles(styles)(TeacherHome));
+export default connect(mapStateToProps)(withStyles(styles)(TeacherHome));

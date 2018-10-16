@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-// import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Divider from "@material-ui/core/Divider";
 
 const styles = {
@@ -81,9 +81,17 @@ const TeacherCourse = ({ course, assignments, sections, classes }) => {
                       to={`/course/${course.id}/assignment/${assignment.id}`}
                     >
                       <ListItemText primary={assignment.name} />
-                      {/* <ListItemSecondaryAction>
-                        <Button>Due on:</Button>
-                      </ListItemSecondaryAction> */}
+                      <ListItemSecondaryAction>
+                        <Button
+                          color="primary"
+                          component={Link}
+                          to={`/course/${assignment.course_id}/assignment/${
+                            assignment.id
+                          }/grade`}
+                        >
+                          Grade
+                        </Button>
+                      </ListItemSecondaryAction>
                     </ListItem>
                   ))
                 : null}
