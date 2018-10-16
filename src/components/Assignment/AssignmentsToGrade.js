@@ -22,16 +22,23 @@ const styles = {
     maxWidth: 400
   },
   heading: {
-    padding: "20px"
+    marginLeft: "20px",
+    marginTop: "20px",
+    paddingTop: "20px"
   },
   button: {
     paddingLeft: "20px"
+  },
+  text: {
+    marginLeft: "20px",
+    paddingBottom: "10px"
   }
 };
 
 const AssignmentsToGrade = ({
   user,
   assignment,
+  course,
   studentAssignments,
   students,
   classes
@@ -40,6 +47,11 @@ const AssignmentsToGrade = ({
     <Paper className={classes.paper}>
       <Typography variant="h4" className={classes.heading}>
         {assignment.name}
+      </Typography>
+      <Typography variant="h6" className={classes.text}>
+        {`${course.name} - ${assignment.category} - ${
+          assignment.points
+        } points`}
       </Typography>
       <Divider />
       <List>
@@ -74,21 +86,28 @@ const AssignmentsToGrade = ({
 const mapStateToProps = (state, ownProps) => {
   let assignment;
   let studentAssignments;
+  let course;
   if (state.user && state.user.person.teacher) {
     const assignmentId = parseInt(ownProps.match.url.split("/")[4]);
     assignment = state.user.person.teacher.assignments.find(
       assignment => assignment.id === assignmentId
     );
-    studentAssignments = state.students
-      .map(student => student.student_assignments)
-      .flat()
-      .filter(
-        studentAssignment => studentAssignment.assignment_id === assignmentId
-      );
+    course = state.user.person.teacher.courses.find(
+      course => course.id === assignment.course_id
+    );
+    if (state.students) {
+      studentAssignments = state.students
+        .map(student => student.student_assignments)
+        .flat()
+        .filter(
+          studentAssignment => studentAssignment.assignment_id === assignmentId
+        );
+    }
   }
   return {
     user: state.user,
     assignment: assignment,
+    course: course,
     studentAssignments: studentAssignments,
     students: state.students
   };
