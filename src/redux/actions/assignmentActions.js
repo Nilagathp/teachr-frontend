@@ -113,7 +113,7 @@ function gradeStudentAssignment(studentAssignmentId, points, courseId, push) {
     fetch(`http://localhost:3000/student_assignments/${studentAssignmentId}`, {
       method: "PATCH",
       body: JSON.stringify({
-        points: points,
+        points_earned: points,
         status: "graded"
       }),
       headers: {
@@ -125,7 +125,7 @@ function gradeStudentAssignment(studentAssignmentId, points, courseId, push) {
       .then(r => r.json())
       .then(json => {
         dispatch(getUserFromToken(token));
-        push(`/course/${courseId}/assignment/${json.assignment_id}`);
+        push(`/course/${courseId}/assignment/${json.assignment_id}/grade`);
       });
   };
 }

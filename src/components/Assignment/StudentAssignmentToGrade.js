@@ -1,5 +1,4 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -8,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
 
 import { gradeStudentAssignment } from "../../redux/actions/assignmentActions";
 
@@ -23,8 +23,12 @@ const styles = {
     paddingTop: "20px"
   },
   button: {
-    padding: "20px",
-    marginLeft: "80%"
+    marginLeft: "80%",
+    paddingRight: "20px"
+  },
+  points: {
+    marginLeft: "80%",
+    paddingRight: "20px"
   },
   textField: {
     marginLeft: "20px",
@@ -52,19 +56,17 @@ class StudentAssignmentToGrade extends React.Component {
   };
 
   handleChange = name => event => {
-    let newAnswers = this.state.answers;
-    newAnswers[event.target.id] = event.target.value;
     this.setState({
-      [name]: newAnswers
+      [name]: event.target.value
     });
   };
 
   handleSubmit = event => {
     const studentAssignmentId = this.props.studentAssignment.id;
-    const answers = this.state.answers;
-    this.props.submitStudentAssignment(
+    const points = this.state.points;
+    this.props.gradeStudentAssignment(
       studentAssignmentId,
-      answers,
+      points,
       this.props.course.id,
       this.props.history.push
     );
@@ -119,8 +121,28 @@ class StudentAssignmentToGrade extends React.Component {
                 />
               </React.Fragment>
             ))}
-            <Button color="primary" onClick={this.handleSubmit}>
-              Grade Assignment
+            <InputLabel shrink className={classes.points}>{`Points out of ${
+              assignment.points
+            }`}</InputLabel>
+            <TextField
+              value={this.state.points}
+              onChange={this.handleChange("points")}
+              type="number"
+              className={classes.points}
+              InputProps={{
+                inputProps: {
+                  min: 0,
+                  max: 10
+                }
+              }}
+              margin="normal"
+            />
+            <Button
+              color="primary"
+              className={classes.button}
+              onClick={this.handleSubmit}
+            >
+              Submit Grade
             </Button>
           </div>
         </Paper>
