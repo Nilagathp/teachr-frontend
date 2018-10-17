@@ -10,6 +10,10 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
 
 import AssignmentList from "../Assignment/AssignmentList";
 
@@ -24,6 +28,11 @@ const styles = {
   heading: {
     paddingTop: "20px",
     paddingLeft: "20px"
+  },
+  formControl: {
+    marginLeft: "20px",
+    marginBottom: "10px",
+    minWidth: 120
   }
 };
 
@@ -80,12 +89,43 @@ class StudentHome extends React.Component {
             <Paper className={classes.paper}>
               <Typography variant="h4" className={classes.heading}>
                 Assignments
+                <FormControl className={classes.formControl}>
+                  <InputLabel shrink>Filter by course:</InputLabel>
+                  <Select
+                    value={this.state.course}
+                    onChange={this.handleChange}
+                    inputProps={{ name: "course" }}
+                  >
+                    <MenuItem value="" />
+                    {student.courses.map(option => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl className={classes.formControl}>
+                  <InputLabel shrink>Filter by category:</InputLabel>
+                  <Select
+                    value={this.state.category}
+                    onChange={this.handleChange}
+                    inputProps={{ name: "category" }}
+                  >
+                    <MenuItem value="" />
+                    <MenuItem key={0} value={"CW"}>
+                      CW
+                    </MenuItem>
+                    <MenuItem key={1} value={"HW"}>
+                      HW
+                    </MenuItem>
+                    <MenuItem key={2} value={"TQP"}>
+                      TQP
+                    </MenuItem>
+                  </Select>
+                </FormControl>
               </Typography>
               <Divider />
-              <AssignmentList
-                assignments={student.assignments}
-                courses={courses}
-              />
+              <AssignmentList assignments={assignments} courses={courses} />
             </Paper>
           </Grid>
         </Grid>
