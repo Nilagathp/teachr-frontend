@@ -53,6 +53,12 @@ class TeacherHome extends React.Component {
 
   render() {
     const { teacher, courses, students, classes } = this.props;
+    let assignments;
+    this.state.course
+      ? (assignments = teacher.assignments.filter(
+          assignment => assignment.course_id === this.state.course
+        ))
+      : (assignments = teacher.assignments);
     return (
       <React.Fragment>
         <Grid container spacing={24}>
@@ -110,10 +116,7 @@ class TeacherHome extends React.Component {
                 </Typography>
               </div>
               <Divider />
-              <AssignmentList
-                assignments={teacher.assignments}
-                courses={courses}
-              />
+              <AssignmentList assignments={assignments} courses={courses} />
             </Paper>
           </Grid>
         </Grid>
