@@ -13,6 +13,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 // import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Divider from "@material-ui/core/Divider";
 
+import AssignmentList from "../Assignment/AssignmentList";
+
 const styles = {
   paper: {
     margin: "20px"
@@ -44,29 +46,7 @@ const StudentCourse = ({ course, assignments, sections, classes }) => {
           Assignments
         </Typography>
         <Divider />
-        <List>
-          {assignments
-            ? assignments.map(assignment => (
-                <ListItem
-                  key={assignment.id}
-                  divider
-                  button
-                  component={Link}
-                  to={`/course/${course.id}/assignment/${assignment.id}`}
-                >
-                  <ListItemText
-                    primary={assignment.name}
-                    secondary={`${assignment.category} - ${
-                      assignment.points
-                    } points`}
-                  />
-                  {/* <ListItemSecondaryAction>
-                    <Button>Due on:</Button>
-                  </ListItemSecondaryAction> */}
-                </ListItem>
-              ))
-            : null}
-        </List>
+        <AssignmentList assignments={assignments} />
       </Paper>
     </React.Fragment>
   );

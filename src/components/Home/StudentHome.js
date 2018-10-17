@@ -82,7 +82,10 @@ class StudentHome extends React.Component {
                 Assignments
               </Typography>
               <Divider />
-              <AssignmentList assignments={student.assignments} />
+              <AssignmentList
+                assignments={student.assignments}
+                courses={courses}
+              />
             </Paper>
           </Grid>
         </Grid>
