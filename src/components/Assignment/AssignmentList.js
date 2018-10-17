@@ -18,12 +18,19 @@ const AssignmentList = ({ assignments, courses }) => {
           component={Link}
           to={`/course/${assignment.course_id}/assignment/${assignment.id}`}
         >
-          <ListItemText
-            primary={assignment.name}
-            secondary={`
-            ${courses[assignment.course_id]} - ${assignment.category}`}
-          />
-          {/* <p>Student Assignments</p> */}
+          {courses ? (
+            <ListItemText
+              primary={assignment.name}
+              secondary={`
+              ${courses[assignment.course_id]} - ${assignment.category}`}
+            />
+          ) : (
+            <ListItemText
+              primary={assignment.name}
+              secondary={`${assignment.category} - ${assignment.points} points`}
+            />
+          )}
+
           <ListItemSecondaryAction>
             <Button
               color="primary"
