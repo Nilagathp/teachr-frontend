@@ -12,6 +12,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Divider from "@material-ui/core/Divider";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
 
 import AssignmentList from "../Assignment/AssignmentList";
 
@@ -28,61 +32,102 @@ const styles = {
   },
   button: {
     paddingLeft: "20px"
+  },
+  formControl: {
+    marginLeft: "20px",
+    marginBottom: "10px",
+    minWidth: 120
   }
 };
 
-const TeacherCourse = ({ course, assignments, sections, classes }) => {
-  return (
-    <React.Fragment>
-      <Typography variant="h4" className={classes.heading}>
-        {course.name}
-        <Button
-          className={classes.button}
-          color="primary"
-          component={Link}
-          to={`/course/${course.id}/assignment/create`}
-        >
-          Create Assignment
-        </Button>
-        {/* <Button className={classes.button} color="primary">
+class TeacherCourse extends React.Component {
+  state = {
+    category: ""
+  };
+
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  render() {
+    const { course, sections, classes } = this.props;
+    let assignments = this.props.assignments;
+    this.state.category
+      ? (assignments = assignments.filter(
+          assignment => assignment.category === this.state.category
+        ))
+      : (assignments = assignments);
+    return (
+      <React.Fragment>
+        <Typography variant="h4" className={classes.heading}>
+          {course.name}
+          <Button
+            className={classes.button}
+            color="primary"
+            component={Link}
+            to={`/course/${course.id}/assignment/create`}
+          >
+            Create Assignment
+          </Button>
+          {/* <Button className={classes.button} color="primary">
           Send message
         </Button> */}
-      </Typography>
-      <Grid container spacing={24}>
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>
-            <Typography variant="h4" className={classes.heading}>
-              Sections
-            </Typography>
-            <Divider />
-            <List>
-              {sections
-                ? sections.map(section => (
-                    <ListItem key={section.id} divider>
-                      <ListItemText primary={`Period ${section.period}`} />
-                    </ListItem>
-                  ))
-                : null}
-            </List>
-          </Paper>
+        </Typography>
+        <Grid container spacing={24}>
+          <Grid item xs={4}>
+            <Paper className={classes.paper}>
+              <Typography variant="h4" className={classes.heading}>
+                Sections
+              </Typography>
+              <Divider />
+              <List>
+                {sections
+                  ? sections.map(section => (
+                      <ListItem key={section.id} divider>
+                        <ListItemText primary={`Period ${section.period}`} />
+                      </ListItem>
+                    ))
+                  : null}
+              </List>
+            </Paper>
+          </Grid>
+          <Grid item xs={8}>
+            <Paper className={classes.paper}>
+              <Typography variant="h4" className={classes.heading}>
+                Assignments
+                <FormControl className={classes.formControl}>
+                  <InputLabel shrink>Filter by category:</InputLabel>
+                  <Select
+                    value={this.state.category}
+                    onChange={this.handleChange}
+                    inputProps={{ name: "category" }}
+                  >
+                    <MenuItem value="" />
+                    <MenuItem key={0} value={"CW"}>
+                      CW
+                    </MenuItem>
+                    <MenuItem key={1} value={"HW"}>
+                      HW
+                    </MenuItem>
+                    <MenuItem key={2} value={"TQP"}>
+                      TQP
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Typography>
+              <Divider />
+              <List>
+                {assignments ? (
+                  <AssignmentList assignments={assignments} />
+                ) : null}
+              </List>
+            </Paper>
+          </Grid>
         </Grid>
-        <Grid item xs={8}>
-          <Paper className={classes.paper}>
-            <Typography variant="h4" className={classes.heading}>
-              Assignments
-            </Typography>
-            <Divider />
-            <List>
-              {assignments ? (
-                <AssignmentList assignments={assignments} />
-              ) : null}
-            </List>
-          </Paper>
-        </Grid>
-      </Grid>
-    </React.Fragment>
-  );
-};
+      </React.Fragment>
+    );
+  }
+}
 
 const mapStateToProps = (state, ownProps) => {
   let courses = state.user.person.teacher.courses;
