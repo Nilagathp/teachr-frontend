@@ -47,6 +47,13 @@ const AssignmentsToGrade = ({
       <Typography variant="h4" className={classes.heading}>
         {assignment.name}
         <Button
+          color="primary"
+          component={Link}
+          to={`/course/${assignment.course_id}/assignment/${assignment.id}`}
+        >
+          Back
+        </Button>
+        <Button
           className={classes.button}
           color="primary"
           component={Link}
