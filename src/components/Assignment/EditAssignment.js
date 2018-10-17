@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -19,7 +20,9 @@ const styles = {
     flexWrap: "wrap"
   },
   heading: {
-    padding: "20px"
+    marginLeft: "20px",
+    marginTop: "20px",
+    paddingTop: "20px"
   },
   button: {
     padding: "20px",
@@ -103,11 +106,18 @@ class EditAssignment extends React.Component {
   };
 
   render() {
-    const { courses, classes } = this.props;
+    const { assignment, courses, classes } = this.props;
     return courses ? (
       <Paper className={classes.paper}>
         <Typography variant="h4" className={classes.heading}>
           Edit Assignment
+          <Button
+            color="primary"
+            component={Link}
+            to={`/course/${assignment.course_id}/assignment/${assignment.id}`}
+          >
+            Cancel
+          </Button>
         </Typography>
         <Divider />
         <form onSubmit={this.handleSubmit}>
@@ -204,7 +214,7 @@ class EditAssignment extends React.Component {
               }}
             />
           ))}
-          <Button className={classes.button} type="submit">
+          <Button color="primary" className={classes.button} type="submit">
             Update Assignment
           </Button>
         </form>

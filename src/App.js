@@ -9,9 +9,9 @@ import Course from "./components/Course/Course";
 import Assignment from "./components/Assignment/Assignment";
 import CreateAssignment from "./components/Assignment/CreateAssignment";
 import EditAssignment from "./components/Assignment/EditAssignment";
-import StudentAssignment from "./components/Assignment/StudentAssignment";
+import StudentAssignment from "./components/StudentAssignment/StudentAssignment";
 import AssignmentsToGrade from "./components/Assignment/AssignmentsToGrade";
-import StudentAssignmentToGrade from "./components/Assignment/StudentAssignmentToGrade";
+import StudentAssignmentToGrade from "./components/StudentAssignment/StudentAssignmentToGrade";
 import { updateUser, getUserFromToken } from "./redux/actions/userActions";
 
 class App extends Component {
