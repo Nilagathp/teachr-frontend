@@ -11,11 +11,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -44,7 +40,8 @@ const styles = {
 
 class TeacherHome extends React.Component {
   state = {
-    course: ""
+    course: "",
+    category: ""
   };
 
   handleChange = event => {
@@ -53,12 +50,17 @@ class TeacherHome extends React.Component {
 
   render() {
     const { teacher, courses, students, classes } = this.props;
-    let assignments;
+    let assignments = teacher.assignments;
     this.state.course
-      ? (assignments = teacher.assignments.filter(
+      ? (assignments = assignments.filter(
           assignment => assignment.course_id === this.state.course
         ))
-      : (assignments = teacher.assignments);
+      : (assignments = assignments);
+    this.state.category
+      ? (assignments = assignments.filter(
+          assignment => assignment.category === this.state.category
+        ))
+      : (assignments = assignments);
     return (
       <React.Fragment>
         <Grid container spacing={24}>
@@ -111,6 +113,25 @@ class TeacherHome extends React.Component {
                           {option.name}
                         </MenuItem>
                       ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel shrink>Filter by category:</InputLabel>
+                    <Select
+                      value={this.state.category}
+                      onChange={this.handleChange}
+                      inputProps={{ name: "category" }}
+                    >
+                      <MenuItem value="" />
+                      <MenuItem key={0} value={"CW"}>
+                        CW
+                      </MenuItem>
+                      <MenuItem key={1} value={"HW"}>
+                        HW
+                      </MenuItem>
+                      <MenuItem key={2} value={"TQP"}>
+                        TQP
+                      </MenuItem>
                     </Select>
                   </FormControl>
                 </Typography>
