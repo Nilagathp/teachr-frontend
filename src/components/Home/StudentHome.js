@@ -14,6 +14,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import Button from "@material-ui/core/Button";
 
 import AssignmentList from "../Assignment/AssignmentList";
 
@@ -44,6 +45,10 @@ class StudentHome extends React.Component {
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleClick = event => {
+    this.setState({ course: "", category: "" });
   };
 
   render() {
@@ -123,6 +128,9 @@ class StudentHome extends React.Component {
                     </MenuItem>
                   </Select>
                 </FormControl>
+                <Button size="small" color="primary" onClick={this.handleClick}>
+                  Clear Filter
+                </Button>
               </Typography>
               <Divider />
               <AssignmentList assignments={assignments} courses={courses} />

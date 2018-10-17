@@ -48,6 +48,10 @@ class TeacherCourse extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleClick = event => {
+    this.setState({ course: "", category: "" });
+  };
+
   render() {
     const { teacher, course, sections, classes } = this.props;
     let assignments = this.props.assignments;
@@ -110,12 +114,13 @@ class TeacherCourse extends React.Component {
                     </MenuItem>
                   </Select>
                 </FormControl>
+                <Button size="small" color="primary" onClick={this.handleClick}>
+                  Clear Filter
+                </Button>
               </Typography>
               <Divider />
               <List>
-                {assignments ? (
-                  <AssignmentList teacher={teacher} assignments={assignments} />
-                ) : null}
+                <AssignmentList teacher={teacher} assignments={assignments} />
               </List>
             </Paper>
           </Grid>

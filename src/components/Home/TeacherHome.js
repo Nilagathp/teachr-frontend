@@ -48,6 +48,10 @@ class TeacherHome extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleClick = event => {
+    this.setState({ course: "", category: "" });
+  };
+
   render() {
     const { teacher, courses, students, classes } = this.props;
     let assignments = teacher.assignments;
@@ -88,9 +92,6 @@ class TeacherHome extends React.Component {
                   >
                     Create Assignment
                   </Button>
-                  {/* <Button size="small" color="primary">
-                  Send Message
-                </Button> */}
                 </CardActions>
               </Card>
             ))}
@@ -134,6 +135,13 @@ class TeacherHome extends React.Component {
                       </MenuItem>
                     </Select>
                   </FormControl>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={this.handleClick}
+                  >
+                    Clear Filter
+                  </Button>
                 </Typography>
               </div>
               <Divider />

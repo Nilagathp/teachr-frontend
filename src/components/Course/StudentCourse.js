@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 // import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-// import Button from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -49,6 +49,10 @@ class StudentCourse extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleClick = event => {
+    this.setState({ course: "", category: "" });
+  };
+
   render() {
     const { course, classes } = this.props;
     let assignments = this.props.assignments;
@@ -88,6 +92,9 @@ class StudentCourse extends React.Component {
                 </MenuItem>
               </Select>
             </FormControl>
+            <Button size="small" color="primary" onClick={this.handleClick}>
+              Clear Filter
+            </Button>
           </Typography>
           <Divider />
           <AssignmentList assignments={assignments} />
