@@ -7,10 +7,10 @@ import NavBar from "./components/Navbar";
 import Home from "./components/Home/Home";
 import Course from "./components/Course/Course";
 import Assignment from "./components/Assignment/Assignment";
-import CreateAssignment from "./components/Assignment/CreateAssignment";
-import EditAssignment from "./components/Assignment/EditAssignment";
+import CreateAssignment from "./components/Assignment/Teacher/CreateAssignment";
+import EditAssignment from "./components/Assignment/Teacher/EditAssignment";
 import StudentAssignment from "./components/StudentAssignment/StudentAssignment";
-import AssignmentsToGrade from "./components/Assignment/AssignmentsToGrade";
+import AssignmentsToGrade from "./components/Assignment/Teacher/AssignmentsToGrade";
 import StudentAssignmentToGrade from "./components/StudentAssignment/StudentAssignmentToGrade";
 import { updateUser, getUserFromToken } from "./redux/actions/userActions";
 

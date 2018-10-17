@@ -9,7 +9,7 @@ import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import { createAssignment } from "../../redux/actions/assignmentActions";
+import { createAssignment } from "../../../redux/actions/assignmentActions";
 
 const styles = {
   paper: {

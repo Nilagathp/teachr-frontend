@@ -10,7 +10,6 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Divider from "@material-ui/core/Divider";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -52,11 +51,11 @@ class TeacherCourse extends React.Component {
   render() {
     const { teacher, course, sections, classes } = this.props;
     let assignments = this.props.assignments;
-    this.state.category
-      ? (assignments = assignments.filter(
-          assignment => assignment.category === this.state.category
-        ))
-      : (assignments = assignments);
+    if (this.state.category) {
+      assignments = assignments.filter(
+        assignment => assignment.category === this.state.category
+      );
+    }
     return (
       <React.Fragment>
         <Typography variant="h4" className={classes.heading}>
@@ -69,9 +68,6 @@ class TeacherCourse extends React.Component {
           >
             Create Assignment
           </Button>
-          {/* <Button className={classes.button} color="primary">
-          Send message
-        </Button> */}
         </Typography>
         <Grid container spacing={24}>
           <Grid item xs={4}>

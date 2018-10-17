@@ -12,7 +12,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import { deleteAssignment } from "../../redux/actions/assignmentActions";
+import { deleteAssignment } from "../../../redux/actions/assignmentActions";
 
 const styles = {
   paper: {

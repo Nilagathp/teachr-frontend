@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import TeacherViewAssignment from "./TeacherViewAssignment";
-import StudentViewAssignment from "./StudentViewAssignment";
+import TeacherViewAssignment from "./Teacher/TeacherViewAssignment";
+import StudentViewAssignment from "./Student/StudentViewAssignment";
 
 const Assignment = ({ user, course, assignment, studentAssignment }) => {
   if (user) {
