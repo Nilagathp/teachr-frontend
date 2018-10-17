@@ -80,7 +80,12 @@ const TeacherCourse = ({ course, assignments, sections, classes }) => {
                       component={Link}
                       to={`/course/${course.id}/assignment/${assignment.id}`}
                     >
-                      <ListItemText primary={assignment.name} />
+                      <ListItemText
+                        primary={assignment.name}
+                        secondary={`${assignment.category} - ${
+                          assignment.points
+                        } points`}
+                      />
                       <ListItemSecondaryAction>
                         <Button
                           color="primary"
