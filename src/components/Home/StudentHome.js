@@ -9,12 +9,9 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-// import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-// import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+
+import AssignmentList from "../Assignment/AssignmentList";
 
 const styles = {
   card: {
@@ -30,68 +27,68 @@ const styles = {
   }
 };
 
-const StudentHome = ({ student, courses, classes }) => {
-  return (
-    <React.Fragment>
-      <Grid container spacing={24}>
-        <Grid item xs={4}>
-          {student.courses.map(course => (
-            <Card key={course.id} className={classes.card}>
-              <CardActionArea component={Link} to={`/course/${course.id}`}>
-                <CardContent>
-                  <Typography
-                    variant="h4"
-                    component="h2"
-                    className={classes.title}
-                    gutterBottom
-                  >
-                    {course.name}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                {/* <Button size="small" color="primary">
+class StudentHome extends React.Component {
+  state = {
+    course: "",
+    category: ""
+  };
+
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  render() {
+    const { student, courses, classes } = this.props;
+    let assignments = student.assignments;
+    this.state.course
+      ? (assignments = assignments.filter(
+          assignment => assignment.course_id === this.state.course
+        ))
+      : (assignments = assignments);
+    this.state.category
+      ? (assignments = assignments.filter(
+          assignment => assignment.category === this.state.category
+        ))
+      : (assignments = assignments);
+    return (
+      <React.Fragment>
+        <Grid container spacing={24}>
+          <Grid item xs={4}>
+            {student.courses.map(course => (
+              <Card key={course.id} className={classes.card}>
+                <CardActionArea component={Link} to={`/course/${course.id}`}>
+                  <CardContent>
+                    <Typography
+                      variant="h4"
+                      component="h2"
+                      className={classes.title}
+                      gutterBottom
+                    >
+                      {course.name}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  {/* <Button size="small" color="primary">
                   Send Message
                 </Button> */}
-              </CardActions>
-            </Card>
-          ))}
+                </CardActions>
+              </Card>
+            ))}
+          </Grid>
+          <Grid item xs={8}>
+            <Paper className={classes.paper}>
+              <Typography variant="h4" className={classes.heading}>
+                Assignments
+              </Typography>
+              <Divider />
+              <AssignmentList assignments={student.assignments} />
+            </Paper>
+          </Grid>
         </Grid>
-        <Grid item xs={8}>
-          <Paper className={classes.paper}>
-            <Typography variant="h4" className={classes.heading}>
-              Assignments
-            </Typography>
-            <Divider />
-            <List>
-              {student.assignments.map(assignment => (
-                <ListItem
-                  key={assignment.id}
-                  divider
-                  button
-                  component={Link}
-                  to={`/course/${assignment.course_id}/assignment/${
-                    assignment.id
-                  }`}
-                >
-                  <ListItemText
-                    primary={assignment.name}
-                    secondary={`
-                      ${courses[assignment.course_id]} - ${
-                      assignment.category
-                    }`}
-                  />
-                  {/* <ListItemSecondaryAction>
-                    <Button>Due on:</Button>
-                  </ListItemSecondaryAction> */}
-                </ListItem>
-              ))}
-            </List>
-          </Paper>
-        </Grid>
-      </Grid>
-    </React.Fragment>
-  );
-};
+      </React.Fragment>
+    );
+  }
+}
 
 export default withStyles(styles)(StudentHome);

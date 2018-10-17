@@ -137,7 +137,11 @@ class TeacherHome extends React.Component {
                 </Typography>
               </div>
               <Divider />
-              <AssignmentList assignments={assignments} courses={courses} />
+              <AssignmentList
+                teacher={teacher}
+                assignments={assignments}
+                courses={courses}
+              />
             </Paper>
           </Grid>
         </Grid>

@@ -50,7 +50,7 @@ class TeacherCourse extends React.Component {
   };
 
   render() {
-    const { course, sections, classes } = this.props;
+    const { teacher, course, sections, classes } = this.props;
     let assignments = this.props.assignments;
     this.state.category
       ? (assignments = assignments.filter(
@@ -118,7 +118,7 @@ class TeacherCourse extends React.Component {
               <Divider />
               <List>
                 {assignments ? (
-                  <AssignmentList assignments={assignments} />
+                  <AssignmentList teacher={teacher} assignments={assignments} />
                 ) : null}
               </List>
             </Paper>
@@ -135,6 +135,7 @@ const mapStateToProps = (state, ownProps) => {
   let sections = state.user.person.teacher.sections;
   let courseId = parseInt(ownProps.match.params.id);
   return {
+    teacher: state.user.person.teacher,
     course: courses.find(c => c.id === courseId),
     assignments: assignments.filter(a => a.course_id === courseId),
     sections: sections.filter(s => s.course_id === courseId)
