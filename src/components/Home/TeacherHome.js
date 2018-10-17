@@ -21,6 +21,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 
+import AssignmentList from "../Assignment/AssignmentList";
+
 const styles = {
   card: {
     maxWidth: 345,
@@ -108,39 +110,10 @@ class TeacherHome extends React.Component {
                 </Typography>
               </div>
               <Divider />
-              <List>
-                {teacher.assignments.map(assignment => (
-                  <ListItem
-                    key={assignment.id}
-                    divider
-                    button
-                    component={Link}
-                    to={`/course/${assignment.course_id}/assignment/${
-                      assignment.id
-                    }`}
-                  >
-                    <ListItemText
-                      primary={assignment.name}
-                      secondary={`
-                      ${courses[assignment.course_id]} - ${
-                        assignment.category
-                      }`}
-                    />
-                    {/* <p>Student Assignments</p> */}
-                    <ListItemSecondaryAction>
-                      <Button
-                        color="primary"
-                        component={Link}
-                        to={`/course/${assignment.course_id}/assignment/${
-                          assignment.id
-                        }/grade`}
-                      >
-                        Grade
-                      </Button>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                ))}
-              </List>
+              <AssignmentList
+                assignments={teacher.assignments}
+                courses={courses}
+              />
             </Paper>
           </Grid>
         </Grid>
