@@ -27,6 +27,11 @@ const styles = {
   textField: {
     marginLeft: "20px",
     marginTop: "20px"
+  },
+  textFieldWide: {
+    marginLeft: "20px",
+    marginTop: "20px",
+    width: "95%"
   }
 };
 
@@ -76,17 +81,128 @@ class CreateAssignment extends React.Component {
     this.setState({ open: false, contentInputs: newContentInputs });
   };
 
+  renderContentInputs() {
+    return this.state.contentInputs.map((input, index) => {
+      switch (input) {
+        case "Text":
+          return (
+            <div key={`item${index}`}>
+              <Typography style={{ marginTop: "20px", marginLeft: "20px" }}>
+                {input}
+              </Typography>
+              <TextField
+                multiline
+                rows="4"
+                variant="outlined"
+                id={`item${index + 1}`}
+                value={this.state.content[index]}
+                onChange={this.handleChangeContent("content")}
+                style={{ marginTop: "10px", marginLeft: "20px", width: "95%" }}
+              />
+            </div>
+          );
+        case "Multiple Choice":
+          return (
+            <div key={`item${index}`}>
+              <Typography
+                style={{
+                  marginTop: "20px",
+                  marginLeft: "20px"
+                }}
+              >
+                {input}
+              </Typography>
+              <TextField
+                label="question"
+                variant="outlined"
+                id={`item${index + 1}`}
+                value={this.state.content[index]}
+                onChange={this.handleChangeContent("content")}
+                style={{ marginTop: "10px", marginLeft: "20px", width: "95%" }}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+              <TextField
+                label="correct answer"
+                variant="outlined"
+                id={`item${index + 1}`}
+                value={this.state.content[index]}
+                onChange={this.handleChangeContent("correctAnswer")}
+                style={{ marginTop: "20px", marginLeft: "40px" }}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+              <TextField
+                label="incorrect answer"
+                variant="outlined"
+                id={`item${index + 1}`}
+                value={this.state.content[index]}
+                onChange={this.handleChangeContent("incorrectAnswer")}
+                style={{ marginTop: "20px", marginLeft: "10px" }}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+              <TextField
+                label="incorrect answer"
+                variant="outlined"
+                id={`item${index + 1}`}
+                value={this.state.content[index]}
+                onChange={this.handleChangeContent("incorrectAnswer")}
+                style={{ marginTop: "20px", marginLeft: "10px" }}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+              <TextField
+                label="incorrect answer"
+                variant="outlined"
+                id={`item${index + 1}`}
+                value={this.state.content[index]}
+                onChange={this.handleChangeContent("incorrectAnswer")}
+                style={{ marginTop: "20px", marginLeft: "10px" }}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </div>
+          );
+        default:
+          return (
+            <div key={`item${index}`}>
+              <Typography style={{ marginTop: "20px", marginLeft: "20px" }}>
+                {input}
+              </Typography>
+              <TextField
+                variant="outlined"
+                label="question"
+                id={`item${index + 1}`}
+                value={this.state.content[index]}
+                onChange={this.handleChangeContent("content")}
+                style={{ marginTop: "10px", marginLeft: "20px", width: "95%" }}
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </div>
+          );
+      }
+    });
+  }
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
     });
   };
 
-  handleChangeQuestions = name => event => {
-    let newQuestions = this.state.questions;
-    newQuestions[event.target.id] = event.target.value;
+  handleChangeContent = name => event => {
+    let newContent = this.state.content;
+    newContent[event.target.id] = event.target.value;
     this.setState({
-      [name]: newQuestions
+      [name]: newContent
     });
   };
 
@@ -167,16 +283,16 @@ class CreateAssignment extends React.Component {
           />
           <TextField
             multiline
-            fullWidth
             label="Directions"
             value={this.state.directions}
             onChange={this.handleChange("directions")}
-            className={classes.textField}
+            className={classes.textFieldWide}
             margin="normal"
             InputLabelProps={{
               shrink: true
             }}
           />
+          {this.renderContentInputs()}
           <Button color="primary" onClick={this.handleClickOpen}>
             Add Content
           </Button>

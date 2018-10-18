@@ -16,7 +16,7 @@ class ContentTypeDialog extends React.Component {
 
   render() {
     const { onClose, selectedValue, ...other } = this.props;
-    const types = ["text", "short answer", "multiple choice", "essay"];
+    const types = ["Text", "Short Answer", "Multiple Choice", "Essay"];
     return (
       <Dialog onClose={this.handleClose} {...other}>
         <DialogTitle>Select content type</DialogTitle>
