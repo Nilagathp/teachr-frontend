@@ -10,6 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import { createAssignment } from "../../../redux/actions/assignmentActions";
+import ContentTypeDialog from "./ContentTypeDialog";
 
 const styles = {
   paper: {
@@ -51,8 +52,9 @@ class CreateAssignment extends React.Component {
     points: 10,
     category: 0,
     directions: "",
-    content: "",
-    questions: ["", "", ""]
+    content: {},
+    open: false,
+    selectedValue: ""
   };
 
   componentDidMount() {
@@ -61,6 +63,16 @@ class CreateAssignment extends React.Component {
       courseId: courseId
     });
   }
+
+  handleClickOpen = () => {
+    this.setState({
+      open: true
+    });
+  };
+
+  handleClose = value => {
+    this.setState({ selectedValue: value, open: false });
+  };
 
   handleChange = name => event => {
     this.setState({
@@ -164,35 +176,15 @@ class CreateAssignment extends React.Component {
               shrink: true
             }}
           />
-          <TextField
-            multiline
-            fullWidth
-            label="Content"
-            value={this.state.content}
-            onChange={this.handleChange("content")}
-            className={classes.textField}
-            margin="normal"
-            InputLabelProps={{
-              shrink: true
-            }}
+          <Button className={classes.button} onClick={this.handleClickOpen}>
+            Add Content
+          </Button>
+          <ContentTypeDialog
+            selectedValue={this.state.selectedValue}
+            open={this.state.open}
+            onClose={this.handleClose}
           />
-          {this.state.questions.map((question, index) => (
-            <TextField
-              multiline
-              fullWidth
-              key={index}
-              id={`${index}`}
-              label={`Question ${index + 1}`}
-              value={question}
-              onChange={this.handleChangeQuestions("questions")}
-              className={classes.textField}
-              margin="normal"
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-          ))}
-          <Button className={classes.button} type="submit">
+          <Button className={classes.button} color="primary" type="submit">
             Create Assignment
           </Button>
         </form>
