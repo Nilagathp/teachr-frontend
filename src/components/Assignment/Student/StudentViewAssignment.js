@@ -47,7 +47,7 @@ class StudentViewAssignment extends React.Component {
                   component={Link}
                   to={`/course/${course.id}/assignment/${
                     assignment.id
-                  }/student/${user.id}`}
+                  }/student/${user.person.student.id}`}
                 >
                   Continue Assignment
                 </Button>
@@ -57,7 +57,7 @@ class StudentViewAssignment extends React.Component {
                   component={Link}
                   to={`/course/${course.id}/assignment/${
                     assignment.id
-                  }/student/${user.id}`}
+                  }/student/${user.person.student.id}`}
                 >
                   View Assignment
                 </Button>
