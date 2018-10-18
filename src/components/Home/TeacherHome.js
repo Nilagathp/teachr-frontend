@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -53,18 +53,18 @@ class TeacherHome extends React.Component {
   };
 
   render() {
-    const { teacher, courses, students, classes } = this.props;
+    const { teacher, courses, classes } = this.props;
     let assignments = teacher.assignments;
-    this.state.course
-      ? (assignments = assignments.filter(
-          assignment => assignment.course_id === this.state.course
-        ))
-      : (assignments = assignments);
-    this.state.category
-      ? (assignments = assignments.filter(
-          assignment => assignment.category === this.state.category
-        ))
-      : (assignments = assignments);
+    if (this.state.course) {
+      assignments = assignments.filter(
+        assignment => assignment.course_id === this.state.course
+      );
+    }
+    if (this.state.category) {
+      assignments = assignments.filter(
+        assignment => assignment.category === this.state.category
+      );
+    }
     return (
       <React.Fragment>
         <Grid container spacing={24}>
@@ -158,10 +158,10 @@ class TeacherHome extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    students: state.students
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     students: state.students
+//   };
+// };
 
-export default connect(mapStateToProps)(withStyles(styles)(TeacherHome));
+export default withStyles(styles)(TeacherHome);

@@ -119,9 +119,7 @@ class TeacherCourse extends React.Component {
                 </Button>
               </Typography>
               <Divider />
-              <List>
-                <AssignmentList teacher={teacher} assignments={assignments} />
-              </List>
+              <AssignmentList teacher={teacher} assignments={assignments} />
             </Paper>
           </Grid>
         </Grid>

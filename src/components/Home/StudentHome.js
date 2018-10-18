@@ -54,16 +54,16 @@ class StudentHome extends React.Component {
   render() {
     const { student, courses, classes } = this.props;
     let assignments = student.assignments;
-    this.state.course
-      ? (assignments = assignments.filter(
-          assignment => assignment.course_id === this.state.course
-        ))
-      : (assignments = assignments);
-    this.state.category
-      ? (assignments = assignments.filter(
-          assignment => assignment.category === this.state.category
-        ))
-      : (assignments = assignments);
+    if (this.state.course) {
+      assignments = assignments.filter(
+        assignment => assignment.course_id === this.state.course
+      );
+    }
+    if (this.state.category) {
+      assignments = assignments.filter(
+        assignment => assignment.category === this.state.category
+      );
+    }
     return (
       <React.Fragment>
         <Grid container spacing={24}>

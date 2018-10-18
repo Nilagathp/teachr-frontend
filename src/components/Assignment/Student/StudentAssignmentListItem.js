@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import Button from "@material-ui/core/Button";
+import Chip from "@material-ui/core/Chip";
 
-const StudentAssignmentListItem = ({ teacher, assignment, courses }) => {
+const StudentAssignmentListItem = ({
+  teacher,
+  assignment,
+  studentAssignment,
+  courses
+}) => {
   return (
     <ListItem
       key={assignment.id}
@@ -28,8 +32,24 @@ const StudentAssignmentListItem = ({ teacher, assignment, courses }) => {
           secondary={`${assignment.category} - ${assignment.points} points`}
         />
       )}
+      {/* <Chip
+        color="primary"
+        label={`${studentAssignment.status}`}
+        variant="outlined"
+      /> */}
     </ListItem>
   );
 };
+
+//trying to display status of assignment in chip
+// const mapStateToProps = (state, ownProps) => {
+//   const studentAssignments = state.user.person.student.student_assignments;
+//   const studentAssignment = studentAssignments.find(
+//     sa => (sa.assignment_id = ownProps.assignment.id)
+//   );
+//   return {
+//     studentAssignment: studentAssignment
+//   };
+// };
 
 export default StudentAssignmentListItem;
