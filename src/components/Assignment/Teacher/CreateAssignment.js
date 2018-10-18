@@ -54,7 +54,8 @@ class CreateAssignment extends React.Component {
     directions: "",
     content: {},
     open: false,
-    selectedValue: ""
+    selectedValue: null,
+    contentInputs: []
   };
 
   componentDidMount() {
@@ -71,7 +72,8 @@ class CreateAssignment extends React.Component {
   };
 
   handleClose = value => {
-    this.setState({ selectedValue: value, open: false });
+    const newContentInputs = [...this.state.contentInputs, value];
+    this.setState({ open: false, contentInputs: newContentInputs });
   };
 
   handleChange = name => event => {
@@ -96,8 +98,7 @@ class CreateAssignment extends React.Component {
       points: this.state.points,
       category: this.state.category,
       directions: this.state.directions,
-      content: this.state.content,
-      questions: this.state.questions
+      content: this.state.content
     };
     this.props.createAssignment(assignmentParams, this.props.history.push);
   };
@@ -176,7 +177,7 @@ class CreateAssignment extends React.Component {
               shrink: true
             }}
           />
-          <Button className={classes.button} onClick={this.handleClickOpen}>
+          <Button color="primary" onClick={this.handleClickOpen}>
             Add Content
           </Button>
           <ContentTypeDialog
