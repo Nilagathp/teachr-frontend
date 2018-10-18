@@ -116,16 +116,43 @@ class TeacherViewAssignment extends React.Component {
             <Typography className={classes.text} variant="subtitle1">
               Directions: {assignment.directions}
             </Typography>
-            <Typography className={classes.text}>
-              {assignment.content}
-            </Typography>
             <Typography variant="subtitle1" className={classes.text}>
-              Questions:
-              {assignment.questions.map((question, index) => (
-                <Typography key={index} className={classes.text}>
-                  {`${index + 1}. ${question}`}
-                </Typography>
-              ))}
+              Content:
+              {Object.keys(assignment.content).map(key => {
+                const item = assignment.content[key];
+                if (item.type === "Multiple Choice") {
+                  return (
+                    <div>
+                      <Typography className={classes.text} variant="subtitle2">
+                        Multiple Choice
+                      </Typography>
+                      <Typography className={classes.text}>
+                        Question: {item.content.question}
+                      </Typography>
+                      <Typography className={classes.text}>
+                        Correct Answer: {item.content.answers.correctAnswer}
+                      </Typography>
+                      <Typography className={classes.text}>
+                        Incorrect Answers:{" "}
+                        {item.content.answers.incorrectAnswer1}
+                        {item.content.answers.incorrectAnswer2}
+                        {item.content.answers.incorrectAnswer3}
+                      </Typography>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div>
+                      <Typography className={classes.text} variant="subtitle2">
+                        {item.type}
+                      </Typography>
+                      <Typography className={classes.text}>
+                        {item.content}
+                      </Typography>
+                    </div>
+                  );
+                }
+              })}
             </Typography>
           </Paper>
         </Paper>
