@@ -96,7 +96,7 @@ class CreateAssignment extends React.Component {
                 variant="outlined"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
-                onChange={this.handleChangeContent("content")}
+                onChange={this.handleChangeContent(input)}
                 style={{ marginTop: "10px", marginLeft: "20px", width: "95%" }}
               />
             </div>
@@ -117,7 +117,7 @@ class CreateAssignment extends React.Component {
                 variant="outlined"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
-                onChange={this.handleChangeContent("content")}
+                onChange={this.handleChangeMCQuestion(input)}
                 style={{ marginTop: "10px", marginLeft: "20px", width: "95%" }}
                 InputLabelProps={{
                   shrink: true
@@ -128,7 +128,7 @@ class CreateAssignment extends React.Component {
                 variant="outlined"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
-                onChange={this.handleChangeContent("correctAnswer")}
+                onChange={this.handleChangeMCAnswer("correctAnswer")}
                 style={{ marginTop: "20px", marginLeft: "40px" }}
                 InputLabelProps={{
                   shrink: true
@@ -139,7 +139,7 @@ class CreateAssignment extends React.Component {
                 variant="outlined"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
-                onChange={this.handleChangeContent("incorrectAnswer")}
+                onChange={this.handleChangeMCAnswer("incorrectAnswer1")}
                 style={{ marginTop: "20px", marginLeft: "10px" }}
                 InputLabelProps={{
                   shrink: true
@@ -150,7 +150,7 @@ class CreateAssignment extends React.Component {
                 variant="outlined"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
-                onChange={this.handleChangeContent("incorrectAnswer")}
+                onChange={this.handleChangeMCAnswer("incorrectAnswer2")}
                 style={{ marginTop: "20px", marginLeft: "10px" }}
                 InputLabelProps={{
                   shrink: true
@@ -161,7 +161,7 @@ class CreateAssignment extends React.Component {
                 variant="outlined"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
-                onChange={this.handleChangeContent("incorrectAnswer")}
+                onChange={this.handleChangeMCAnswer("incorrectAnswer3")}
                 style={{ marginTop: "20px", marginLeft: "10px" }}
                 InputLabelProps={{
                   shrink: true
@@ -180,7 +180,7 @@ class CreateAssignment extends React.Component {
                 label="question"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
-                onChange={this.handleChangeContent("content")}
+                onChange={this.handleChangeContent(input)}
                 style={{ marginTop: "10px", marginLeft: "20px", width: "95%" }}
                 InputLabelProps={{
                   shrink: true
@@ -200,9 +200,73 @@ class CreateAssignment extends React.Component {
 
   handleChangeContent = name => event => {
     let newContent = this.state.content;
-    newContent[event.target.id] = event.target.value;
+    newContent[event.target.id] = { type: name, content: event.target.value };
     this.setState({
-      [name]: newContent
+      content: newContent
+    });
+  };
+
+  handleChangeMCQuestion = name => event => {
+    let newContent = this.state.content;
+    newContent[event.target.id] && newContent[event.target.id]["content"]
+      ? (newContent[event.target.id] = {
+          type: "Multiple Choice",
+          content: {
+            ...this.state.content[event.target.id]["content"],
+            question: event.target.value
+          }
+        })
+      : (newContent[event.target.id] = {
+          type: "Multiple Choice",
+          content: {
+            question: event.target.value,
+            answers: {}
+          }
+        });
+    this.setState({
+      content: newContent
+    });
+  };
+
+  handleChangeMCAnswer = name => event => {
+    let newContent = this.state.content;
+    if (newContent[event.target.id] && newContent[event.target.id]["content"]) {
+      if (newContent[event.target.id]["content"]["answers"]) {
+        let newAnswers = this.state.content[event.target.id]["content"][
+          "answers"
+        ];
+        newAnswers[name] = event.target.value;
+        newContent[event.target.id] = {
+          type: "Multiple Choice",
+          content: {
+            ...this.state.content[event.target.id]["content"],
+            answers: newAnswers
+          }
+        };
+      } else {
+        let newAnswers = {};
+        newAnswers[name] = event.target.value;
+        newContent[event.target.id] = {
+          type: "Multiple Choice",
+          content: {
+            ...this.state.content[event.target.id]["content"],
+            answers: newAnswers
+          }
+        };
+      }
+    } else {
+      let newAnswers = {};
+      newAnswers[name] = event.target.value;
+      newContent[event.target.id] = {
+        type: "Multiple Choice",
+        content: {
+          question: "",
+          answers: newAnswers
+        }
+      };
+    }
+    this.setState({
+      content: newContent
     });
   };
 
