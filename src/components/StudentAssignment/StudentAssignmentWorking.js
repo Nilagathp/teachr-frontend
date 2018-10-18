@@ -10,8 +10,8 @@ import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 
-import { submitStudentAssignment } from "../../redux/actions/assignmentActions";
-import { saveStudentAssignment } from "../../redux/actions/assignmentActions";
+import { submitStudentAssignment } from "../../redux/actions/studentAssignmentActions";
+import { saveStudentAssignment } from "../../redux/actions/studentAssignmentActions";
 
 const styles = {
   paper: {

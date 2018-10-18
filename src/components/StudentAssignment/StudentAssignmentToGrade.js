@@ -10,7 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Chip from "@material-ui/core/Chip";
 
-import { gradeStudentAssignment } from "../../redux/actions/assignmentActions";
+import { gradeStudentAssignment } from "../../redux/actions/studentAssignmentActions";
 
 const styles = {
   paper: {
