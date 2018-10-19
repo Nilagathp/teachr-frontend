@@ -87,6 +87,7 @@ class CreateAssignment extends React.Component {
         case "Text":
           return (
             <TextField
+              required
               key={`item${index}`}
               label={input}
               multiline
@@ -105,6 +106,7 @@ class CreateAssignment extends React.Component {
           return (
             <div key={`item${index}`}>
               <TextField
+                required
                 label="Multiple Choice Question"
                 variant="outlined"
                 id={`item${index + 1}`}
@@ -116,6 +118,7 @@ class CreateAssignment extends React.Component {
                 }}
               />
               <TextField
+                required
                 label="Correct Answer"
                 variant="outlined"
                 id={`item${index + 1}`}
@@ -127,6 +130,7 @@ class CreateAssignment extends React.Component {
                 }}
               />
               <TextField
+                required
                 label="Incorrect Answer"
                 variant="outlined"
                 id={`item${index + 1}`}
@@ -138,6 +142,7 @@ class CreateAssignment extends React.Component {
                 }}
               />
               <TextField
+                required
                 label="Incorrect Answer"
                 variant="outlined"
                 id={`item${index + 1}`}
@@ -149,6 +154,7 @@ class CreateAssignment extends React.Component {
                 }}
               />
               <TextField
+                required
                 label="Incorrect Answer"
                 variant="outlined"
                 id={`item${index + 1}`}
@@ -165,6 +171,7 @@ class CreateAssignment extends React.Component {
           return (
             <div key={`item${index}`}>
               <TextField
+                required
                 key={`item${index}`}
                 variant="outlined"
                 label={`${input} Question`}
@@ -299,6 +306,7 @@ class CreateAssignment extends React.Component {
             ))}
           </TextField>
           <TextField
+            required
             label="Assignment Name"
             value={this.state.name}
             variant="outlined"
@@ -343,7 +351,7 @@ class CreateAssignment extends React.Component {
             margin="normal"
           />
           <TextField
-            multiline
+            required
             label="Directions"
             variant="outlined"
             value={this.state.directions}
