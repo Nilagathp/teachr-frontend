@@ -1,41 +1,49 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
-import Chip from "@material-ui/core/Chip";
-import DoneIcon from "@material-ui/icons/Done";
+import TextField from "@material-ui/core/TextField";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-const EditStudentMultipleChoice = ({ content, classes }) => {
-  return (
-    <Card className={classes.card}>
-      <Typography className={classes.text} color="textSecondary">
-        Multiple Choice
-      </Typography>
-      <Typography className={classes.text} variant="subtitle2">
-        {content.question}
-      </Typography>
-      <Chip
-        variant="outlined"
-        label={content.answers.correctAnswer}
-        icon={<DoneIcon />}
-        className={classes.text}
-      />
-      <Chip
-        variant="outlined"
-        label={content.answers.incorrectAnswer1}
-        className={classes.text}
-      />
-      <Chip
-        variant="outlined"
-        label={content.answers.incorrectAnswer2}
-        className={classes.text}
-      />
-      <Chip
-        variant="outlined"
-        label={content.answers.incorrectAnswer3}
-        className={classes.text}
-      />
-    </Card>
-  );
-};
+class EditStudentMultipleChoice extends React.PureComponent {
+  state = {
+    value: ""
+  };
+
+  handleClick = event => {
+    this.setState({ value: event.target.value });
+  };
+
+  render() {
+    const { id, content, answerChoices, handleChange, classes } = this.props;
+    return (
+      <React.Fragment>
+        <Typography className={classes.text} variant="subtitle2">
+          {content.question}
+        </Typography>
+        <FormControl component="fieldset">
+          <RadioGroup
+            id={id}
+            onChange={this.handleClick}
+            value={this.state.value}
+            className={classes.group}
+          >
+            {answerChoices.map((answer, index) => (
+              <FormControlLabel
+                onClick={handleChange}
+                key={index}
+                value={answer}
+                control={<Radio id={id} />}
+                label={answer}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+      </React.Fragment>
+    );
+  }
+}
 
 export default EditStudentMultipleChoice;

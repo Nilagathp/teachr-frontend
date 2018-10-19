@@ -10,6 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 
+import { shuffle } from "../../functions";
 import { submitStudentAssignment } from "../../redux/actions/studentAssignmentActions";
 import { saveStudentAssignment } from "../../redux/actions/studentAssignmentActions";
 import EditStudentMultipleChoice from "./EditStudentAssignmentContent/EditStudentMultipleChoice";
@@ -48,10 +49,18 @@ const styles = {
   },
   question: {
     marginLeft: "20px"
+  },
+  group: {
+    width: "auto",
+    height: "auto",
+    display: "flex",
+    flexWrap: "nowrap",
+    flexDirection: "row",
+    marginLeft: "40px"
   }
 };
 
-class StudentAssignmentWorking extends React.Component {
+class StudentAssignmentWorking extends React.PureComponent {
   state = {
     answers: {}
   };
@@ -113,12 +122,17 @@ class StudentAssignmentWorking extends React.Component {
             const item = assignment.content[key];
             switch (item.type) {
               case "Multiple Choice":
+                const shuffledAnswers = shuffle(
+                  Object.values(item.content.answers)
+                );
                 return (
                   <EditStudentMultipleChoice
                     key={key}
                     id={key}
                     content={item.content}
                     classes={classes}
+                    answerChoices={shuffledAnswers}
+                    handleChange={this.handleChange("answers")}
                   />
                 );
               case "Short Answer":
@@ -136,9 +150,9 @@ class StudentAssignmentWorking extends React.Component {
                   <EditStudentEssay
                     id={key}
                     key={key}
-                    type={item.type}
                     content={item.content}
                     classes={classes}
+                    handleChange={this.handleChange("answers")}
                   />
                 );
               default:
