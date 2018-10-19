@@ -18,6 +18,7 @@ const EditMultipleChoice = ({
   return (
     <div>
       <TextField
+        required
         id={id}
         label={`${item.type} Question`}
         variant="outlined"
@@ -27,6 +28,7 @@ const EditMultipleChoice = ({
         onChange={handleChangeQuestion}
       />
       <TextField
+        required
         id={id}
         label="Correct Answer"
         variant="outlined"
@@ -35,6 +37,7 @@ const EditMultipleChoice = ({
         onChange={handleChangeCorrectAnswer}
       />
       <TextField
+        required
         id={id}
         label="Incorrect Answer"
         variant="outlined"
@@ -43,6 +46,7 @@ const EditMultipleChoice = ({
         onChange={handleChangeIncorrectAnswer1}
       />
       <TextField
+        required
         id={id}
         label="Incorrect Answer"
         variant="outlined"
@@ -51,6 +55,7 @@ const EditMultipleChoice = ({
         onChange={handleChangeIncorrectAnswer2}
       />
       <TextField
+        required
         id={id}
         label="Incorrect Answer"
         variant="outlined"

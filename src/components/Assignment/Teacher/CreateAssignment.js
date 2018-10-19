@@ -345,7 +345,8 @@ class CreateAssignment extends React.Component {
             }}
             InputProps={{
               inputProps: {
-                min: 0
+                min: 0,
+                max: 100
               }
             }}
             margin="normal"

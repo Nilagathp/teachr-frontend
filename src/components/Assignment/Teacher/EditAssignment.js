@@ -167,6 +167,7 @@ class EditAssignment extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <TextField
             select
+            variant="outlined"
             label="Course"
             className={classes.textField}
             value={this.state.courseId}
@@ -181,6 +182,8 @@ class EditAssignment extends React.Component {
             ))}
           </TextField>
           <TextField
+            required
+            variant="outlined"
             label="Assignment Name"
             value={this.state.name}
             onChange={this.handleChange("name")}
@@ -189,6 +192,7 @@ class EditAssignment extends React.Component {
           />
           <TextField
             select
+            variant="outlined"
             label="Category"
             className={classes.textField}
             value={this.state.category}
@@ -203,6 +207,7 @@ class EditAssignment extends React.Component {
             ))}
           </TextField>
           <TextField
+            variant="outlined"
             label="Points"
             value={this.state.points}
             onChange={this.handleChange("points")}
@@ -213,13 +218,15 @@ class EditAssignment extends React.Component {
             }}
             InputProps={{
               inputProps: {
-                min: 0
+                min: 0,
+                max: 100
               }
             }}
             margin="normal"
           />
           <TextField
-            multiline
+            required
+            variant="outlined"
             fullWidth
             label="Directions"
             value={this.state.directions}

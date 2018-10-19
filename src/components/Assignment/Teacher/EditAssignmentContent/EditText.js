@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 const EditText = ({ id, item, handleChange, classes }) => {
   return (
     <TextField
+      required
       id={id}
       label="Text"
       variant="outlined"
