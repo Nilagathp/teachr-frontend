@@ -45,6 +45,10 @@ const styles = {
     marginLeft: "20px",
     marginTop: "20px",
     width: "95%"
+  },
+  textFieldLeft: {
+    marginLeft: "40px",
+    marginTop: "20px"
   }
 };
 
@@ -99,21 +103,13 @@ class EditAssignment extends React.Component {
 
   handleChangeMCQuestion = name => event => {
     let newContent = this.state.content;
-    newContent[event.target.id] && newContent[event.target.id]["content"]
-      ? (newContent[event.target.id] = {
-          type: "Multiple Choice",
-          content: {
-            ...this.state.content[event.target.id]["content"],
-            question: event.target.value
-          }
-        })
-      : (newContent[event.target.id] = {
-          type: "Multiple Choice",
-          content: {
-            question: event.target.value,
-            answers: {}
-          }
-        });
+    newContent[event.target.id] = {
+      type: "Multiple Choice",
+      content: {
+        ...this.state.content[event.target.id]["content"],
+        question: event.target.value
+      }
+    };
     this.setState({
       content: newContent
     });
@@ -121,53 +117,19 @@ class EditAssignment extends React.Component {
 
   handleChangeMCAnswer = name => event => {
     let newContent = this.state.content;
-    if (newContent[event.target.id] && newContent[event.target.id]["content"]) {
-      if (newContent[event.target.id]["content"]["answers"]) {
-        let newAnswers = this.state.content[event.target.id]["content"][
-          "answers"
-        ];
-        newAnswers[name] = event.target.value;
-        newContent[event.target.id] = {
-          type: "Multiple Choice",
-          content: {
-            ...this.state.content[event.target.id]["content"],
-            answers: newAnswers
-          }
-        };
-      } else {
-        let newAnswers = {};
-        newAnswers[name] = event.target.value;
-        newContent[event.target.id] = {
-          type: "Multiple Choice",
-          content: {
-            ...this.state.content[event.target.id]["content"],
-            answers: newAnswers
-          }
-        };
+    let newAnswers = this.state.content[event.target.id]["content"]["answers"];
+    newAnswers[name] = event.target.value;
+    newContent[event.target.id] = {
+      type: "Multiple Choice",
+      content: {
+        ...this.state.content[event.target.id]["content"],
+        answers: newAnswers
       }
-    } else {
-      let newAnswers = {};
-      newAnswers[name] = event.target.value;
-      newContent[event.target.id] = {
-        type: "Multiple Choice",
-        content: {
-          question: "",
-          answers: newAnswers
-        }
-      };
-    }
+    };
     this.setState({
       content: newContent
     });
   };
-
-  // handleChangeQuestions = name => event => {
-  //   let newQuestions = this.state.questions;
-  //   newQuestions[event.target.id] = event.target.value;
-  //   this.setState({
-  //     [name]: newQuestions
-  //   });
-  // };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -274,9 +236,24 @@ class EditAssignment extends React.Component {
               return (
                 <EditMultipleChoice
                   key={key}
-                  name={key}
+                  id={key}
                   item={item}
                   classes={classes}
+                  handleChangeQuestion={this.handleChangeMCQuestion(
+                    "Multiple Choice"
+                  )}
+                  handleChangeCorrectAnswer={this.handleChangeMCAnswer(
+                    "correctAnswer"
+                  )}
+                  handleChangeIncorrectAnswer1={this.handleChangeMCAnswer(
+                    "incorrectAnswer1"
+                  )}
+                  handleChangeIncorrectAnswer2={this.handleChangeMCAnswer(
+                    "incorrectAnswer2"
+                  )}
+                  handleChangeIncorrectAnswer3={this.handleChangeMCAnswer(
+                    "incorrectAnswer3"
+                  )}
                 />
               );
             } else if (item.type === "Text") {

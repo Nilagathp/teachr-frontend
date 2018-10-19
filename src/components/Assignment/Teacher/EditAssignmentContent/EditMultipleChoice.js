@@ -1,40 +1,64 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
 
-const EditMultipleChoice = ({ name, item, classes }) => {
+const EditMultipleChoice = ({
+  id,
+  item,
+  handleChangeQuestion,
+  handleChangeCorrectAnswer,
+  handleChangeIncorrectAnswer1,
+  handleChangeIncorrectAnswer2,
+  handleChangeIncorrectAnswer3,
+  classes
+}) => {
   return (
-    <Card className={classes.card}>
-      <Typography className={classes.text} color="textSecondary">
-        Multiple Choice
-      </Typography>
-      <Typography className={classes.text} variant="subtitle2">
-        {item.content.question}
-      </Typography>
-      <Chip
+    <div>
+      <TextField
+        id={id}
+        label={`${item.type} Question`}
         variant="outlined"
-        label={item.content.answers.correctAnswer}
-        icon={<DoneIcon />}
-        className={classes.text}
+        multiline
+        className={classes.textFieldWide}
+        value={item.content.question}
+        onChange={handleChangeQuestion}
       />
-      <Chip
+      <TextField
+        id={id}
+        label="Correct Answer"
         variant="outlined"
-        label={item.content.answers.incorrectAnswer1}
-        className={classes.text}
+        className={classes.textFieldLeft}
+        value={item.content.answers.correctAnswer}
+        onChange={handleChangeCorrectAnswer}
       />
-      <Chip
+      <TextField
+        id={id}
+        label="Incorrect Answer"
         variant="outlined"
-        label={item.content.answers.incorrectAnswer2}
-        className={classes.text}
+        className={classes.textField}
+        value={item.content.answers.incorrectAnswer1}
+        onChange={handleChangeIncorrectAnswer1}
       />
-      <Chip
+      <TextField
+        id={id}
+        label="Incorrect Answer"
         variant="outlined"
-        label={item.content.answers.incorrectAnswer3}
-        className={classes.text}
+        className={classes.textField}
+        value={item.content.answers.incorrectAnswer2}
+        onChange={handleChangeIncorrectAnswer2}
       />
-    </Card>
+      <TextField
+        id={id}
+        label="Incorrect Answer"
+        variant="outlined"
+        className={classes.textField}
+        value={item.content.answers.incorrectAnswer3}
+        onChange={handleChangeIncorrectAnswer3}
+      />
+    </div>
   );
 };
 
