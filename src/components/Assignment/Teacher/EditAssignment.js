@@ -11,9 +11,9 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import { updateAssignment } from "../../../redux/actions/assignmentActions";
-import MultipleChoice from "./AssignmentContent/MultipleChoice";
-import ShortAnswerOrEssay from "./AssignmentContent/ShortAnswerOrEssay";
-import Text from "./AssignmentContent/Text";
+import EditMultipleChoice from "./EditAssignmentContent/EditMultipleChoice";
+import EditShortAnswerOrEssay from "./EditAssignmentContent/EditShortAnswerOrEssay";
+import EditText from "./EditAssignmentContent/EditText";
 
 const styles = {
   paper: {
@@ -40,6 +40,11 @@ const styles = {
   card: {
     margin: "20px",
     padding: "5px"
+  },
+  textFieldWide: {
+    marginLeft: "20px",
+    marginTop: "20px",
+    width: "95%"
   }
 };
 
@@ -71,7 +76,6 @@ class EditAssignment extends React.Component {
         category: categoryHash[props.assignment.category],
         directions: props.assignment.directions,
         content: props.assignment.content,
-        questions: props.assignment.questions,
         assignmentId: props.assignment.id
       };
     } else {
@@ -85,13 +89,85 @@ class EditAssignment extends React.Component {
     });
   };
 
-  handleChangeQuestions = name => event => {
-    let newQuestions = this.state.questions;
-    newQuestions[event.target.id] = event.target.value;
+  handleChangeContent = name => event => {
+    let newContent = this.state.content;
+    newContent[event.target.id] = { type: name, content: event.target.value };
     this.setState({
-      [name]: newQuestions
+      content: newContent
     });
   };
+
+  handleChangeMCQuestion = name => event => {
+    let newContent = this.state.content;
+    newContent[event.target.id] && newContent[event.target.id]["content"]
+      ? (newContent[event.target.id] = {
+          type: "Multiple Choice",
+          content: {
+            ...this.state.content[event.target.id]["content"],
+            question: event.target.value
+          }
+        })
+      : (newContent[event.target.id] = {
+          type: "Multiple Choice",
+          content: {
+            question: event.target.value,
+            answers: {}
+          }
+        });
+    this.setState({
+      content: newContent
+    });
+  };
+
+  handleChangeMCAnswer = name => event => {
+    let newContent = this.state.content;
+    if (newContent[event.target.id] && newContent[event.target.id]["content"]) {
+      if (newContent[event.target.id]["content"]["answers"]) {
+        let newAnswers = this.state.content[event.target.id]["content"][
+          "answers"
+        ];
+        newAnswers[name] = event.target.value;
+        newContent[event.target.id] = {
+          type: "Multiple Choice",
+          content: {
+            ...this.state.content[event.target.id]["content"],
+            answers: newAnswers
+          }
+        };
+      } else {
+        let newAnswers = {};
+        newAnswers[name] = event.target.value;
+        newContent[event.target.id] = {
+          type: "Multiple Choice",
+          content: {
+            ...this.state.content[event.target.id]["content"],
+            answers: newAnswers
+          }
+        };
+      }
+    } else {
+      let newAnswers = {};
+      newAnswers[name] = event.target.value;
+      newContent[event.target.id] = {
+        type: "Multiple Choice",
+        content: {
+          question: "",
+          answers: newAnswers
+        }
+      };
+    }
+    this.setState({
+      content: newContent
+    });
+  };
+
+  // handleChangeQuestions = name => event => {
+  //   let newQuestions = this.state.questions;
+  //   newQuestions[event.target.id] = event.target.value;
+  //   this.setState({
+  //     [name]: newQuestions
+  //   });
+  // };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -102,8 +178,7 @@ class EditAssignment extends React.Component {
       points: this.state.points,
       category: this.state.category,
       directions: this.state.directions,
-      content: this.state.content,
-      questions: this.state.questions
+      content: this.state.content
     };
     this.props.updateAssignment(
       assignmentId,
@@ -197,55 +272,35 @@ class EditAssignment extends React.Component {
             const item = assignment.content[key];
             if (item.type === "Multiple Choice") {
               return (
-                <MultipleChoice
+                <EditMultipleChoice
                   key={key}
-                  content={item.content}
+                  name={key}
+                  item={item}
                   classes={classes}
                 />
               );
             } else if (item.type === "Text") {
               return (
-                <Text key={key} content={item.content} classes={classes} />
+                <EditText
+                  key={key}
+                  id={key}
+                  item={item}
+                  classes={classes}
+                  handleChange={this.handleChangeContent("Text")}
+                />
               );
             } else {
               return (
-                <ShortAnswerOrEssay
+                <EditShortAnswerOrEssay
                   key={key}
-                  type={item.type}
-                  content={item.content}
+                  id={key}
+                  item={item}
                   classes={classes}
+                  handleChange={this.handleChangeContent(`${item.type}`)}
                 />
               );
             }
           })}
-          {/* <TextField
-            multiline
-            fullWidth
-            label="Content"
-            value={this.state.content}
-            onChange={this.handleChange("content")}
-            className={classes.textField}
-            margin="normal"
-            InputLabelProps={{
-              shrink: true
-            }}
-          /> */}
-          {/* {this.state.questions.map((question, index) => (
-            <TextField
-              multiline
-              fullWidth
-              key={index}
-              id={`${index}`}
-              label={`Question ${index + 1}`}
-              value={question}
-              onChange={this.handleChangeQuestions("questions")}
-              className={classes.textField}
-              margin="normal"
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
-          ))} */}
           <Button color="primary" className={classes.button} type="submit">
             Update Assignment
           </Button>

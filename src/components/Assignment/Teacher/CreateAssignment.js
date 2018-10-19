@@ -86,45 +86,37 @@ class CreateAssignment extends React.Component {
       switch (input) {
         case "Text":
           return (
-            <div key={`item${index}`}>
-              <Typography style={{ marginTop: "20px", marginLeft: "20px" }}>
-                {input}
-              </Typography>
-              <TextField
-                multiline
-                rows="4"
-                variant="outlined"
-                id={`item${index + 1}`}
-                value={this.state.content[index]}
-                onChange={this.handleChangeContent(input)}
-                style={{ marginTop: "10px", marginLeft: "20px", width: "95%" }}
-              />
-            </div>
+            <TextField
+              key={`item${index}`}
+              label={input}
+              multiline
+              rows="4"
+              variant="outlined"
+              id={`item${index + 1}`}
+              value={this.state.content[index]}
+              onChange={this.handleChangeContent(input)}
+              style={{ marginTop: "20px", marginLeft: "20px", width: "95%" }}
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
           );
         case "Multiple Choice":
           return (
             <div key={`item${index}`}>
-              <Typography
-                style={{
-                  marginTop: "20px",
-                  marginLeft: "20px"
-                }}
-              >
-                {input}
-              </Typography>
               <TextField
-                label="question"
+                label="Multiple Choice Question"
                 variant="outlined"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
                 onChange={this.handleChangeMCQuestion(input)}
-                style={{ marginTop: "10px", marginLeft: "20px", width: "95%" }}
+                style={{ marginTop: "20px", marginLeft: "20px", width: "95%" }}
                 InputLabelProps={{
                   shrink: true
                 }}
               />
               <TextField
-                label="correct answer"
+                label="Correct Answer"
                 variant="outlined"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
@@ -135,7 +127,7 @@ class CreateAssignment extends React.Component {
                 }}
               />
               <TextField
-                label="incorrect answer"
+                label="Incorrect Answer"
                 variant="outlined"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
@@ -146,7 +138,7 @@ class CreateAssignment extends React.Component {
                 }}
               />
               <TextField
-                label="incorrect answer"
+                label="Incorrect Answer"
                 variant="outlined"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
@@ -157,7 +149,7 @@ class CreateAssignment extends React.Component {
                 }}
               />
               <TextField
-                label="incorrect answer"
+                label="Incorrect Answer"
                 variant="outlined"
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
@@ -172,16 +164,14 @@ class CreateAssignment extends React.Component {
         default:
           return (
             <div key={`item${index}`}>
-              <Typography style={{ marginTop: "20px", marginLeft: "20px" }}>
-                {input}
-              </Typography>
               <TextField
+                key={`item${index}`}
                 variant="outlined"
-                label="question"
+                label={`${input} Question`}
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
                 onChange={this.handleChangeContent(input)}
-                style={{ marginTop: "10px", marginLeft: "20px", width: "95%" }}
+                style={{ marginTop: "20px", marginLeft: "20px", width: "95%" }}
                 InputLabelProps={{
                   shrink: true
                 }}
@@ -294,6 +284,7 @@ class CreateAssignment extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <TextField
             select
+            variant="outlined"
             label="Course"
             className={classes.textField}
             value={this.state.courseId}
@@ -310,13 +301,18 @@ class CreateAssignment extends React.Component {
           <TextField
             label="Assignment Name"
             value={this.state.name}
+            variant="outlined"
             onChange={this.handleChange("name")}
             className={classes.textField}
             margin="normal"
+            InputLabelProps={{
+              shrink: true
+            }}
           />
           <TextField
             select
             label="Category"
+            variant="outlined"
             className={classes.textField}
             value={this.state.category}
             onChange={this.handleChange("category")}
@@ -331,6 +327,7 @@ class CreateAssignment extends React.Component {
           </TextField>
           <TextField
             label="Points"
+            variant="outlined"
             value={this.state.points}
             onChange={this.handleChange("points")}
             type="number"
@@ -348,6 +345,7 @@ class CreateAssignment extends React.Component {
           <TextField
             multiline
             label="Directions"
+            variant="outlined"
             value={this.state.directions}
             onChange={this.handleChange("directions")}
             className={classes.textFieldWide}

@@ -119,7 +119,6 @@ class TeacherViewAssignment extends React.Component {
           <Typography className={classes.text} variant="subtitle1">
             Directions: {assignment.directions}
           </Typography>
-
           {Object.keys(assignment.content).map(key => {
             const item = assignment.content[key];
             if (item.type === "Multiple Choice") {
