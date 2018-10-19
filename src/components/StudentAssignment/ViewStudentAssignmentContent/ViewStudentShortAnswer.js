@@ -3,9 +3,9 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 
-class ViewStudentShortAnswer extends React.PureComponent {
+class EditStudentShortAnswer extends React.PureComponent {
   render() {
-    const { id, content, handleChange, classes } = this.props;
+    const { answer, id, content, handleChange, classes } = this.props;
     return (
       <React.Fragment>
         <Typography className={classes.text} variant="subtitle2">
@@ -13,6 +13,7 @@ class ViewStudentShortAnswer extends React.PureComponent {
         </Typography>
         <TextField
           required
+          value={answer}
           id={id}
           multiline
           rows="3"
@@ -29,4 +30,4 @@ class ViewStudentShortAnswer extends React.PureComponent {
   }
 }
 
-export default ViewStudentShortAnswer;
+export default EditStudentShortAnswer;

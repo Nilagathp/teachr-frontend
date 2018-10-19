@@ -1,11 +1,10 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 
-class ViewStudentShortAnswer extends React.PureComponent {
+class ViewStudentEssay extends React.PureComponent {
   render() {
-    const { id, content, handleChange, classes } = this.props;
+    const { answer, id, type, content, handleChange, classes } = this.props;
     return (
       <React.Fragment>
         <Typography className={classes.text} variant="subtitle2">
@@ -15,13 +14,15 @@ class ViewStudentShortAnswer extends React.PureComponent {
           required
           id={id}
           multiline
-          rows="3"
+          rows="10"
           fullWidth
           variant="outlined"
+          value={answer}
           className={classes.textField}
           InputLabelProps={{
             shrink: true
           }}
+          InputProps={{ readOnly: true }}
           onChange={handleChange}
         />
       </React.Fragment>
@@ -29,4 +30,4 @@ class ViewStudentShortAnswer extends React.PureComponent {
   }
 }
 
-export default ViewStudentShortAnswer;
+export default ViewStudentEssay;

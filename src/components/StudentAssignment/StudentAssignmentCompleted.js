@@ -7,6 +7,12 @@ import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 
+import { shuffle } from "../../functions";
+import ViewStudentMultipleChoice from "./ViewStudentAssignmentContent/ViewStudentMultipleChoice";
+import ViewStudentShortAnswer from "./ViewStudentAssignmentContent/ViewStudentShortAnswer";
+import ViewStudentEssay from "./ViewStudentAssignmentContent/ViewStudentEssay";
+import StudentText from "./StudentAssignmentContent/StudentText";
+
 const styles = {
   paper: {
     margin: "20px",
@@ -38,6 +44,14 @@ const styles = {
   },
   question: {
     marginLeft: "20px"
+  },
+  group: {
+    width: "auto",
+    height: "auto",
+    display: "flex",
+    flexWrap: "nowrap",
+    flexDirection: "row",
+    marginLeft: "40px"
   }
 };
 
@@ -72,44 +86,57 @@ class StudentAssignmentCompleted extends React.Component {
               assignment.points
             } points`}
           </Typography>
-        </div>
-        <div>
+          <Divider />
           <Typography className={classes.content} variant="subtitle1">
             Directions: {assignment.directions}
           </Typography>
-          <Divider />
-          <Typography className={classes.content}>
-            {assignment.content}
-          </Typography>
-          <Typography variant="subtitle1" className={classes.text}>
-            Questions:
-          </Typography>
-
-          {assignment.questions.map((question, index) => (
-            <React.Fragment key={index}>
-              <Typography
-                key={`question-${index}`}
-                className={classes.question}
-              >
-                {`${index + 1}. ${question}`}{" "}
-              </Typography>
-              <TextField
-                id={`${index}`}
-                multiline
-                fullWidth
-                value={`${studentAssignment.answers[index]}`}
-                variant="outlined"
-                key={`answer-${index}`}
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true
-                }}
-                InputProps={{
-                  readOnly: true
-                }}
-              />
-            </React.Fragment>
-          ))}
+          {Object.keys(assignment.content).map(key => {
+            const item = assignment.content[key];
+            switch (item.type) {
+              case "Multiple Choice":
+                const shuffledAnswers = shuffle(
+                  Object.values(item.content.answers)
+                );
+                return (
+                  <ViewStudentMultipleChoice
+                    key={key}
+                    id={key}
+                    content={item.content}
+                    classes={classes}
+                    answer={studentAssignment.answers[key]}
+                    answerChoices={shuffledAnswers}
+                  />
+                );
+              case "Short Answer":
+                return (
+                  <ViewStudentShortAnswer
+                    key={key}
+                    id={key}
+                    content={item.content}
+                    classes={classes}
+                    answer={studentAssignment.answers[key]}
+                  />
+                );
+              case "Essay":
+                return (
+                  <ViewStudentEssay
+                    id={key}
+                    key={key}
+                    content={item.content}
+                    classes={classes}
+                    answer={studentAssignment.answers[key]}
+                  />
+                );
+              default:
+                return (
+                  <StudentText
+                    key={key}
+                    content={item.content}
+                    classes={classes}
+                  />
+                );
+            }
+          })}
         </div>
       </Paper>
     );

@@ -165,44 +165,6 @@ class StudentAssignmentWorking extends React.PureComponent {
                 );
             }
           })}
-          {/* {assignment.questions.map((question, index) => (
-            <React.Fragment key={index}>
-              <Typography
-                key={`question-${index}`}
-                className={classes.question}
-              >
-                {`${index + 1}. ${question}`}{" "}
-              </Typography>
-              {this.state.answers[index] ? (
-                <TextField
-                  id={`${index}`}
-                  multiline
-                  fullWidth
-                  value={`${this.state.answers[index]}`}
-                  variant="outlined"
-                  key={`answer-${index}`}
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  onChange={this.handleChange("answers")}
-                />
-              ) : (
-                <TextField
-                  id={`${index}`}
-                  multiline
-                  fullWidth
-                  variant="outlined"
-                  key={`answer-${index}`}
-                  className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  onChange={this.handleChange("answers")}
-                />
-              )}
-            </React.Fragment>
-          ))} */}
           <Button
             color="primary"
             className={classes.button}
