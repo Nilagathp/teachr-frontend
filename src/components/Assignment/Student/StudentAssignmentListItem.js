@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Chip from "@material-ui/core/Chip";
+// import Chip from "@material-ui/core/Chip";
 
 const StudentAssignmentListItem = ({
   teacher,

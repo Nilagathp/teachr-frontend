@@ -13,14 +13,18 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { deleteAssignment } from "../../../redux/actions/assignmentActions";
+import MultipleChoice from "./AssignmentContent/MultipleChoice";
+import ShortAnswerOrEssay from "./AssignmentContent/ShortAnswerOrEssay";
+import Text from "./AssignmentContent/Text";
 
 const styles = {
   paper: {
-    margin: "20px"
+    margin: "20px",
+    paddingBottom: "10px"
   },
   card: {
     margin: "20px",
-    maxWidth: 400
+    padding: "5px"
   },
   heading: {
     marginLeft: "20px",
@@ -30,9 +34,12 @@ const styles = {
   button: {
     paddingLeft: "20px"
   },
-  text: {
+  headingText: {
     marginLeft: "20px",
     paddingBottom: "10px"
+  },
+  text: {
+    marginLeft: "20px"
   }
 };
 
@@ -103,58 +110,41 @@ class TeacherViewAssignment extends React.Component {
                 </DialogActions>
               </DialogContent>
             </Dialog>
-            {/* <Button className={classes.button} color="primary">
-              Assign
-            </Button> */}
           </Typography>
-          <Typography variant="h6" className={classes.text}>
+          <Typography variant="h6" className={classes.headingText}>
             {`${course.name} - ${assignment.category} - ${
               assignment.points
             } points`}
           </Typography>
-          <Paper>
-            <Typography className={classes.text} variant="subtitle1">
-              Directions: {assignment.directions}
-            </Typography>
-            <Typography variant="subtitle1" className={classes.text}>
-              Content:
-              {Object.keys(assignment.content).map(key => {
-                const item = assignment.content[key];
-                if (item.type === "Multiple Choice") {
-                  return (
-                    <div>
-                      <Typography className={classes.text} variant="subtitle2">
-                        Multiple Choice
-                      </Typography>
-                      <Typography className={classes.text}>
-                        Question: {item.content.question}
-                      </Typography>
-                      <Typography className={classes.text}>
-                        Correct Answer: {item.content.answers.correctAnswer}
-                      </Typography>
-                      <Typography className={classes.text}>
-                        Incorrect Answers:{" "}
-                        {item.content.answers.incorrectAnswer1}
-                        {item.content.answers.incorrectAnswer2}
-                        {item.content.answers.incorrectAnswer3}
-                      </Typography>
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div>
-                      <Typography className={classes.text} variant="subtitle2">
-                        {item.type}
-                      </Typography>
-                      <Typography className={classes.text}>
-                        {item.content}
-                      </Typography>
-                    </div>
-                  );
-                }
-              })}
-            </Typography>
-          </Paper>
+          <Typography className={classes.text} variant="subtitle1">
+            Directions: {assignment.directions}
+          </Typography>
+
+          {Object.keys(assignment.content).map(key => {
+            const item = assignment.content[key];
+            if (item.type === "Multiple Choice") {
+              return (
+                <MultipleChoice
+                  key={key}
+                  content={item.content}
+                  classes={classes}
+                />
+              );
+            } else if (item.type === "Text") {
+              return (
+                <Text key={key} content={item.content} classes={classes} />
+              );
+            } else {
+              return (
+                <ShortAnswerOrEssay
+                  key={key}
+                  type={item.type}
+                  content={item.content}
+                  classes={classes}
+                />
+              );
+            }
+          })}
         </Paper>
       );
     } else {

@@ -11,6 +11,9 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import { updateAssignment } from "../../../redux/actions/assignmentActions";
+import MultipleChoice from "./AssignmentContent/MultipleChoice";
+import ShortAnswerOrEssay from "./AssignmentContent/ShortAnswerOrEssay";
+import Text from "./AssignmentContent/Text";
 
 const styles = {
   paper: {
@@ -33,6 +36,10 @@ const styles = {
     marginTop: "20px",
     marginRight: "20px",
     maxWidth: "93%"
+  },
+  card: {
+    margin: "20px",
+    padding: "5px"
   }
 };
 
@@ -186,7 +193,32 @@ class EditAssignment extends React.Component {
               shrink: true
             }}
           />
-          <TextField
+          {Object.keys(assignment.content).map(key => {
+            const item = assignment.content[key];
+            if (item.type === "Multiple Choice") {
+              return (
+                <MultipleChoice
+                  key={key}
+                  content={item.content}
+                  classes={classes}
+                />
+              );
+            } else if (item.type === "Text") {
+              return (
+                <Text key={key} content={item.content} classes={classes} />
+              );
+            } else {
+              return (
+                <ShortAnswerOrEssay
+                  key={key}
+                  type={item.type}
+                  content={item.content}
+                  classes={classes}
+                />
+              );
+            }
+          })}
+          {/* <TextField
             multiline
             fullWidth
             label="Content"
@@ -197,8 +229,8 @@ class EditAssignment extends React.Component {
             InputLabelProps={{
               shrink: true
             }}
-          />
-          {this.state.questions.map((question, index) => (
+          /> */}
+          {/* {this.state.questions.map((question, index) => (
             <TextField
               multiline
               fullWidth
@@ -213,7 +245,7 @@ class EditAssignment extends React.Component {
                 shrink: true
               }}
             />
-          ))}
+          ))} */}
           <Button color="primary" className={classes.button} type="submit">
             Update Assignment
           </Button>
