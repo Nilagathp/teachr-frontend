@@ -12,6 +12,10 @@ import Chip from "@material-ui/core/Chip";
 
 import { submitStudentAssignment } from "../../redux/actions/studentAssignmentActions";
 import { saveStudentAssignment } from "../../redux/actions/studentAssignmentActions";
+import EditStudentMultipleChoice from "./EditStudentAssignmentContent/EditStudentMultipleChoice";
+import EditStudentShortAnswer from "./EditStudentAssignmentContent/EditStudentShortAnswer";
+import EditStudentEssay from "./EditStudentAssignmentContent/EditStudentEssay";
+import StudentText from "./StudentAssignmentContent/StudentText";
 
 const styles = {
   paper: {
@@ -47,9 +51,9 @@ const styles = {
   }
 };
 
-class StudentAssignment extends React.Component {
+class StudentAssignmentWorking extends React.Component {
   state = {
-    answers: this.props.studentAssignment.answers
+    answers: {}
   };
 
   handleChange = name => event => {
@@ -101,20 +105,53 @@ class StudentAssignment extends React.Component {
               assignment.points
             } points`}
           </Typography>
-        </div>
-        <div>
+          <Divider />
           <Typography className={classes.content} variant="subtitle1">
             Directions: {assignment.directions}
           </Typography>
-          <Divider />
-          <Typography className={classes.content}>
-            {assignment.content}
-          </Typography>
-          <Typography variant="subtitle1" className={classes.text}>
-            Questions:
-          </Typography>
-
-          {assignment.questions.map((question, index) => (
+          {Object.keys(assignment.content).map(key => {
+            const item = assignment.content[key];
+            switch (item.type) {
+              case "Multiple Choice":
+                return (
+                  <EditStudentMultipleChoice
+                    key={key}
+                    id={key}
+                    content={item.content}
+                    classes={classes}
+                  />
+                );
+              case "Short Answer":
+                return (
+                  <EditStudentShortAnswer
+                    key={key}
+                    id={key}
+                    content={item.content}
+                    classes={classes}
+                    handleChange={this.handleChange("answers")}
+                  />
+                );
+              case "Essay":
+                return (
+                  <EditStudentEssay
+                    id={key}
+                    key={key}
+                    type={item.type}
+                    content={item.content}
+                    classes={classes}
+                  />
+                );
+              default:
+                return (
+                  <StudentText
+                    key={key}
+                    content={item.content}
+                    classes={classes}
+                  />
+                );
+            }
+          })}
+          {/* {assignment.questions.map((question, index) => (
             <React.Fragment key={index}>
               <Typography
                 key={`question-${index}`}
@@ -151,7 +188,7 @@ class StudentAssignment extends React.Component {
                 />
               )}
             </React.Fragment>
-          ))}
+          ))} */}
           <Button
             color="primary"
             className={classes.button}
@@ -172,10 +209,12 @@ class StudentAssignment extends React.Component {
   }
 }
 
-const styledStudentAssignment = withStyles(styles)(StudentAssignment);
+const styledStudentAssignmentWorking = withStyles(styles)(
+  StudentAssignmentWorking
+);
 export default withRouter(
   connect(
     null,
     { saveStudentAssignment, submitStudentAssignment }
-  )(styledStudentAssignment)
+  )(styledStudentAssignmentWorking)
 );

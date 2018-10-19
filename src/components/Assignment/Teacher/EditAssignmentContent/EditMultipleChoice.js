@@ -5,7 +5,7 @@ import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
 
-const EditMultipleChoice = ({
+const EditStudentMultipleChoice = ({
   id,
   item,
   handleChangeQuestion,
@@ -67,4 +67,4 @@ const EditMultipleChoice = ({
   );
 };
 
-export default EditMultipleChoice;
+export default EditStudentMultipleChoice;
