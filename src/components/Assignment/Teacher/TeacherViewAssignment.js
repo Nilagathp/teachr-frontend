@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -152,9 +152,10 @@ class TeacherViewAssignment extends React.Component {
   }
 }
 
-export default withStyles(styles)(
+const StyledTeacherViewAssignment = withStyles(styles)(TeacherViewAssignment);
+export default withRouter(
   connect(
     null,
     { deleteAssignment }
-  )(TeacherViewAssignment)
+  )(StyledTeacherViewAssignment)
 );

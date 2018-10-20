@@ -68,11 +68,7 @@ function submitStudentAssignment(studentAssignmentId, answers, courseId, push) {
       .then(r => r.json())
       .then(json => {
         dispatch(getUserFromToken(token));
-        push(
-          `/course/${courseId}/assignment/${json.assignment_id}/student/${
-            json.student_id
-          }`
-        );
+        push(`/course/${courseId}/assignment/${json.assignment_id}`);
       });
   };
 }

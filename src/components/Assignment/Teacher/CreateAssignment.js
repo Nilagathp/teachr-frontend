@@ -8,6 +8,8 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
 import { createAssignment } from "../../../redux/actions/assignmentActions";
 import ContentTypeDialog from "./ContentTypeDialog";
@@ -86,21 +88,22 @@ class CreateAssignment extends React.Component {
       switch (input) {
         case "Text":
           return (
-            <TextField
-              required
-              key={`item${index}`}
-              label={input}
-              multiline
-              rows="4"
-              variant="outlined"
-              id={`item${index + 1}`}
-              value={this.state.content[index]}
-              onChange={this.handleChangeContent(input)}
-              style={{ marginTop: "20px", marginLeft: "20px", width: "95%" }}
-              InputLabelProps={{
-                shrink: true
-              }}
-            />
+            <div key={`item${index}`}>
+              <TextField
+                required
+                label={input}
+                multiline
+                rows="4"
+                variant="outlined"
+                id={`item${index + 1}`}
+                value={this.state.content[index]}
+                onChange={this.handleChangeContent(input)}
+                style={{ marginTop: "20px", marginLeft: "20px", width: "90%" }}
+              />
+              <IconButton style={{ marginTop: "20px" }}>
+                <DeleteOutlinedIcon />
+              </IconButton>
+            </div>
           );
         case "Multiple Choice":
           return (
@@ -112,11 +115,11 @@ class CreateAssignment extends React.Component {
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
                 onChange={this.handleChangeMCQuestion(input)}
-                style={{ marginTop: "20px", marginLeft: "20px", width: "95%" }}
-                InputLabelProps={{
-                  shrink: true
-                }}
+                style={{ marginTop: "20px", marginLeft: "20px", width: "90%" }}
               />
+              <IconButton style={{ marginTop: "20px" }}>
+                <DeleteOutlinedIcon />
+              </IconButton>
               <TextField
                 required
                 label="Correct Answer"
@@ -125,9 +128,6 @@ class CreateAssignment extends React.Component {
                 value={this.state.content[index]}
                 onChange={this.handleChangeMCAnswer("correctAnswer")}
                 style={{ marginTop: "20px", marginLeft: "40px" }}
-                InputLabelProps={{
-                  shrink: true
-                }}
               />
               <TextField
                 required
@@ -137,9 +137,6 @@ class CreateAssignment extends React.Component {
                 value={this.state.content[index]}
                 onChange={this.handleChangeMCAnswer("incorrectAnswer1")}
                 style={{ marginTop: "20px", marginLeft: "10px" }}
-                InputLabelProps={{
-                  shrink: true
-                }}
               />
               <TextField
                 required
@@ -149,9 +146,6 @@ class CreateAssignment extends React.Component {
                 value={this.state.content[index]}
                 onChange={this.handleChangeMCAnswer("incorrectAnswer2")}
                 style={{ marginTop: "20px", marginLeft: "10px" }}
-                InputLabelProps={{
-                  shrink: true
-                }}
               />
               <TextField
                 required
@@ -161,13 +155,11 @@ class CreateAssignment extends React.Component {
                 value={this.state.content[index]}
                 onChange={this.handleChangeMCAnswer("incorrectAnswer3")}
                 style={{ marginTop: "20px", marginLeft: "10px" }}
-                InputLabelProps={{
-                  shrink: true
-                }}
               />
             </div>
           );
-        default:
+        case "Essay":
+        case "Short Answer":
           return (
             <div key={`item${index}`}>
               <TextField
@@ -178,11 +170,11 @@ class CreateAssignment extends React.Component {
                 id={`item${index + 1}`}
                 value={this.state.content[index]}
                 onChange={this.handleChangeContent(input)}
-                style={{ marginTop: "20px", marginLeft: "20px", width: "95%" }}
-                InputLabelProps={{
-                  shrink: true
-                }}
+                style={{ marginTop: "20px", marginLeft: "20px", width: "90%" }}
               />
+              <IconButton style={{ marginTop: "20px" }}>
+                <DeleteOutlinedIcon />
+              </IconButton>
             </div>
           );
       }
@@ -313,9 +305,6 @@ class CreateAssignment extends React.Component {
             onChange={this.handleChange("name")}
             className={classes.textField}
             margin="normal"
-            InputLabelProps={{
-              shrink: true
-            }}
           />
           <TextField
             select
@@ -359,9 +348,6 @@ class CreateAssignment extends React.Component {
             onChange={this.handleChange("directions")}
             className={classes.textFieldWide}
             margin="normal"
-            InputLabelProps={{
-              shrink: true
-            }}
           />
           {this.renderContentInputs()}
           <Button color="primary" onClick={this.handleClickOpen}>
