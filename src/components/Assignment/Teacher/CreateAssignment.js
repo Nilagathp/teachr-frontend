@@ -79,8 +79,14 @@ class CreateAssignment extends React.Component {
   };
 
   handleClose = value => {
-    const newContentInputs = [...this.state.contentInputs, value];
+    let newContentInputs = [...this.state.contentInputs, value];
     this.setState({ open: false, contentInputs: newContentInputs });
+  };
+
+  removeInput = index => event => {
+    let inputs = this.state.contentInputs;
+    delete inputs[index];
+    this.setState({ contentInputs: inputs });
   };
 
   renderContentInputs() {
@@ -100,7 +106,10 @@ class CreateAssignment extends React.Component {
                 onChange={this.handleChangeContent(input)}
                 style={{ marginTop: "20px", marginLeft: "20px", width: "90%" }}
               />
-              <IconButton style={{ marginTop: "20px" }}>
+              <IconButton
+                style={{ marginTop: "20px" }}
+                onClick={this.removeInput(index)}
+              >
                 <DeleteOutlinedIcon />
               </IconButton>
             </div>
@@ -117,7 +126,10 @@ class CreateAssignment extends React.Component {
                 onChange={this.handleChangeMCQuestion(input)}
                 style={{ marginTop: "20px", marginLeft: "20px", width: "90%" }}
               />
-              <IconButton style={{ marginTop: "20px" }}>
+              <IconButton
+                style={{ marginTop: "20px" }}
+                onClick={this.removeInput(index)}
+              >
                 <DeleteOutlinedIcon />
               </IconButton>
               <TextField
@@ -172,7 +184,10 @@ class CreateAssignment extends React.Component {
                 onChange={this.handleChangeContent(input)}
                 style={{ marginTop: "20px", marginLeft: "20px", width: "90%" }}
               />
-              <IconButton style={{ marginTop: "20px" }}>
+              <IconButton
+                style={{ marginTop: "20px" }}
+                onClick={this.removeInput(index)}
+              >
                 <DeleteOutlinedIcon />
               </IconButton>
             </div>
