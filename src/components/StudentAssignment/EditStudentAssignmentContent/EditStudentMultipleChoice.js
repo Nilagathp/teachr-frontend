@@ -12,12 +12,23 @@ class EditStudentMultipleChoice extends React.PureComponent {
     value: ""
   };
 
+  componentDidMount() {
+    this.setState({ value: this.props.answer });
+  }
+
   handleClick = event => {
     this.setState({ value: event.target.value });
   };
 
   render() {
-    const { id, content, answerChoices, handleChange, classes } = this.props;
+    const {
+      id,
+      content,
+      answer,
+      answerChoices,
+      handleChange,
+      classes
+    } = this.props;
     return (
       <React.Fragment>
         <Typography className={classes.text} variant="subtitle2">
@@ -30,13 +41,13 @@ class EditStudentMultipleChoice extends React.PureComponent {
             value={this.state.value}
             className={classes.group}
           >
-            {answerChoices.map((answer, index) => (
+            {answerChoices.map((answerChoice, index) => (
               <FormControlLabel
                 onClick={handleChange}
                 key={index}
-                value={answer}
+                value={answerChoice}
                 control={<Radio id={id} />}
-                label={answer}
+                label={answerChoice}
               />
             ))}
           </RadioGroup>

@@ -3,9 +3,22 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import TextField from "@material-ui/core/TextField";
 
-class ViewStudentShortAnswer extends React.PureComponent {
+class EditStudentShortAnswer extends React.PureComponent {
+  state = {
+    value: ""
+  };
+
+  componentDidMount() {
+    this.setState({ value: this.props.answer });
+  }
+
+  handleInputChange = event => {
+    this.setState({ value: event.target.value });
+    this.props.handleChange(event);
+  };
+
   render() {
-    const { id, content, handleChange, classes } = this.props;
+    const { id, answer, content, handleChange, classes } = this.props;
     return (
       <React.Fragment>
         <Typography className={classes.text} variant="subtitle2">
@@ -16,17 +29,18 @@ class ViewStudentShortAnswer extends React.PureComponent {
           id={id}
           multiline
           rows="3"
+          value={this.state.value}
           fullWidth
           variant="outlined"
           className={classes.textField}
           InputLabelProps={{
             shrink: true
           }}
-          onChange={handleChange}
+          onChange={this.handleInputChange}
         />
       </React.Fragment>
     );
   }
 }
 
-export default ViewStudentShortAnswer;
+export default EditStudentShortAnswer;

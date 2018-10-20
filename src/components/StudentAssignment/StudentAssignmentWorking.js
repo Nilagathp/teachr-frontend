@@ -62,7 +62,7 @@ const styles = {
 
 class StudentAssignmentWorking extends React.PureComponent {
   state = {
-    answers: {}
+    answers: this.props.studentAssignment.answers
   };
 
   handleChange = name => event => {
@@ -133,6 +133,7 @@ class StudentAssignmentWorking extends React.PureComponent {
                     classes={classes}
                     answerChoices={shuffledAnswers}
                     handleChange={this.handleChange("answers")}
+                    answer={this.state.answers[key]}
                   />
                 );
               case "Short Answer":
@@ -143,6 +144,7 @@ class StudentAssignmentWorking extends React.PureComponent {
                     content={item.content}
                     classes={classes}
                     handleChange={this.handleChange("answers")}
+                    answer={this.state.answers[key]}
                   />
                 );
               case "Essay":
@@ -153,6 +155,7 @@ class StudentAssignmentWorking extends React.PureComponent {
                     content={item.content}
                     classes={classes}
                     handleChange={this.handleChange("answers")}
+                    answer={this.state.answers[key]}
                   />
                 );
               default:
