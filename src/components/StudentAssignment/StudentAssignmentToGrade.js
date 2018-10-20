@@ -11,6 +11,10 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Chip from "@material-ui/core/Chip";
 
 import { gradeStudentAssignment } from "../../redux/actions/studentAssignmentActions";
+import ViewStudentMultipleChoice from "./ViewStudentAssignmentContent/ViewStudentMultipleChoice";
+import ViewStudentShortAnswer from "./ViewStudentAssignmentContent/ViewStudentShortAnswer";
+import ViewStudentEssay from "./ViewStudentAssignmentContent/ViewStudentEssay";
+import StudentText from "./StudentAssignmentContent/StudentText";
 
 const styles = {
   paper: {
@@ -48,6 +52,14 @@ const styles = {
   },
   question: {
     marginLeft: "20px"
+  },
+  group: {
+    width: "auto",
+    height: "auto",
+    display: "flex",
+    flexWrap: "nowrap",
+    flexDirection: "row",
+    marginLeft: "40px"
   }
 };
 
@@ -104,16 +116,56 @@ class StudentAssignmentToGrade extends React.Component {
                 assignment.points
               } points`}
             </Typography>
-          </div>
-          <div>
+            <Divider />
             <Typography className={classes.content} variant="subtitle1">
               Directions: {assignment.directions}
             </Typography>
-            <Divider />
-            <Typography className={classes.content}>
-              {assignment.content}
-            </Typography>
-            <Typography variant="subtitle1" className={classes.text}>
+            {Object.keys(assignment.content).map(key => {
+              const item = assignment.content[key];
+              switch (item.type) {
+                case "Multiple Choice":
+                  const answerChoices = Object.values(item.content.answers);
+                  return (
+                    <ViewStudentMultipleChoice
+                      key={key}
+                      id={key}
+                      content={item.content}
+                      classes={classes}
+                      answer={studentAssignment.answers[key]}
+                      answerChoices={answerChoices}
+                    />
+                  );
+                case "Short Answer":
+                  return (
+                    <ViewStudentShortAnswer
+                      key={key}
+                      id={key}
+                      content={item.content}
+                      classes={classes}
+                      answer={studentAssignment.answers[key]}
+                    />
+                  );
+                case "Essay":
+                  return (
+                    <ViewStudentEssay
+                      id={key}
+                      key={key}
+                      content={item.content}
+                      classes={classes}
+                      answer={studentAssignment.answers[key]}
+                    />
+                  );
+                default:
+                  return (
+                    <StudentText
+                      key={key}
+                      content={item.content}
+                      classes={classes}
+                    />
+                  );
+              }
+            })}
+            {/* <Typography variant="subtitle1" className={classes.text}>
               Questions:
             </Typography>
             {assignment.questions.map((question, index) => (
@@ -138,7 +190,7 @@ class StudentAssignmentToGrade extends React.Component {
                   }}
                 />
               </React.Fragment>
-            ))}
+            ))} */}
             {studentAssignment.status === "submitted" ? (
               <React.Fragment>
                 <InputLabel shrink className={classes.points}>{`Points out of ${
