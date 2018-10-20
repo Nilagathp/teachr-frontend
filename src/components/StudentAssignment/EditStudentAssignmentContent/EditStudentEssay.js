@@ -17,7 +17,7 @@ class EditStudentEssay extends React.Component {
   };
 
   render() {
-    const { id, answer, content, handleChange, classes } = this.props;
+    const { id, content, classes } = this.props;
     return (
       <React.Fragment>
         <Typography className={classes.text} variant="subtitle2">

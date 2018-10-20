@@ -9,29 +9,16 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 class ViewStudentMultipleChoice extends React.PureComponent {
   render() {
-    const {
-      answer,
-      id,
-      content,
-      answerChoices,
-      handleChange,
-      classes
-    } = this.props;
+    const { answer, id, content, answerChoices, classes } = this.props;
     return (
       <React.Fragment>
         <Typography className={classes.text} variant="subtitle2">
           {content.question}
         </Typography>
         <FormControl component="fieldset">
-          <RadioGroup
-            id={id}
-            onChange={this.handleClick}
-            value={answer}
-            className={classes.group}
-          >
+          <RadioGroup id={id} value={answer} className={classes.group}>
             {answerChoices.map((answer, index) => (
               <FormControlLabel
-                onClick={handleChange}
                 key={index}
                 value={answer}
                 control={<Radio id={id} />}

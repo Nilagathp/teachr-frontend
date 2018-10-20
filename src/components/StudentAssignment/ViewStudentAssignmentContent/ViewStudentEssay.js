@@ -4,14 +4,13 @@ import TextField from "@material-ui/core/TextField";
 
 class ViewStudentEssay extends React.PureComponent {
   render() {
-    const { answer, id, type, content, handleChange, classes } = this.props;
+    const { answer, id, content, classes } = this.props;
     return (
       <React.Fragment>
         <Typography className={classes.text} variant="subtitle2">
           {content}
         </Typography>
         <TextField
-          required
           id={id}
           multiline
           rows="10"
@@ -23,7 +22,6 @@ class ViewStudentEssay extends React.PureComponent {
             shrink: true
           }}
           InputProps={{ readOnly: true }}
-          onChange={handleChange}
         />
       </React.Fragment>
     );

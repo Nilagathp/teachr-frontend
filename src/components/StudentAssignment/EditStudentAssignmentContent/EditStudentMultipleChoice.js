@@ -21,14 +21,7 @@ class EditStudentMultipleChoice extends React.PureComponent {
   };
 
   render() {
-    const {
-      id,
-      content,
-      answer,
-      answerChoices,
-      handleChange,
-      classes
-    } = this.props;
+    const { id, content, answerChoices, handleChange, classes } = this.props;
     return (
       <React.Fragment>
         <Typography className={classes.text} variant="subtitle2">
