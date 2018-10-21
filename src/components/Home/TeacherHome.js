@@ -158,10 +158,4 @@ class TeacherHome extends React.Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     students: state.students
-//   };
-// };
-
 export default withStyles(styles)(TeacherHome);

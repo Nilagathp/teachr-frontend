@@ -234,7 +234,7 @@ const mapStateToProps = (state, ownProps) => {
   const urlArray = ownProps.match.url.split("/");
   const assignmentId = parseInt(urlArray[4]);
   const courseId = parseInt(urlArray[2]);
-  // const studentId = parseInt(urlArray[7]);
+  const studentId = parseInt(urlArray[7]);
   if (state.user && state.user.person.teacher) {
     assignment = state.user.person.teacher.assignments.find(
       assignment => assignment.id === assignmentId
@@ -242,14 +242,11 @@ const mapStateToProps = (state, ownProps) => {
     course = state.user.person.teacher.courses.find(
       course => course.id === courseId
     );
-  }
-  if (state.students) {
-    studentAssignment = state.students
-      .map(student => student.student_assignments)
-      .flat()
-      .find(
-        studentAssignment => studentAssignment.assignment_id === assignmentId
-      );
+    studentAssignment = state.user.person.teacher.student_assignments.find(
+      studentAssignment =>
+        studentAssignment.assignment_id === assignmentId &&
+        studentAssignment.student_id === studentId
+    );
   }
   return {
     assignment: assignment,

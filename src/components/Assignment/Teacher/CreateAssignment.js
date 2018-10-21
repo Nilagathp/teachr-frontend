@@ -296,11 +296,7 @@ class CreateAssignment extends React.Component {
       <Paper className={classes.paper}>
         <Typography variant="h4" className={classes.heading}>
           Create Assignment
-          <Button
-            color="primary"
-            component={Link}
-            to={`/course/${this.state.courseId}/`}
-          >
+          <Button color="primary" component={Link} to={`/home`}>
             Cancel
           </Button>
         </Typography>
