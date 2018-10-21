@@ -53,7 +53,7 @@ class TeacherCourse extends React.Component {
   };
 
   render() {
-    const { teacher, course, sections, classes } = this.props;
+    const { teacher, course, classes } = this.props;
     let assignments = this.props.assignments;
     if (this.state.category) {
       assignments = assignments.filter(
@@ -73,56 +73,36 @@ class TeacherCourse extends React.Component {
             Create Assignment
           </Button>
         </Typography>
-        <Grid container spacing={24}>
-          <Grid item xs={4}>
-            <Paper className={classes.paper}>
-              <Typography variant="h4" className={classes.heading}>
-                Sections
-              </Typography>
-              <Divider />
-              <List>
-                {sections
-                  ? sections.map(section => (
-                      <ListItem key={section.id} divider>
-                        <ListItemText primary={`Period ${section.period}`} />
-                      </ListItem>
-                    ))
-                  : null}
-              </List>
-            </Paper>
-          </Grid>
-          <Grid item xs={8}>
-            <Paper className={classes.paper}>
-              <Typography variant="h4" className={classes.heading}>
-                Assignments
-                <FormControl className={classes.formControl}>
-                  <InputLabel shrink>Filter by category:</InputLabel>
-                  <Select
-                    value={this.state.category}
-                    onChange={this.handleChange}
-                    inputProps={{ name: "category" }}
-                  >
-                    <MenuItem value="" />
-                    <MenuItem key={0} value={"CW"}>
-                      CW
-                    </MenuItem>
-                    <MenuItem key={1} value={"HW"}>
-                      HW
-                    </MenuItem>
-                    <MenuItem key={2} value={"TQP"}>
-                      TQP
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-                <Button size="small" color="primary" onClick={this.handleClick}>
-                  Clear Filter
-                </Button>
-              </Typography>
-              <Divider />
-              <AssignmentList teacher={teacher} assignments={assignments} />
-            </Paper>
-          </Grid>
-        </Grid>
+
+        <Paper className={classes.paper}>
+          <Typography variant="h4" className={classes.heading}>
+            Assignments
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink>Filter by category:</InputLabel>
+              <Select
+                value={this.state.category}
+                onChange={this.handleChange}
+                inputProps={{ name: "category" }}
+              >
+                <MenuItem value="" />
+                <MenuItem key={0} value={"CW"}>
+                  CW
+                </MenuItem>
+                <MenuItem key={1} value={"HW"}>
+                  HW
+                </MenuItem>
+                <MenuItem key={2} value={"TQP"}>
+                  TQP
+                </MenuItem>
+              </Select>
+            </FormControl>
+            <Button size="small" color="primary" onClick={this.handleClick}>
+              Clear Filter
+            </Button>
+          </Typography>
+          <Divider />
+          <AssignmentList teacher={teacher} assignments={assignments} />
+        </Paper>
       </React.Fragment>
     );
   }
@@ -131,13 +111,11 @@ class TeacherCourse extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   let courses = state.user.person.teacher.courses;
   let assignments = state.user.person.teacher.assignments;
-  let sections = state.user.person.teacher.sections;
   let courseId = parseInt(ownProps.match.params.id);
   return {
     teacher: state.user.person.teacher,
     course: courses.find(c => c.id === courseId),
-    assignments: assignments.filter(a => a.course_id === courseId),
-    sections: sections.filter(s => s.course_id === courseId)
+    assignments: assignments.filter(a => a.course_id === courseId)
   };
 };
 

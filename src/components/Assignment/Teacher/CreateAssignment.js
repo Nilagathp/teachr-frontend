@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -192,6 +193,8 @@ class CreateAssignment extends React.Component {
               </IconButton>
             </div>
           );
+        default:
+          return null;
       }
     });
   }
@@ -293,6 +296,13 @@ class CreateAssignment extends React.Component {
       <Paper className={classes.paper}>
         <Typography variant="h4" className={classes.heading}>
           Create Assignment
+          <Button
+            color="primary"
+            component={Link}
+            to={`/course/${this.state.courseId}/`}
+          >
+            Cancel
+          </Button>
         </Typography>
         <Divider />
         <form onSubmit={this.handleSubmit}>
