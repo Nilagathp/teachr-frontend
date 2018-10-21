@@ -1,5 +1,3 @@
-import { getStudents, updateStudents } from "./studentsActions";
-
 function updateUser(user) {
   return { type: "UPDATE_USER", user };
 }
@@ -18,9 +16,6 @@ function logInUser(userParams) {
       .then(json => {
         if (json.jwt) {
           localStorage.setItem("token", json.jwt);
-          if (json.user.role === "teacher") {
-            dispatch(getStudents(json.user.person.teacher.id));
-          }
           dispatch(updateUser(json.user));
         }
       });
@@ -31,7 +26,6 @@ function logOutUser() {
   return function(dispatch) {
     localStorage.clear();
     dispatch(updateUser(null));
-    dispatch(updateStudents(null));
   };
 }
 
@@ -44,9 +38,6 @@ function getUserFromToken(token) {
     })
       .then(r => r.json())
       .then(json => {
-        if (json.user.role === "teacher") {
-          dispatch(getStudents(json.user.person.teacher.id));
-        }
         dispatch(updateUser(json.user));
       });
   };
