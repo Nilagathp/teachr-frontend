@@ -5,7 +5,12 @@ import List from "@material-ui/core/List";
 import TeacherAssignmentListItem from "./Teacher/TeacherAssignmentListItem";
 import StudentAssignmentListItem from "./Student/StudentAssignmentListItem";
 
-const AssignmentList = ({ teacher, assignments, courses }) => {
+const AssignmentList = ({
+  teacher,
+  assignments,
+  studentAssignments,
+  courses
+}) => {
   if (teacher) {
     return (
       <List>
@@ -27,6 +32,10 @@ const AssignmentList = ({ teacher, assignments, courses }) => {
             key={assignment.id}
             assignment={assignment}
             courses={courses}
+            studentAssignment={studentAssignments.find(
+              studentAssignment =>
+                studentAssignment.assignment_id === assignment.id
+            )}
           />
         ))}
       </List>

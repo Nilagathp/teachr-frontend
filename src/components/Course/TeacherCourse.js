@@ -97,7 +97,11 @@ class TeacherCourse extends React.Component {
             </Button>
           </Typography>
           <Divider />
-          <AssignmentList teacher={teacher} assignments={assignments} />
+          <AssignmentList
+            teacher={teacher}
+            assignments={assignments}
+            studentAssignments={teacher.studentAssignments}
+          />
         </Paper>
       </React.Fragment>
     );
@@ -109,7 +113,6 @@ const mapStateToProps = (state, ownProps) => {
   let assignments = state.user.person.teacher.assignments;
   let courseId = parseInt(ownProps.match.params.id);
   return {
-    teacher: state.user.person.teacher,
     course: courses.find(c => c.id === courseId),
     assignments: assignments.filter(a => a.course_id === courseId)
   };

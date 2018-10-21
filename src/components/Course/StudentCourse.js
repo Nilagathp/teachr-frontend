@@ -49,7 +49,7 @@ class StudentCourse extends React.Component {
   };
 
   render() {
-    const { course, classes } = this.props;
+    const { course, student, classes } = this.props;
     let assignments = this.props.assignments;
     if (this.state.category) {
       assignments = assignments.filter(
@@ -89,7 +89,10 @@ class StudentCourse extends React.Component {
             </Button>
           </Typography>
           <Divider />
-          <AssignmentList assignments={assignments} />
+          <AssignmentList
+            assignments={assignments}
+            studentAssignments={student.student_assignments}
+          />
         </Paper>
       </React.Fragment>
     );

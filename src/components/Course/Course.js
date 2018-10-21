@@ -7,9 +7,9 @@ import StudentCourse from "./StudentCourse";
 const Course = ({ user }) => {
   if (user) {
     if (user.role === "teacher") {
-      return <TeacherCourse user={user} />;
+      return <TeacherCourse teacher={user.person.teacher} />;
     } else {
-      return <StudentCourse />;
+      return <StudentCourse student={user.person.student} />;
     }
   } else {
     return null;

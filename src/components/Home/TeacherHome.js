@@ -149,6 +149,7 @@ class TeacherHome extends React.Component {
                 teacher={teacher}
                 assignments={assignments}
                 courses={courses}
+                studentAssignments={teacher.student_assignments}
               />
             </Paper>
           </Grid>

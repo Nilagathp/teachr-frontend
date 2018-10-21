@@ -133,7 +133,11 @@ class StudentHome extends React.Component {
                 </Button>
               </Typography>
               <Divider />
-              <AssignmentList assignments={assignments} courses={courses} />
+              <AssignmentList
+                assignments={assignments}
+                courses={courses}
+                studentAssignments={student.student_assignments}
+              />
             </Paper>
           </Grid>
         </Grid>
