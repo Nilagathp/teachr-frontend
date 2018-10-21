@@ -37,7 +37,8 @@ const styles = {
 
 class StudentCourse extends React.Component {
   state = {
-    category: ""
+    category: "",
+    status: ""
   };
 
   handleChange = event => {
@@ -45,7 +46,7 @@ class StudentCourse extends React.Component {
   };
 
   handleClick = event => {
-    this.setState({ course: "", category: "" });
+    this.setState({ category: "", status: "" });
   };
 
   render() {
@@ -55,6 +56,27 @@ class StudentCourse extends React.Component {
       assignments = assignments.filter(
         assignment => assignment.category === this.state.category
       );
+    }
+    if (this.state.status) {
+      let assignmentIds = student.student_assignments
+        .filter(
+          student_assignment => student_assignment.status === this.state.status
+        )
+        .map(student_assignment => student_assignment.assignment_id);
+      if (this.state.status === "not_started") {
+        let allStudentAssignmentIds = student.student_assignments.map(
+          student_assignment => student_assignment.assignment_id
+        );
+        assignments = assignments.filter(
+          assignment =>
+            !allStudentAssignmentIds.includes(assignment.id) ||
+            assignmentIds.includes(assignment.id)
+        );
+      } else {
+        assignments = assignments.filter(assignment =>
+          assignmentIds.includes(assignment.id)
+        );
+      }
     }
     return (
       <React.Fragment>
@@ -81,6 +103,28 @@ class StudentCourse extends React.Component {
                 </MenuItem>
                 <MenuItem key={2} value={"TQP"}>
                   TQP
+                </MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink>Filter by status:</InputLabel>
+              <Select
+                value={this.state.status}
+                onChange={this.handleChange}
+                inputProps={{ name: "status" }}
+              >
+                <MenuItem value="" />
+                <MenuItem key={"not_started"} value={"not_started"}>
+                  not started
+                </MenuItem>
+                <MenuItem key={"in_progress"} value={"in_progress"}>
+                  in progress
+                </MenuItem>
+                <MenuItem key={"submitted"} value={"submitted"}>
+                  submitted
+                </MenuItem>
+                <MenuItem key={"graded"} value={"graded"}>
+                  graded
                 </MenuItem>
               </Select>
             </FormControl>
