@@ -1,18 +1,31 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
-const EditShortAnswerOrEssay = ({ id, item, handleChange, classes }) => {
+const EditShortAnswerOrEssay = ({
+  id,
+  item,
+  handleChange,
+  removeInput,
+  classes
+}) => {
   return (
-    <TextField
-      required
-      id={id}
-      label={`${item.type} Question`}
-      variant="outlined"
-      multiline
-      className={classes.textFieldWide}
-      value={item.content}
-      onChange={handleChange}
-    />
+    <div>
+      <TextField
+        required
+        id={id}
+        label={`${item.type} Question`}
+        variant="outlined"
+        multiline
+        className={classes.textFieldWide}
+        value={item.content}
+        onChange={handleChange}
+      />
+      <IconButton style={{ marginTop: "20px" }} onClick={removeInput(id)}>
+        <DeleteOutlinedIcon />
+      </IconButton>
+    </div>
   );
 };
 

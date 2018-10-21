@@ -4,12 +4,15 @@ import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import Chip from "@material-ui/core/Chip";
 import DoneIcon from "@material-ui/icons/Done";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 
-const EditStudentMultipleChoice = ({
+const EditMultipleChoice = ({
   id,
   item,
   handleChangeQuestion,
   handleChangeMCAnswer,
+  removeInput,
   classes
 }) => {
   return (
@@ -24,6 +27,9 @@ const EditStudentMultipleChoice = ({
         value={item.content.question}
         onChange={handleChangeQuestion}
       />
+      <IconButton style={{ marginTop: "20px" }} onClick={removeInput(id)}>
+        <DeleteOutlinedIcon />
+      </IconButton>
       <TextField
         required
         id={id}
@@ -64,4 +70,4 @@ const EditStudentMultipleChoice = ({
   );
 };
 
-export default EditStudentMultipleChoice;
+export default EditMultipleChoice;

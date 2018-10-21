@@ -45,7 +45,7 @@ const styles = {
   textFieldWide: {
     marginLeft: "20px",
     marginTop: "20px",
-    width: "95%"
+    width: "90%"
   },
   textFieldLeft: {
     marginLeft: "40px",
@@ -127,6 +127,12 @@ class EditAssignment extends React.Component {
         })
       : (newContent[newKey] = { content: "", type: value });
     this.setState({ open: false, content: newContent });
+  };
+
+  removeInput = key => event => {
+    let inputs = this.state.content;
+    delete inputs[key];
+    this.setState({ content: inputs });
   };
 
   handleChangeMCQuestion = name => event => {
@@ -278,6 +284,7 @@ class EditAssignment extends React.Component {
                     "Multiple Choice"
                   )}
                   handleChangeMCAnswer={this.handleChangeMCAnswer}
+                  removeInput={this.removeInput}
                 />
               );
             } else if (item.type === "Text") {
@@ -288,6 +295,7 @@ class EditAssignment extends React.Component {
                   item={item}
                   classes={classes}
                   handleChange={this.handleChangeContent("Text")}
+                  removeInput={this.removeInput}
                 />
               );
             } else {
@@ -298,6 +306,7 @@ class EditAssignment extends React.Component {
                   item={item}
                   classes={classes}
                   handleChange={this.handleChangeContent(`${item.type}`)}
+                  removeInput={this.removeInput}
                 />
               );
             }
