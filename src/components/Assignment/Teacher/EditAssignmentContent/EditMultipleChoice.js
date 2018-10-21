@@ -9,10 +9,7 @@ const EditStudentMultipleChoice = ({
   id,
   item,
   handleChangeQuestion,
-  handleChangeCorrectAnswer,
-  handleChangeIncorrectAnswer1,
-  handleChangeIncorrectAnswer2,
-  handleChangeIncorrectAnswer3,
+  handleChangeMCAnswer,
   classes
 }) => {
   return (
@@ -34,7 +31,7 @@ const EditStudentMultipleChoice = ({
         variant="outlined"
         className={classes.textFieldLeft}
         value={item.content.answers.correctAnswer}
-        onChange={handleChangeCorrectAnswer}
+        onChange={handleChangeMCAnswer("correctAnswer")}
       />
       <TextField
         required
@@ -43,7 +40,7 @@ const EditStudentMultipleChoice = ({
         variant="outlined"
         className={classes.textField}
         value={item.content.answers.incorrectAnswer1}
-        onChange={handleChangeIncorrectAnswer1}
+        onChange={handleChangeMCAnswer("incorrectAnswer1")}
       />
       <TextField
         required
@@ -52,7 +49,7 @@ const EditStudentMultipleChoice = ({
         variant="outlined"
         className={classes.textField}
         value={item.content.answers.incorrectAnswer2}
-        onChange={handleChangeIncorrectAnswer2}
+        onChange={handleChangeMCAnswer("incorrectAnswer2")}
       />
       <TextField
         required
@@ -61,7 +58,7 @@ const EditStudentMultipleChoice = ({
         variant="outlined"
         className={classes.textField}
         value={item.content.answers.incorrectAnswer3}
-        onChange={handleChangeIncorrectAnswer3}
+        onChange={handleChangeMCAnswer("incorrectAnswer3")}
       />
     </div>
   );

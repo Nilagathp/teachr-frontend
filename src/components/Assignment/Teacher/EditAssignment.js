@@ -14,6 +14,7 @@ import { updateAssignment } from "../../../redux/actions/assignmentActions";
 import EditMultipleChoice from "./EditAssignmentContent/EditMultipleChoice";
 import EditShortAnswerOrEssay from "./EditAssignmentContent/EditShortAnswerOrEssay";
 import EditText from "./EditAssignmentContent/EditText";
+import ContentTypeDialog from "./ContentTypeDialog";
 
 const styles = {
   paper: {
@@ -68,7 +69,7 @@ const categories = [
 ];
 
 class EditAssignment extends React.Component {
-  state = {};
+  state = { open: false, selectedValue: null };
 
   static getDerivedStateFromProps(props, state) {
     if (props.assignment && props.assignment.id !== state.assignmentId) {
@@ -99,6 +100,33 @@ class EditAssignment extends React.Component {
     this.setState({
       content: newContent
     });
+  };
+
+  handleClickOpen = () => {
+    this.setState({
+      open: true
+    });
+  };
+
+  handleClose = value => {
+    let newContent = this.state.content;
+    let lastKey = Object.keys(newContent)[Object.keys(newContent).length - 1];
+    let newKey = `item${parseInt(lastKey.substring(4)) + 1}`;
+    value === "Multiple Choice"
+      ? (newContent[newKey] = {
+          content: {
+            question: "",
+            answers: {
+              correctAnswer: "",
+              incorrectAnswer1: "",
+              incorrectAnswer2: "",
+              incorrectAnswer3: ""
+            }
+          },
+          type: value
+        })
+      : (newContent[newKey] = { content: "", type: value });
+    this.setState({ open: false, content: newContent });
   };
 
   handleChangeMCQuestion = name => event => {
@@ -237,8 +265,8 @@ class EditAssignment extends React.Component {
               shrink: true
             }}
           />
-          {Object.keys(assignment.content).map(key => {
-            const item = assignment.content[key];
+          {Object.keys(this.state.content).map(key => {
+            const item = this.state.content[key];
             if (item.type === "Multiple Choice") {
               return (
                 <EditMultipleChoice
@@ -249,18 +277,7 @@ class EditAssignment extends React.Component {
                   handleChangeQuestion={this.handleChangeMCQuestion(
                     "Multiple Choice"
                   )}
-                  handleChangeCorrectAnswer={this.handleChangeMCAnswer(
-                    "correctAnswer"
-                  )}
-                  handleChangeIncorrectAnswer1={this.handleChangeMCAnswer(
-                    "incorrectAnswer1"
-                  )}
-                  handleChangeIncorrectAnswer2={this.handleChangeMCAnswer(
-                    "incorrectAnswer2"
-                  )}
-                  handleChangeIncorrectAnswer3={this.handleChangeMCAnswer(
-                    "incorrectAnswer3"
-                  )}
+                  handleChangeMCAnswer={this.handleChangeMCAnswer}
                 />
               );
             } else if (item.type === "Text") {
@@ -285,6 +302,14 @@ class EditAssignment extends React.Component {
               );
             }
           })}
+          <Button color="primary" onClick={this.handleClickOpen}>
+            Add Content
+          </Button>
+          <ContentTypeDialog
+            selectedValue={this.state.selectedValue}
+            open={this.state.open}
+            onClose={this.handleClose}
+          />
           <Button color="primary" className={classes.button} type="submit">
             Update Assignment
           </Button>
