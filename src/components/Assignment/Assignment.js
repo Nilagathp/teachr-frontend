@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import TeacherViewAssignment from "./Teacher/TeacherViewAssignment";
-import StudentViewAssignment from "./Student/StudentViewAssignment";
+import StudentAssignment from "../StudentAssignment/StudentAssignment";
 
 const Assignment = ({ user, course, assignment, studentAssignment }) => {
   if (user) {
@@ -16,7 +17,7 @@ const Assignment = ({ user, course, assignment, studentAssignment }) => {
       );
     } else {
       return (
-        <StudentViewAssignment
+        <StudentAssignment
           user={user}
           course={course}
           assignment={assignment}
@@ -64,4 +65,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(Assignment);
+export default withRouter(connect(mapStateToProps)(Assignment));

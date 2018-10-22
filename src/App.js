@@ -32,10 +32,6 @@ class App extends Component {
             component={CreateAssignment}
           />
           <Route
-            path="/course/:id/assignment/:id/student/:id"
-            component={StudentAssignment}
-          />
-          <Route
             path="/course/:id/assignment/:id/grade/student/:id"
             component={StudentAssignmentToGrade}
           />

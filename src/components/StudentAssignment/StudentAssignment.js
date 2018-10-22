@@ -1,33 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import StudentAssignmentWorking from "./StudentAssignmentWorking";
 import StudentAssignmentCompleted from "./StudentAssignmentCompleted";
 
 const StudentAssignment = ({ studentAssignment, assignment, course }) => {
-  if (studentAssignment) {
-    if (
-      studentAssignment.status === "not_started" ||
-      studentAssignment.status === "in_progress"
-    ) {
-      return (
-        <StudentAssignmentWorking
-          studentAssignment={studentAssignment}
-          assignment={assignment}
-          course={course}
-        />
-      );
-    } else {
-      return (
-        <StudentAssignmentCompleted
-          studentAssignment={studentAssignment}
-          assignment={assignment}
-          course={course}
-        />
-      );
-    }
+  if (
+    studentAssignment.status === "not_started" ||
+    studentAssignment.status === "in_progress"
+  ) {
+    return (
+      <StudentAssignmentWorking
+        studentAssignment={studentAssignment}
+        assignment={assignment}
+        course={course}
+      />
+    );
   } else {
-    return null;
+    return (
+      <StudentAssignmentCompleted
+        studentAssignment={studentAssignment}
+        assignment={assignment}
+        course={course}
+      />
+    );
   }
 };
 
@@ -55,4 +52,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(StudentAssignment);
+export default withRouter(connect(mapStateToProps)(StudentAssignment));
