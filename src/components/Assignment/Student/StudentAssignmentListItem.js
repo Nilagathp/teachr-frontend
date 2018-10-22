@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Chip from "@material-ui/core/Chip";
+import format from "date-fns/format";
 
 const StudentAssignmentListItem = ({
   teacher,
@@ -22,13 +23,16 @@ const StudentAssignmentListItem = ({
       {courses ? (
         <ListItemText
           primary={assignment.name}
-          secondary={`
-              ${courses[assignment.course_id]} - ${assignment.category}`}
+          secondary={`${assignment.category} - ${
+            assignment.points
+          } points - ${format(assignment.due_date, "M/d")}`}
         />
       ) : (
         <ListItemText
           primary={assignment.name}
-          secondary={`${assignment.category} - ${assignment.points} points`}
+          secondary={`${assignment.category} - ${
+            assignment.points
+          } points - ${format(assignment.due_date, "M/d")}`}
         />
       )}
       {studentAssignment ? (
