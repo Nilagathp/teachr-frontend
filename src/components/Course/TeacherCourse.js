@@ -100,7 +100,7 @@ class TeacherCourse extends React.Component {
           <AssignmentList
             teacher={teacher}
             assignments={assignments}
-            studentAssignments={teacher.studentAssignments}
+            studentAssignments={teacher.student_assignments}
           />
         </Paper>
       </React.Fragment>
