@@ -11,6 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import DateTimePicker from "material-ui-pickers/DateTimePicker";
 
 import { createAssignment } from "../../../redux/actions/assignmentActions";
 import ContentTypeDialog from "./ContentTypeDialog";
@@ -63,7 +64,8 @@ class CreateAssignment extends React.Component {
     content: {},
     open: false,
     selectedValue: null,
-    contentInputs: []
+    contentInputs: [],
+    dueDate: new Date()
   };
 
   componentDidMount() {
@@ -205,6 +207,10 @@ class CreateAssignment extends React.Component {
     });
   };
 
+  handleDateChange = date => {
+    this.setState({ dueDate: date });
+  };
+
   handleChangeContent = name => event => {
     let newContent = this.state.content;
     newContent[event.target.id] = { type: name, content: event.target.value };
@@ -285,7 +291,8 @@ class CreateAssignment extends React.Component {
       points: this.state.points,
       category: this.state.category,
       directions: this.state.directions,
-      content: this.state.content
+      content: this.state.content,
+      due_date: this.state.dueDate
     };
     this.props.createAssignment(assignmentParams, this.props.history.push);
   };
@@ -360,6 +367,13 @@ class CreateAssignment extends React.Component {
               }
             }}
             margin="normal"
+          />
+          <DateTimePicker
+            label="Due on:"
+            variant="outlined"
+            className={classes.textField}
+            value={this.state.dueDate}
+            onChange={this.handleDateChange}
           />
           <TextField
             required

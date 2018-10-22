@@ -7,6 +7,8 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import store from "./redux/store";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsProvider";
+import DateFnsUtils from "material-ui-pickers/utils/date-fns-utils";
 
 const theme = createMuiTheme({
   typography: {
@@ -18,7 +20,9 @@ ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
-        <App />
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <App />
+        </MuiPickersUtilsProvider>
       </MuiThemeProvider>
     </Provider>
   </BrowserRouter>,
