@@ -35,7 +35,7 @@ const StudentAssignmentListItem = ({
   teacher,
   assignment,
   studentAssignment,
-  courses
+  coursesName
 }) => {
   return (
     <ListItem
@@ -45,12 +45,15 @@ const StudentAssignmentListItem = ({
       component={Link}
       to={`/course/${assignment.course_id}/assignment/${assignment.id}`}
     >
-      {courses ? (
+      {coursesName ? (
         <ListItemText
           primary={assignment.name}
-          secondary={`${assignment.category} - ${
-            assignment.points
-          } points - ${format(assignment.due_date, "M/d")}`}
+          secondary={`${coursesName[assignment.course_id]} - ${
+            assignment.category
+          } - ${assignment.points} points - ${format(
+            assignment.due_date,
+            "M/d"
+          )}`}
         />
       ) : (
         <ListItemText

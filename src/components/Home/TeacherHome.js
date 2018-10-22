@@ -53,7 +53,7 @@ class TeacherHome extends React.Component {
   };
 
   render() {
-    const { teacher, courses, classes } = this.props;
+    const { teacher, coursesName, classes } = this.props;
     let assignments = teacher.assignments;
     if (this.state.course) {
       assignments = assignments.filter(
@@ -148,8 +148,9 @@ class TeacherHome extends React.Component {
               <AssignmentList
                 teacher={teacher}
                 assignments={assignments}
-                courses={courses}
+                coursesName={coursesName}
                 studentAssignments={teacher.student_assignments}
+                courses={teacher.courses}
               />
             </Paper>
           </Grid>

@@ -52,7 +52,7 @@ class StudentHome extends React.Component {
   };
 
   render() {
-    const { student, courses, classes } = this.props;
+    const { student, coursesName, classes } = this.props;
     let assignments = student.assignments;
     if (this.state.course) {
       assignments = assignments.filter(
@@ -173,7 +173,7 @@ class StudentHome extends React.Component {
               <Divider />
               <AssignmentList
                 assignments={assignments}
-                courses={courses}
+                coursesName={coursesName}
                 studentAssignments={student.student_assignments}
               />
             </Paper>

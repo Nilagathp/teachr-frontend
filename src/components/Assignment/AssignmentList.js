@@ -9,6 +9,7 @@ const AssignmentList = ({
   teacher,
   assignments,
   studentAssignments,
+  coursesName,
   courses
 }) => {
   if (teacher) {
@@ -19,12 +20,14 @@ const AssignmentList = ({
             key={assignment.id}
             assignment={assignment}
             teacher={teacher}
-            courses={courses}
+            coursesName={coursesName}
+            students={teacher.students}
             studentAssignments={studentAssignments.filter(
               studentAssignment =>
                 studentAssignment.assignment_id === assignment.id &&
                 studentAssignment.status === "submitted"
             )}
+            course={courses.find(course => course.id === assignment.course_id)}
           />
         ))}
       </List>
@@ -36,7 +39,7 @@ const AssignmentList = ({
           <StudentAssignmentListItem
             key={assignment.id}
             assignment={assignment}
-            courses={courses}
+            coursesName={coursesName}
             studentAssignment={studentAssignments.find(
               studentAssignment =>
                 studentAssignment.assignment_id === assignment.id

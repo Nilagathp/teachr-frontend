@@ -101,6 +101,7 @@ class TeacherCourse extends React.Component {
             teacher={teacher}
             assignments={assignments}
             studentAssignments={teacher.student_assignments}
+            courses={teacher.courses}
           />
         </Paper>
       </React.Fragment>
