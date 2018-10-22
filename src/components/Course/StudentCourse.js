@@ -51,7 +51,9 @@ class StudentCourse extends React.Component {
 
   render() {
     const { course, student, classes } = this.props;
-    let assignments = this.props.assignments;
+    let assignments = this.props.assignments.filter(
+      assignment => assignment.assigned
+    );
     if (this.state.category) {
       assignments = assignments.filter(
         assignment => assignment.category === this.state.category
@@ -63,20 +65,10 @@ class StudentCourse extends React.Component {
           student_assignment => student_assignment.status === this.state.status
         )
         .map(student_assignment => student_assignment.assignment_id);
-      if (this.state.status === "not_started") {
-        let allStudentAssignmentIds = student.student_assignments.map(
-          student_assignment => student_assignment.assignment_id
-        );
-        assignments = assignments.filter(
-          assignment =>
-            !allStudentAssignmentIds.includes(assignment.id) ||
-            assignmentIds.includes(assignment.id)
-        );
-      } else {
-        assignments = assignments.filter(assignment =>
-          assignmentIds.includes(assignment.id)
-        );
-      }
+
+      assignments = assignments.filter(assignment =>
+        assignmentIds.includes(assignment.id)
+      );
     }
     return (
       <React.Fragment>
