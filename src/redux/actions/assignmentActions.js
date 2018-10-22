@@ -1,4 +1,5 @@
 import { getUserFromToken } from "./userActions";
+import { createStudentAssignment } from "./studentAssignmentActions";
 
 function createAssignment(assignmentParams, push) {
   return function(dispatch) {
@@ -16,6 +17,28 @@ function createAssignment(assignmentParams, push) {
       .then(json => {
         dispatch(getUserFromToken(token));
         push(`/course/${json.course.id}/assignment/${json.id}`);
+      });
+  };
+}
+
+function publishAssignment(assignmentId) {
+  return function(dispatch) {
+    const token = localStorage.getItem("token");
+    fetch(`http://localhost:3000/assignments/${assignmentId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ assignment: { assigned: true } }),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(r => r.json())
+      .then(json => {
+        json.course.students.forEach(student =>
+          dispatch(createStudentAssignment(student.id, assignmentId))
+        );
+        dispatch(getUserFromToken(token));
       });
   };
 }
@@ -57,4 +80,9 @@ function deleteAssignment(assignmentId, push) {
   };
 }
 
-export { createAssignment, updateAssignment, deleteAssignment };
+export {
+  createAssignment,
+  publishAssignment,
+  updateAssignment,
+  deleteAssignment
+};

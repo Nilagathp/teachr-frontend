@@ -11,16 +11,11 @@ import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import format from "date-fns/format";
 
-import { getStudentsInCourse } from "../../../redux/actions/studentsActions";
+import { publishAssignment } from "../../../redux/actions/assignmentActions";
 
 class TeacherAssignmentListItem extends React.Component {
-  handleUnassign = assignmentId => {
-    console.log("unassign", assignmentId);
-  };
-
-  handleAssign = (assignmentId, courseId) => {
-    console.log(assignmentId, courseId);
-    this.props.getStudentsInCourse(courseId, assignmentId);
+  handleAssign = assignmentId => {
+    this.props.publishAssignment(assignmentId);
   };
 
   render() {
@@ -58,26 +53,13 @@ class TeacherAssignmentListItem extends React.Component {
         )}
         <ListItemSecondaryAction>
           {assignment.assigned ? (
-            <FormControlLabel
-              control={
-                <Switch
-                  onChange={() => this.handleUnassign(assignment.id)}
-                  checked={true}
-                />
-              }
-              label="unassign"
+            <Switch
+              onChange={() => this.handleUnassign(assignment.id)}
+              checked={true}
+              disabled
             />
           ) : (
-            <FormControlLabel
-              control={
-                <Switch
-                  onChange={() => this.handleAssign(assignment.id, course.id)}
-                />
-              }
-              label="assign"
-              color="secondary"
-              labelPlacement="start"
-            />
+            <Switch onChange={() => this.handleAssign(assignment.id)} />
           )}
           {studentAssignments.length > 0 ? (
             <Badge
@@ -119,5 +101,5 @@ class TeacherAssignmentListItem extends React.Component {
 
 export default connect(
   null,
-  { getStudentsInCourse }
+  { publishAssignment }
 )(TeacherAssignmentListItem);
