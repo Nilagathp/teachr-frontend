@@ -20,6 +20,11 @@ const AssignmentList = ({
             assignment={assignment}
             teacher={teacher}
             courses={courses}
+            studentAssignments={studentAssignments.filter(
+              studentAssignment =>
+                studentAssignment.assignment_id === assignment.id &&
+                studentAssignment.status === "submitted"
+            )}
           />
         ))}
       </List>
