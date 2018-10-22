@@ -20,9 +20,9 @@ import StudentText from "./StudentAssignmentContent/StudentText";
 const styles = {
   paper: {
     margin: "20px",
-    maxWidth: "95%",
-    display: "flex",
-    flexWrap: "wrap"
+    maxWidth: "95%"
+    // display: "flex",
+    // flexWrap: "wrap"
   },
   heading: {
     marginLeft: "20px",
@@ -117,6 +117,9 @@ class StudentAssignmentToGrade extends React.Component {
                 assignment.points
               } points`}
             </Typography>
+            <Typography variant="h6" className={classes.text}>
+              {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
+            </Typography>
             <Divider />
             <Typography className={classes.content} variant="subtitle1">
               Directions: {assignment.directions}
@@ -166,32 +169,6 @@ class StudentAssignmentToGrade extends React.Component {
                   );
               }
             })}
-            {/* <Typography variant="subtitle1" className={classes.text}>
-              Questions:
-            </Typography>
-            {assignment.questions.map((question, index) => (
-              <React.Fragment key={index}>
-                <Typography
-                  key={`question-${index}`}
-                  className={classes.question}
-                >
-                  {`${index + 1}. ${question}`}{" "}
-                </Typography>
-                <TextField
-                  id={`${index}`}
-                  multiline
-                  fullWidth
-                  variant="outlined"
-                  key={`answer-${index}`}
-                  className={classes.textField}
-                  defaultValue={studentAssignment.answers[index]}
-                  InputProps={{ readOnly: true }}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                />
-              </React.Fragment>
-            ))} */}
             {studentAssignment.status === "submitted" ? (
               <React.Fragment>
                 <InputLabel shrink className={classes.points}>{`Points out of ${

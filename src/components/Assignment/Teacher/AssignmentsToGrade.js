@@ -10,6 +10,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import format from "date-fns/format";
 
 const styles = {
   paper: {
@@ -66,6 +67,9 @@ const AssignmentsToGrade = ({
           assignment.points
         } points`}
       </Typography>
+      <Typography variant="h6" className={classes.text}>
+        {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
+      </Typography>
       <Divider />
       <List>
         {studentAssignments
@@ -89,9 +93,6 @@ const AssignmentsToGrade = ({
                     .split("_")
                     .join(" ")}`}
                 />
-                {/* <ListItemSecondaryAction>
-                    <Button>Due on:</Button>
-                  </ListItemSecondaryAction> */}
               </ListItem>
             ))
           : null}
