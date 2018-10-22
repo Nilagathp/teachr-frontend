@@ -13,25 +13,55 @@ const Navbar = ({ person, logOutUser }) => {
     <AppBar position="static" color="default">
       <Toolbar>
         {person.teacher ? (
-          <Typography
-            variant="h6"
-            component={NavLink}
-            style={{ textDecoration: "none" }}
-            to="/home"
-          >
-            {person.teacher.name}
-          </Typography>
+          <React.Fragment>
+            <Typography
+              variant="h6"
+              component={NavLink}
+              style={{ textDecoration: "none" }}
+              to="/home"
+            >
+              {person.teacher.name}
+            </Typography>
+            {person.teacher.courses.map(course => (
+              <div style={{ marginLeft: "20px" }}>
+                <Typography
+                  component={NavLink}
+                  style={{ textDecoration: "none" }}
+                  to={`/course/${course.id}`}
+                >
+                  {course.name}
+                </Typography>
+              </div>
+            ))}
+          </React.Fragment>
         ) : (
-          <Typography
-            variant="h6"
-            component={NavLink}
-            style={{ textDecoration: "none" }}
-            to="/home"
-          >
-            {person.student.name}
-          </Typography>
+          <React.Fragment>
+            <Typography
+              variant="h6"
+              component={NavLink}
+              style={{ textDecoration: "none" }}
+              to="/home"
+            >
+              {person.student.name}
+            </Typography>
+            {person.student.courses.map(course => (
+              <div style={{ marginLeft: "20px" }}>
+                <Typography
+                  component={NavLink}
+                  style={{ textDecoration: "none" }}
+                  to={`/course/${course.id}`}
+                >
+                  {course.name}
+                </Typography>
+              </div>
+            ))}
+          </React.Fragment>
         )}
-        {person ? <Button onClick={logOutUser}>Logout</Button> : null}
+        {person ? (
+          <Button style={{ marginLeft: "auto" }} onClick={logOutUser}>
+            Logout
+          </Button>
+        ) : null}
       </Toolbar>
     </AppBar>
   );
