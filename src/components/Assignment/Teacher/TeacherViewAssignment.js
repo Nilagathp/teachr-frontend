@@ -11,6 +11,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Divider from "@material-ui/core/Divider";
+import format from "date-fns/format";
 
 import { deleteAssignment } from "../../../redux/actions/assignmentActions";
 import MultipleChoice from "./AssignmentContent/MultipleChoice";
@@ -59,6 +61,7 @@ class TeacherViewAssignment extends React.Component {
   render() {
     const { course, assignment, classes } = this.props;
     if (assignment) {
+      const dueDate = format(assignment.due_date, "PPPP @ p");
       return (
         <Paper className={classes.paper}>
           <Typography variant="h4" className={classes.heading}>
@@ -116,6 +119,10 @@ class TeacherViewAssignment extends React.Component {
               assignment.points
             } points`}
           </Typography>
+          <Typography variant="h6" className={classes.headingText}>
+            {`Due on: ${dueDate}`}
+          </Typography>
+          <Divider />
           <Typography className={classes.text} variant="subtitle1">
             Directions: {assignment.directions}
           </Typography>

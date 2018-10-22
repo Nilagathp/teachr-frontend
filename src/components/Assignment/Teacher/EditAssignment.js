@@ -15,6 +15,7 @@ import EditMultipleChoice from "./EditAssignmentContent/EditMultipleChoice";
 import EditShortAnswerOrEssay from "./EditAssignmentContent/EditShortAnswerOrEssay";
 import EditText from "./EditAssignmentContent/EditText";
 import ContentTypeDialog from "./ContentTypeDialog";
+import DateTimePicker from "material-ui-pickers/DateTimePicker";
 
 const styles = {
   paper: {
@@ -81,7 +82,8 @@ class EditAssignment extends React.Component {
         category: categoryHash[props.assignment.category],
         directions: props.assignment.directions,
         content: props.assignment.content,
-        assignmentId: props.assignment.id
+        assignmentId: props.assignment.id,
+        dueDate: props.assignment.due_date
       };
     } else {
       return null;
@@ -92,6 +94,10 @@ class EditAssignment extends React.Component {
     this.setState({
       [name]: event.target.value
     });
+  };
+
+  handleDateChange = date => {
+    this.setState({ dueDate: date });
   };
 
   handleChangeContent = name => event => {
@@ -174,7 +180,8 @@ class EditAssignment extends React.Component {
       points: this.state.points,
       category: this.state.category,
       directions: this.state.directions,
-      content: this.state.content
+      content: this.state.content,
+      due_date: this.state.dueDate
     };
     this.props.updateAssignment(
       assignmentId,
@@ -257,6 +264,14 @@ class EditAssignment extends React.Component {
               }
             }}
             margin="normal"
+          />
+          <DateTimePicker
+            required
+            label="Due on:"
+            variant="outlined"
+            className={classes.textField}
+            value={this.state.dueDate}
+            onChange={this.handleDateChange}
           />
           <TextField
             required

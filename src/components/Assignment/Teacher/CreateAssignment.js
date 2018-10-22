@@ -369,6 +369,7 @@ class CreateAssignment extends React.Component {
             margin="normal"
           />
           <DateTimePicker
+            required
             label="Due on:"
             variant="outlined"
             className={classes.textField}
