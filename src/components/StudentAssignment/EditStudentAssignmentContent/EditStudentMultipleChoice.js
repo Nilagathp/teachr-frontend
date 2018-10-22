@@ -25,9 +25,10 @@ class EditStudentMultipleChoice extends React.PureComponent {
         <Typography className={classes.text} variant="subtitle2">
           {content.question}
         </Typography>
-        <FormControl component="fieldset">
+        <FormControl required component="fieldset">
           <RadioGroup
             id={id}
+            name="answerChoices"
             onChange={this.handleClick}
             value={this.state.value}
             className={classes.group}
@@ -37,7 +38,7 @@ class EditStudentMultipleChoice extends React.PureComponent {
                 onClick={handleChange}
                 key={index}
                 value={answerChoice}
-                control={<Radio id={id} />}
+                control={<Radio required id={id} />}
                 label={answerChoice}
               />
             ))}

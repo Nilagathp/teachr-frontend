@@ -138,107 +138,105 @@ class StudentAssignmentWorking extends React.PureComponent {
           <Typography className={classes.content} variant="subtitle1">
             Directions: {assignment.directions}
           </Typography>
-          {Object.keys(assignment.content).map(key => {
-            const item = assignment.content[key];
-            switch (item.type) {
-              case "Multiple Choice":
-                const shuffledAnswers = shuffle(
-                  Object.values(item.content.answers)
-                );
-                if (this.state.answers && this.state.answers[key]) {
+          <form onSubmit={this.handleSubmit}>
+            {Object.keys(assignment.content).map(key => {
+              const item = assignment.content[key];
+              switch (item.type) {
+                case "Multiple Choice":
+                  const shuffledAnswers = shuffle(
+                    Object.values(item.content.answers)
+                  );
+                  if (this.state.answers && this.state.answers[key]) {
+                    return (
+                      <EditStudentMultipleChoice
+                        key={key}
+                        id={key}
+                        content={item.content}
+                        classes={classes}
+                        answerChoices={shuffledAnswers}
+                        handleChange={this.handleChange("answers")}
+                        answer={this.state.answers[key]}
+                      />
+                    );
+                  } else {
+                    return (
+                      <EditStudentMultipleChoice
+                        key={key}
+                        id={key}
+                        content={item.content}
+                        classes={classes}
+                        answerChoices={shuffledAnswers}
+                        handleChange={this.handleChange("answers")}
+                      />
+                    );
+                  }
+                case "Short Answer":
+                  if (this.state.answers && this.state.answers[key]) {
+                    return (
+                      <EditStudentShortAnswer
+                        key={key}
+                        id={key}
+                        content={item.content}
+                        classes={classes}
+                        handleChange={this.handleChange("answers")}
+                        answer={this.state.answers[key]}
+                      />
+                    );
+                  } else {
+                    return (
+                      <EditStudentShortAnswer
+                        key={key}
+                        id={key}
+                        content={item.content}
+                        classes={classes}
+                        handleChange={this.handleChange("answers")}
+                      />
+                    );
+                  }
+                case "Essay":
+                  if (this.state.answers && this.state.answers[key]) {
+                    return (
+                      <EditStudentEssay
+                        id={key}
+                        key={key}
+                        content={item.content}
+                        classes={classes}
+                        handleChange={this.handleChange("answers")}
+                        answer={this.state.answers[key]}
+                      />
+                    );
+                  } else {
+                    return (
+                      <EditStudentEssay
+                        id={key}
+                        key={key}
+                        content={item.content}
+                        classes={classes}
+                        handleChange={this.handleChange("answers")}
+                      />
+                    );
+                  }
+                default:
                   return (
-                    <EditStudentMultipleChoice
+                    <StudentText
                       key={key}
-                      id={key}
                       content={item.content}
                       classes={classes}
-                      answerChoices={shuffledAnswers}
-                      handleChange={this.handleChange("answers")}
-                      answer={this.state.answers[key]}
                     />
                   );
-                } else {
-                  return (
-                    <EditStudentMultipleChoice
-                      key={key}
-                      id={key}
-                      content={item.content}
-                      classes={classes}
-                      answerChoices={shuffledAnswers}
-                      handleChange={this.handleChange("answers")}
-                    />
-                  );
-                }
-              case "Short Answer":
-                if (this.state.answers && this.state.answers[key]) {
-                  return (
-                    <EditStudentShortAnswer
-                      key={key}
-                      id={key}
-                      content={item.content}
-                      classes={classes}
-                      handleChange={this.handleChange("answers")}
-                      answer={this.state.answers[key]}
-                    />
-                  );
-                } else {
-                  return (
-                    <EditStudentShortAnswer
-                      key={key}
-                      id={key}
-                      content={item.content}
-                      classes={classes}
-                      handleChange={this.handleChange("answers")}
-                    />
-                  );
-                }
-              case "Essay":
-                if (this.state.answers && this.state.answers[key]) {
-                  return (
-                    <EditStudentEssay
-                      id={key}
-                      key={key}
-                      content={item.content}
-                      classes={classes}
-                      handleChange={this.handleChange("answers")}
-                      answer={this.state.answers[key]}
-                    />
-                  );
-                } else {
-                  return (
-                    <EditStudentEssay
-                      id={key}
-                      key={key}
-                      content={item.content}
-                      classes={classes}
-                      handleChange={this.handleChange("answers")}
-                    />
-                  );
-                }
-              default:
-                return (
-                  <StudentText
-                    key={key}
-                    content={item.content}
-                    classes={classes}
-                  />
-                );
-            }
-          })}
-          <Button
-            color="primary"
-            className={classes.button}
-            onClick={this.handleSave}
-          >
-            Save and Finish Later
-          </Button>
-          <Button
-            color="primary"
-            className={classes.button}
-            onClick={this.handleSubmit}
-          >
-            Submit Assignment
-          </Button>
+              }
+            })}
+            <Button
+              color="primary"
+              className={classes.button}
+              onClick={this.handleSave}
+            >
+              Save and Finish Later
+            </Button>
+            <Button color="primary" className={classes.button} type="submit">
+              Submit Assignment
+            </Button>
+          </form>
         </div>
       </Paper>
     );

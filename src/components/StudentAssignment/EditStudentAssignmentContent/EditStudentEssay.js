@@ -25,6 +25,7 @@ class EditStudentEssay extends React.Component {
         </Typography>
         <TextField
           required
+          label="Answer"
           id={id}
           multiline
           rows="10"

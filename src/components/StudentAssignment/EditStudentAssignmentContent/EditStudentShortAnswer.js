@@ -25,6 +25,7 @@ class EditStudentShortAnswer extends React.PureComponent {
         </Typography>
         <TextField
           required
+          label="Answer"
           id={id}
           multiline
           rows="3"

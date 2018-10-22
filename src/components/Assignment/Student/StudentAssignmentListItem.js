@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Chip from "@material-ui/core/Chip";
-import Badge from "@material-ui/core/Badge";
 import format from "date-fns/format";
 
 const renderChip = (studentAssignment, assignment) => {

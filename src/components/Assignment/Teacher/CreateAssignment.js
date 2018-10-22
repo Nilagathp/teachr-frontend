@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -303,7 +302,7 @@ class CreateAssignment extends React.Component {
       <Paper className={classes.paper}>
         <Typography variant="h4" className={classes.heading}>
           Create Assignment
-          <Button color="primary" component={Link} to={`/home`}>
+          <Button color="primary" onClick={() => this.props.history.goBack()}>
             Cancel
           </Button>
         </Typography>

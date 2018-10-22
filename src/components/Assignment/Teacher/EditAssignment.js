@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -116,22 +115,27 @@ class EditAssignment extends React.Component {
 
   handleClose = value => {
     let newContent = this.state.content;
-    let lastKey = Object.keys(newContent)[Object.keys(newContent).length - 1];
-    let newKey = `item${parseInt(lastKey.substring(4)) + 1}`;
-    value === "Multiple Choice"
-      ? (newContent[newKey] = {
-          content: {
-            question: "",
-            answers: {
-              correctAnswer: "",
-              incorrectAnswer1: "",
-              incorrectAnswer2: "",
-              incorrectAnswer3: ""
-            }
-          },
-          type: value
-        })
-      : (newContent[newKey] = { content: "", type: value });
+    if (value) {
+      let lastKey = Object.keys(newContent)[Object.keys(newContent).length - 1];
+      let newKey;
+      lastKey
+        ? (newKey = `item${parseInt(lastKey.substring(4)) + 1}`)
+        : (newKey = "item1");
+      value === "Multiple Choice"
+        ? (newContent[newKey] = {
+            content: {
+              question: "",
+              answers: {
+                correctAnswer: "",
+                incorrectAnswer1: "",
+                incorrectAnswer2: "",
+                incorrectAnswer3: ""
+              }
+            },
+            type: value
+          })
+        : (newContent[newKey] = { content: "", type: value });
+    }
     this.setState({ open: false, content: newContent });
   };
 
@@ -191,16 +195,12 @@ class EditAssignment extends React.Component {
   };
 
   render() {
-    const { assignment, courses, classes } = this.props;
+    const { courses, history, classes } = this.props;
     return courses ? (
       <Paper className={classes.paper}>
         <Typography variant="h4" className={classes.heading}>
           Edit Assignment
-          <Button
-            color="primary"
-            component={Link}
-            to={`/course/${assignment.course_id}/assignment/${assignment.id}`}
-          >
+          <Button color="primary" onClick={() => history.goBack()}>
             Cancel
           </Button>
         </Typography>
@@ -357,7 +357,8 @@ const mapStateToProps = (state, ownProps) => {
   }
   return {
     courses: courses,
-    assignment: assignment
+    assignment: assignment,
+    history: ownProps.history
   };
 };
 

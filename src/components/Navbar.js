@@ -23,7 +23,7 @@ const Navbar = ({ person, logOutUser }) => {
               {person.teacher.name}
             </Typography>
             {person.teacher.courses.map(course => (
-              <div style={{ marginLeft: "20px" }}>
+              <div key={course.id} style={{ marginLeft: "20px" }}>
                 <Typography
                   component={NavLink}
                   style={{ textDecoration: "none" }}

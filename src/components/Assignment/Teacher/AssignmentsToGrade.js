@@ -40,17 +40,14 @@ const AssignmentsToGrade = ({
   course,
   studentAssignments,
   students,
+  history,
   classes
 }) => {
   return user ? (
     <Paper className={classes.paper}>
       <Typography variant="h4" className={classes.heading}>
         {assignment.name}
-        <Button
-          color="primary"
-          component={Link}
-          to={`/course/${assignment.course_id}/assignment/${assignment.id}`}
-        >
+        <Button color="primary" onClick={() => history.goBack()}>
           Back
         </Button>
         <Button
@@ -124,7 +121,8 @@ const mapStateToProps = (state, ownProps) => {
     assignment: assignment,
     course: course,
     students: students,
-    studentAssignments: studentAssignments
+    studentAssignments: studentAssignments,
+    history: ownProps.history
   };
 };
 
