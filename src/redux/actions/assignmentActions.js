@@ -1,5 +1,6 @@
 import { getUserFromToken } from "./userActions";
 import { createStudentAssignment } from "./studentAssignmentActions";
+import { deleteStudentAssignment } from "./studentAssignmentActions";
 
 function createAssignment(assignmentParams, push) {
   return function(dispatch) {
@@ -21,7 +22,7 @@ function createAssignment(assignmentParams, push) {
   };
 }
 
-function publishAssignment(assignmentId) {
+function assignAssignment(assignmentId) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
     fetch(`http://localhost:3000/assignments/${assignmentId}`, {
@@ -38,6 +39,33 @@ function publishAssignment(assignmentId) {
         json.course.students.forEach(student =>
           dispatch(createStudentAssignment(student.id, assignmentId))
         );
+        dispatch(getUserFromToken(token));
+      });
+  };
+}
+
+function unassignAssignment(assignmentId, studentAssignments) {
+  return function(dispatch) {
+    const token = localStorage.getItem("token");
+    fetch(`http://localhost:3000/assignments/${assignmentId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ assignment: { assigned: false } }),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(r => r.json())
+      .then(json => {
+        json.course.students.forEach(student => {
+          let studentAssignment = studentAssignments.find(
+            studentAssignment =>
+              studentAssignment.student_id === student.id &&
+              studentAssignment.assignment_id === assignmentId
+          );
+          dispatch(deleteStudentAssignment(studentAssignment.id));
+        });
         dispatch(getUserFromToken(token));
       });
   };
@@ -82,7 +110,8 @@ function deleteAssignment(assignmentId, push) {
 
 export {
   createAssignment,
-  publishAssignment,
+  assignAssignment,
+  unassignAssignment,
   updateAssignment,
   deleteAssignment
 };

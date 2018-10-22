@@ -20,6 +20,20 @@ function createStudentAssignment(studentId, assignmentId) {
   };
 }
 
+function deleteStudentAssignment(studentAssignmentId) {
+  return function(dispatch) {
+    const token = localStorage.getItem("token");
+    fetch(`http://localhost:3000/student_assignments/${studentAssignmentId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(r => r.json())
+      .then(json => dispatch(getUserFromToken(token)));
+  };
+}
+
 function saveStudentAssignment(studentAssignmentId, answers, courseId, push) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
@@ -93,5 +107,6 @@ export {
   createStudentAssignment,
   saveStudentAssignment,
   submitStudentAssignment,
-  gradeStudentAssignment
+  gradeStudentAssignment,
+  deleteStudentAssignment
 };
