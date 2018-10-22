@@ -45,7 +45,7 @@ const Navbar = ({ person, logOutUser }) => {
               {person.student.name}
             </Typography>
             {person.student.courses.map(course => (
-              <div style={{ marginLeft: "20px" }}>
+              <div key={course.id} style={{ marginLeft: "20px" }}>
                 <Typography
                   component={NavLink}
                   style={{ textDecoration: "none" }}
