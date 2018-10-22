@@ -16,6 +16,7 @@ import EditStudentMultipleChoice from "./EditStudentAssignmentContent/EditStuden
 import EditStudentShortAnswer from "./EditStudentAssignmentContent/EditStudentShortAnswer";
 import EditStudentEssay from "./EditStudentAssignmentContent/EditStudentEssay";
 import StudentText from "./StudentAssignmentContent/StudentText";
+import format from "date-fns/format";
 
 const styles = {
   paper: {
@@ -129,6 +130,9 @@ class StudentAssignmentWorking extends React.PureComponent {
             {`${course.name} - ${assignment.category} - ${
               assignment.points
             } points`}
+          </Typography>
+          <Typography variant="h6" className={classes.text}>
+            {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
           </Typography>
           <Divider />
           <Typography className={classes.content} variant="subtitle1">

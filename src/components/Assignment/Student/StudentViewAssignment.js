@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
+import format from "date-fns/format";
 
 import { createStudentAssignment } from "../../../redux/actions/studentAssignmentActions";
 
@@ -83,6 +84,9 @@ class StudentViewAssignment extends React.Component {
             {`${course.name} - ${assignment.category} - ${
               assignment.points
             } points`}
+          </Typography>
+          <Typography variant="h6" className={classes.text}>
+            {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
           </Typography>
         </Paper>
       );

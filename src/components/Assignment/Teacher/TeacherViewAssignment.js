@@ -61,7 +61,6 @@ class TeacherViewAssignment extends React.Component {
   render() {
     const { course, assignment, classes } = this.props;
     if (assignment) {
-      const dueDate = format(assignment.due_date, "PPPP @ p");
       return (
         <Paper className={classes.paper}>
           <Typography variant="h4" className={classes.heading}>
@@ -120,7 +119,7 @@ class TeacherViewAssignment extends React.Component {
             } points`}
           </Typography>
           <Typography variant="h6" className={classes.headingText}>
-            {`Due on: ${dueDate}`}
+            {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
           </Typography>
           <Divider />
           <Typography className={classes.text} variant="subtitle1">

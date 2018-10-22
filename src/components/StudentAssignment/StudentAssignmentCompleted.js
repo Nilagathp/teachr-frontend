@@ -11,6 +11,7 @@ import ViewStudentMultipleChoice from "./ViewStudentAssignmentContent/ViewStuden
 import ViewStudentShortAnswer from "./ViewStudentAssignmentContent/ViewStudentShortAnswer";
 import ViewStudentEssay from "./ViewStudentAssignmentContent/ViewStudentEssay";
 import StudentText from "./StudentAssignmentContent/StudentText";
+import format from "date-fns/format";
 
 const styles = {
   paper: {
@@ -84,6 +85,9 @@ class StudentAssignmentCompleted extends React.Component {
             {`${course.name} - ${assignment.category} - ${
               assignment.points
             } points`}
+          </Typography>
+          <Typography variant="h6" className={classes.text}>
+            {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
           </Typography>
           <Divider />
           <Typography className={classes.content} variant="subtitle1">
