@@ -23,6 +23,63 @@ class TeacherAssignmentListItem extends React.Component {
     this.props.unassignAssignment(assignmentId, studentAssignments);
   };
 
+  renderGradeButton = (studentAssignments, assignment, teacher) => {
+    if (studentAssignments.length > 0) {
+      return (
+        <>
+          <Switch
+            onChange={() =>
+              this.handleUnassign(assignment.id, teacher.student_assignments)
+            }
+            color="primary"
+            checked={true}
+          />
+          <Badge
+            badgeContent={`${studentAssignments.length}`}
+            color="secondary"
+            style={{ margin: "20px" }}
+          >
+            <Button
+              color="primary"
+              variant="outlined"
+              size="small"
+              component={Link}
+              to={`/course/${assignment.course_id}/assignment/${
+                assignment.id
+              }/grade`}
+            >
+              Grade
+            </Button>
+          </Badge>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Switch
+            onChange={() =>
+              this.handleUnassign(assignment.id, teacher.student_assignments)
+            }
+            color="primary"
+            checked={true}
+          />
+          <Button
+            color="primary"
+            variant="outlined"
+            size="small"
+            style={{ margin: "20px" }}
+            component={Link}
+            to={`/course/${assignment.course_id}/assignment/${
+              assignment.id
+            }/grade`}
+          >
+            Grade
+          </Button>
+        </>
+      );
+    }
+  };
+
   render() {
     const {
       teacher,
@@ -58,46 +115,14 @@ class TeacherAssignmentListItem extends React.Component {
         )}
         <ListItemSecondaryAction>
           {assignment.assigned ? (
-            <Switch
-              onChange={() =>
-                this.handleUnassign(assignment.id, teacher.student_assignments)
+            this.renderGradeButton(studentAssignments, assignment, teacher)
+          ) : (
+            <FormControlLabel
+              control={
+                <Switch onChange={() => this.handleAssign(assignment.id)} />
               }
-              checked={true}
+              label="Assign"
             />
-          ) : (
-            <Switch onChange={() => this.handleAssign(assignment.id)} />
-          )}
-          {studentAssignments.length > 0 ? (
-            <Badge
-              badgeContent={`${studentAssignments.length}`}
-              color="secondary"
-              style={{ margin: "20px" }}
-            >
-              <Button
-                color="primary"
-                variant="outlined"
-                size="small"
-                component={Link}
-                to={`/course/${assignment.course_id}/assignment/${
-                  assignment.id
-                }/grade`}
-              >
-                Grade
-              </Button>
-            </Badge>
-          ) : (
-            <Button
-              color="primary"
-              variant="outlined"
-              size="small"
-              style={{ margin: "20px" }}
-              component={Link}
-              to={`/course/${assignment.course_id}/assignment/${
-                assignment.id
-              }/grade`}
-            >
-              Grade
-            </Button>
           )}
         </ListItemSecondaryAction>
       </ListItem>
