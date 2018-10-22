@@ -1,6 +1,6 @@
 import { getUserFromToken } from "./userActions";
 
-function createStudentAssignment(studentId, assignmentId, courseId, push) {
+function createStudentAssignment(studentId, assignmentId) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
     fetch("http://localhost:3000/student_assignments", {
@@ -16,14 +16,7 @@ function createStudentAssignment(studentId, assignmentId, courseId, push) {
       }
     })
       .then(r => r.json())
-      .then(json => {
-        dispatch(getUserFromToken(token));
-        push(
-          `/course/${courseId}/assignment/${
-            json.assignment_id
-          }/student/${studentId}`
-        );
-      });
+      .then(json => dispatch(getUserFromToken(token)));
   };
 }
 
