@@ -15,7 +15,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import Chip from "@material-ui/core/Chip";
 import format from "date-fns/format";
+import isSameDay from "date-fns/isSameDay";
 
 import { assignAssignment } from "../../../redux/actions/assignmentActions";
 import { unassignAssignment } from "../../../redux/actions/assignmentActions";
@@ -136,21 +138,30 @@ class TeacherAssignmentListItem extends React.Component {
           component={Link}
           to={`/course/${assignment.course_id}/assignment/${assignment.id}`}
         >
+          {isSameDay(assignment.due_date, new Date()) ? (
+            <Chip
+              label={`${format(assignment.due_date, "M/d @ p")}`}
+              variant="outlined"
+              color="secondary"
+            />
+          ) : (
+            <Chip
+              label={`${format(assignment.due_date, "M/d @ p")}`}
+              variant="outlined"
+              color="primary"
+            />
+          )}
           {coursesName ? (
             <ListItemText
-              primary={`${assignment.name} - due ${format(
-                assignment.due_date,
-                "M/d @ p"
-              )}`}
+              primary={`${assignment.name}`}
               secondary={`
-              ${coursesName[assignment.course_id]} - ${assignment.category}`}
+              ${coursesName[assignment.course_id]} - ${assignment.category} - ${
+                assignment.points
+              } points`}
             />
           ) : (
             <ListItemText
-              primary={`${assignment.name} - due ${format(
-                assignment.due_date,
-                "M/d @ p"
-              )}`}
+              primary={`${assignment.name}`}
               secondary={`${assignment.category} - ${assignment.points} points`}
             />
           )}

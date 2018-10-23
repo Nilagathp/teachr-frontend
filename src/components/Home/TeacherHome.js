@@ -42,7 +42,8 @@ const styles = {
 class TeacherHome extends React.Component {
   state = {
     course: "",
-    category: ""
+    category: "",
+    dueDate: ""
   };
 
   handleChange = event => {
@@ -50,7 +51,7 @@ class TeacherHome extends React.Component {
   };
 
   handleClick = event => {
-    this.setState({ course: "", category: "" });
+    this.setState({ course: "", category: "", dueDate: "" });
   };
 
   render() {
@@ -68,10 +69,15 @@ class TeacherHome extends React.Component {
         assignment => assignment.category === this.state.category
       );
     }
+    // if (this.state.dueDate) {
+    //   assignments = assignments.filter(
+    //     assignment => a
+    //   )
+    // }
     return (
       <React.Fragment>
         <Grid container spacing={24}>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             {teacher.courses.map(course => (
               <Card key={course.id} className={classes.card}>
                 <CardActionArea component={Link} to={`/course/${course.id}`}>
@@ -99,7 +105,7 @@ class TeacherHome extends React.Component {
               </Card>
             ))}
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={9}>
             <Paper className={classes.paper}>
               <div>
                 <Typography variant="h4" className={classes.heading}>
