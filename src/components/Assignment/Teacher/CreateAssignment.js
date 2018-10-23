@@ -113,10 +113,14 @@ class CreateAssignment extends React.Component {
       due_date: this.state.dueDate,
       assigned: value
     };
-    this.props.createAndAssignAssignment(
-      assignmentParams,
-      this.props.history.push
-    );
+    if (value) {
+      this.props.createAndAssignAssignment(
+        assignmentParams,
+        this.props.history.push
+      );
+    } else {
+      this.props.createAssignment(assignmentParams, this.props.history.push);
+    }
   };
 
   handleCloseDontCreate = value => {
