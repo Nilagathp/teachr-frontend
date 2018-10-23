@@ -11,6 +11,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import compareAsc from "date-fns/compareAsc";
 
 import AssignmentList from "../Assignment/AssignmentList";
 
@@ -50,7 +51,9 @@ class TeacherCourse extends React.Component {
 
   render() {
     const { teacher, course, classes } = this.props;
-    let assignments = this.props.assignments;
+    let assignments = this.props.assignments.sort(function(a, b) {
+      return compareAsc(a.due_date, b.due_date);
+    });
     if (this.state.category) {
       assignments = assignments.filter(
         assignment => assignment.category === this.state.category
