@@ -12,9 +12,16 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Divider from "@material-ui/core/Divider";
+import Switch from "@material-ui/core/Switch";
+import Badge from "@material-ui/core/Badge";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import format from "date-fns/format";
 
-import { deleteAssignment } from "../../../redux/actions/assignmentActions";
+import {
+  deleteAssignment,
+  assignAssignment,
+  unassignAssignment
+} from "../../../redux/actions/assignmentActions";
 import MultipleChoice from "./AssignmentContent/MultipleChoice";
 import ShortAnswerOrEssay from "./AssignmentContent/ShortAnswerOrEssay";
 import Text from "./AssignmentContent/Text";
@@ -34,7 +41,7 @@ const styles = {
     paddingTop: "20px"
   },
   button: {
-    paddingLeft: "20px"
+    marginLeft: "20px"
   },
   headingText: {
     marginLeft: "20px",
@@ -58,24 +65,108 @@ class TeacherViewAssignment extends React.Component {
     this.setState({ open: false });
   };
 
+  handleAssign = assignmentId => {
+    this.props.assignAssignment(assignmentId);
+  };
+
+  handleUnassign = (assignmentId, studentAssignments) => {
+    this.props.unassignAssignment(assignmentId, studentAssignments);
+  };
+
+  renderGradeButton = (studentAssignments, assignment, teacher) => {
+    if (studentAssignments.length > 0) {
+      return (
+        <>
+          <Switch
+            onChange={() =>
+              this.handleUnassign(assignment.id, teacher.student_assignments)
+            }
+            color="primary"
+            checked={true}
+          />
+          <Badge
+            badgeContent={`${studentAssignments.length}`}
+            color="secondary"
+            style={{ margin: "20px" }}
+          >
+            <Button
+              color="primary"
+              variant="outlined"
+              component={Link}
+              to={`/course/${assignment.course_id}/assignment/${
+                assignment.id
+              }/grade`}
+            >
+              Grade
+            </Button>
+          </Badge>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Switch
+            onChange={() =>
+              this.handleUnassign(assignment.id, teacher.student_assignments)
+            }
+            color="primary"
+            checked={true}
+          />
+          <Button
+            color="primary"
+            variant="outlined"
+            component={Link}
+            to={`/course/${assignment.course_id}/assignment/${
+              assignment.id
+            }/grade`}
+          >
+            Grade
+          </Button>
+        </>
+      );
+    }
+  };
+
   render() {
-    const { course, assignment, classes } = this.props;
+    const {
+      user,
+      studentAssignments,
+      course,
+      assignment,
+      classes
+    } = this.props;
     if (assignment) {
       return (
         <Paper className={classes.paper}>
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
-            <Button
+            {assignment.assigned ? (
+              this.renderGradeButton(
+                studentAssignments,
+                assignment,
+                user.person.teacher
+              )
+            ) : (
+              <FormControlLabel
+                control={
+                  <Switch onChange={() => this.handleAssign(assignment.id)} />
+                }
+                label="Assign"
+              />
+            )}
+
+            {/* <Button
               className={classes.button}
               color="primary"
               component={Link}
               to={`/course/${course.id}/assignment/${assignment.id}/grade`}
             >
               Grade
-            </Button>
+            </Button> */}
             <Button
               className={classes.button}
               color="primary"
+              variant="outlined"
               component={Link}
               to={`/course/${course.id}/assignment/${assignment.id}/edit`}
             >
@@ -84,6 +175,7 @@ class TeacherViewAssignment extends React.Component {
             <Button
               className={classes.button}
               color="primary"
+              variant="outlined"
               onClick={this.handleClickOpen}
             >
               Delete
@@ -158,10 +250,23 @@ class TeacherViewAssignment extends React.Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  const teacher = ownProps.user.person.teacher;
+  const assignment = ownProps.assignment;
+  const studentAssignments = teacher.student_assignments.filter(
+    studentAssignment =>
+      studentAssignment.assignment_id === assignment.id &&
+      studentAssignment.status === "submitted"
+  );
+  return {
+    studentAssignments: studentAssignments
+  };
+};
+
 const StyledTeacherViewAssignment = withStyles(styles)(TeacherViewAssignment);
 export default withRouter(
   connect(
-    null,
-    { deleteAssignment }
+    mapStateToProps,
+    { assignAssignment, unassignAssignment, deleteAssignment }
   )(StyledTeacherViewAssignment)
 );
