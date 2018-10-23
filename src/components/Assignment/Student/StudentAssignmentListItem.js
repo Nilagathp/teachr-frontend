@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import ListItem from "@material-ui/core/ListItem";
@@ -46,7 +46,7 @@ class StudentAssignmentListItem extends React.Component {
   };
 
   render() {
-    const { teacher, assignment, studentAssignment, coursesName } = this.props;
+    const { assignment, studentAssignment, coursesName } = this.props;
     return (
       <ListItem
         key={assignment.id}

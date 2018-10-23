@@ -1,7 +1,6 @@
 import React from "react";
 
 import List from "@material-ui/core/List";
-import compareAsc from "date-fns/compareAsc";
 
 import TeacherAssignmentListItem from "./Teacher/TeacherAssignmentListItem";
 import StudentAssignmentListItem from "./Student/StudentAssignmentListItem";

@@ -10,6 +10,10 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentTitle from "@material-ui/core/DialogContentText";
 import DateTimePicker from "material-ui-pickers/DateTimePicker";
 
 import { createAssignment } from "../../../redux/actions/assignmentActions";
@@ -64,7 +68,8 @@ class CreateAssignment extends React.Component {
     open: false,
     selectedValue: null,
     contentInputs: [],
-    dueDate: new Date()
+    dueDate: new Date(),
+    createOpen: false
   };
 
   componentDidMount() {
@@ -83,6 +88,35 @@ class CreateAssignment extends React.Component {
   handleClose = value => {
     let newContentInputs = [...this.state.contentInputs, value];
     this.setState({ open: false, contentInputs: newContentInputs });
+  };
+
+  handleClickCreate = () => {
+    this.setState({
+      createOpen: true
+    });
+  };
+
+  handleCloseCreate = value => {
+    this.setState({
+      createOpen: false
+    });
+    const assignmentParams = {
+      course_id: this.state.courseId,
+      name: this.state.name,
+      points: this.state.points,
+      category: this.state.category,
+      directions: this.state.directions,
+      content: this.state.content,
+      due_date: this.state.dueDate,
+      assigned: value
+    };
+    this.props.createAssignment(assignmentParams, this.props.history.push);
+  };
+
+  handleCloseDontCreate = value => {
+    this.setState({
+      createOpen: false
+    });
   };
 
   removeInput = index => event => {
@@ -284,16 +318,7 @@ class CreateAssignment extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const assignmentParams = {
-      course_id: this.state.courseId,
-      name: this.state.name,
-      points: this.state.points,
-      category: this.state.category,
-      directions: this.state.directions,
-      content: this.state.content,
-      due_date: this.state.dueDate
-    };
-    this.props.createAssignment(assignmentParams, this.props.history.push);
+    this.handleClickCreate();
   };
 
   render() {
@@ -396,6 +421,28 @@ class CreateAssignment extends React.Component {
           <Button className={classes.button} color="primary" type="submit">
             Create Assignment
           </Button>
+          <Dialog
+            open={this.state.createOpen}
+            onClose={this.handleCloseDontCreate}
+          >
+            <DialogContent>
+              <DialogContentTitle>Assign to students? </DialogContentTitle>
+              <DialogActions>
+                <Button
+                  color="secondary"
+                  onClick={() => this.handleCloseCreate(false)}
+                >
+                  Assign later
+                </Button>
+                <Button
+                  color="primary"
+                  onClick={() => this.handleCloseCreate(true)}
+                >
+                  Assign now
+                </Button>
+              </DialogActions>
+            </DialogContent>
+          </Dialog>
         </form>
       </Paper>
     ) : null;

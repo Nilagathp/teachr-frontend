@@ -99,18 +99,20 @@ class TeacherAssignmentListItem extends React.Component {
       >
         {coursesName ? (
           <ListItemText
-            primary={assignment.name}
+            primary={`${assignment.name} - due ${format(
+              assignment.due_date,
+              "M/d @ p"
+            )}`}
             secondary={`
-              ${coursesName[assignment.course_id]} - ${
-              assignment.category
-            } - ${format(assignment.due_date, "M/d")}`}
+              ${coursesName[assignment.course_id]} - ${assignment.category}`}
           />
         ) : (
           <ListItemText
-            primary={assignment.name}
-            secondary={`${assignment.category} - ${
-              assignment.points
-            } points - ${format(assignment.due_date, "M/d")}`}
+            primary={`${assignment.name} - due ${format(
+              assignment.due_date,
+              "M/d @ p"
+            )}`}
+            secondary={`${assignment.category} - ${assignment.points} points`}
           />
         )}
         <ListItemSecondaryAction>
