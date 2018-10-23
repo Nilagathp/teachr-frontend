@@ -15,6 +15,7 @@ import Divider from "@material-ui/core/Divider";
 import Switch from "@material-ui/core/Switch";
 import Badge from "@material-ui/core/Badge";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Tooltip from "@material-ui/core/Tooltip";
 import format from "date-fns/format";
 
 import {
@@ -26,7 +27,7 @@ import MultipleChoice from "./AssignmentContent/MultipleChoice";
 import ShortAnswerOrEssay from "./AssignmentContent/ShortAnswerOrEssay";
 import Text from "./AssignmentContent/Text";
 
-const styles = {
+const styles = theme => ({
   paper: {
     margin: "20px",
     paddingBottom: "10px"
@@ -49,8 +50,17 @@ const styles = {
   },
   text: {
     marginLeft: "20px"
+  },
+  lightTooltip: {
+    background: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    boxShadow: theme.shadows[1],
+    fontSize: 14
+  },
+  switch: {
+    marginRight: "80px"
   }
-};
+});
 
 class TeacherViewAssignment extends React.Component {
   state = {
@@ -147,22 +157,17 @@ class TeacherViewAssignment extends React.Component {
                 user.person.teacher
               )
             ) : (
-              <FormControlLabel
-                control={
-                  <Switch onChange={() => this.handleAssign(assignment.id)} />
-                }
-                label="Assign"
-              />
+              <Tooltip
+                title="Assign"
+                placement="right"
+                classes={{ tooltip: classes.lightTooltip }}
+              >
+                <Switch
+                  className={classes.switch}
+                  onChange={() => this.handleAssign(assignment.id)}
+                />
+              </Tooltip>
             )}
-
-            {/* <Button
-              className={classes.button}
-              color="primary"
-              component={Link}
-              to={`/course/${course.id}/assignment/${assignment.id}/grade`}
-            >
-              Grade
-            </Button> */}
             <Button
               className={classes.button}
               color="primary"
@@ -253,11 +258,14 @@ class TeacherViewAssignment extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   const teacher = ownProps.user.person.teacher;
   const assignment = ownProps.assignment;
-  const studentAssignments = teacher.student_assignments.filter(
-    studentAssignment =>
-      studentAssignment.assignment_id === assignment.id &&
-      studentAssignment.status === "submitted"
-  );
+  let studentAssignments;
+  if (assignment) {
+    studentAssignments = teacher.student_assignments.filter(
+      studentAssignment =>
+        studentAssignment.assignment_id === assignment.id &&
+        studentAssignment.status === "submitted"
+    );
+  }
   return {
     studentAssignments: studentAssignments
   };

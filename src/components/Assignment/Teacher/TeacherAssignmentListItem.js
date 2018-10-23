@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+import { withStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
@@ -9,10 +10,20 @@ import Button from "@material-ui/core/Button";
 import Badge from "@material-ui/core/Badge";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Tooltip from "@material-ui/core/Tooltip";
 import format from "date-fns/format";
 
 import { assignAssignment } from "../../../redux/actions/assignmentActions";
 import { unassignAssignment } from "../../../redux/actions/assignmentActions";
+
+const styles = theme => ({
+  lightTooltip: {
+    background: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    boxShadow: theme.shadows[1],
+    fontSize: 14
+  }
+});
 
 class TeacherAssignmentListItem extends React.Component {
   handleAssign = assignmentId => {
@@ -27,13 +38,6 @@ class TeacherAssignmentListItem extends React.Component {
     if (studentAssignments.length > 0) {
       return (
         <>
-          <Switch
-            onChange={() =>
-              this.handleUnassign(assignment.id, teacher.student_assignments)
-            }
-            color="primary"
-            checked={true}
-          />
           <Badge
             badgeContent={`${studentAssignments.length}`}
             color="secondary"
@@ -51,11 +55,6 @@ class TeacherAssignmentListItem extends React.Component {
               Grade
             </Button>
           </Badge>
-        </>
-      );
-    } else {
-      return (
-        <>
           <Switch
             onChange={() =>
               this.handleUnassign(assignment.id, teacher.student_assignments)
@@ -63,6 +62,11 @@ class TeacherAssignmentListItem extends React.Component {
             color="primary"
             checked={true}
           />
+        </>
+      );
+    } else {
+      return (
+        <>
           <Button
             color="primary"
             variant="outlined"
@@ -75,6 +79,13 @@ class TeacherAssignmentListItem extends React.Component {
           >
             Grade
           </Button>
+          <Switch
+            onChange={() =>
+              this.handleUnassign(assignment.id, teacher.student_assignments)
+            }
+            color="primary"
+            checked={true}
+          />
         </>
       );
     }
@@ -87,7 +98,8 @@ class TeacherAssignmentListItem extends React.Component {
       studentAssignments,
       coursesName,
       students,
-      course
+      course,
+      classes
     } = this.props;
     return (
       <ListItem
@@ -119,12 +131,13 @@ class TeacherAssignmentListItem extends React.Component {
           {assignment.assigned ? (
             this.renderGradeButton(studentAssignments, assignment, teacher)
           ) : (
-            <FormControlLabel
-              control={
-                <Switch onChange={() => this.handleAssign(assignment.id)} />
-              }
-              label="Assign"
-            />
+            <Tooltip
+              title="Assign"
+              placement="left"
+              classes={{ tooltip: classes.lightTooltip }}
+            >
+              <Switch onChange={() => this.handleAssign(assignment.id)} />
+            </Tooltip>
           )}
         </ListItemSecondaryAction>
       </ListItem>
@@ -132,7 +145,9 @@ class TeacherAssignmentListItem extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  { assignAssignment, unassignAssignment }
-)(TeacherAssignmentListItem);
+export default withStyles(styles)(
+  connect(
+    null,
+    { assignAssignment, unassignAssignment }
+  )(TeacherAssignmentListItem)
+);
