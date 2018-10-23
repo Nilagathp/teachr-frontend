@@ -35,16 +35,6 @@ const renderChip = (studentAssignment, assignment) => {
 };
 
 class StudentAssignmentListItem extends React.Component {
-  handleClick = (studentAssignment, courseId, push) => {
-    if (studentAssignment.status === "not_started") {
-      this.props.startStudentAssignment(studentAssignment.id, courseId, push);
-    } else {
-      this.props.history.push(
-        `/course/${courseId}/assignment/${studentAssignment.assignment_id}`
-      );
-    }
-  };
-
   render() {
     const { assignment, studentAssignment, coursesName } = this.props;
     return (
@@ -53,10 +43,8 @@ class StudentAssignmentListItem extends React.Component {
         divider
         button
         onClick={() =>
-          this.handleClick(
-            studentAssignment,
-            assignment.course_id,
-            this.props.history.push
+          this.props.history.push(
+            `/course/${assignment.course_id}/assignment/${assignment.id}`
           )
         }
       >

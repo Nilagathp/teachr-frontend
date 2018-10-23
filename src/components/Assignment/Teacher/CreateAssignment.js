@@ -13,10 +13,13 @@ import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentTitle from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import DateTimePicker from "material-ui-pickers/DateTimePicker";
 
-import { createAssignment } from "../../../redux/actions/assignmentActions";
+import {
+  createAssignment,
+  createAndAssignAssignment
+} from "../../../redux/actions/assignmentActions";
 import ContentTypeDialog from "./ContentTypeDialog";
 
 const styles = {
@@ -110,7 +113,10 @@ class CreateAssignment extends React.Component {
       due_date: this.state.dueDate,
       assigned: value
     };
-    this.props.createAssignment(assignmentParams, this.props.history.push);
+    this.props.createAndAssignAssignment(
+      assignmentParams,
+      this.props.history.push
+    );
   };
 
   handleCloseDontCreate = value => {
@@ -426,7 +432,7 @@ class CreateAssignment extends React.Component {
             onClose={this.handleCloseDontCreate}
           >
             <DialogContent>
-              <DialogContentTitle>Assign to students? </DialogContentTitle>
+              <DialogTitle>Assign to students?</DialogTitle>
               <DialogActions>
                 <Button
                   color="secondary"
@@ -462,6 +468,6 @@ const mapStateToProps = state => {
 export default withStyles(styles)(
   connect(
     mapStateToProps,
-    { createAssignment }
+    { createAssignment, createAndAssignAssignment }
   )(CreateAssignment)
 );

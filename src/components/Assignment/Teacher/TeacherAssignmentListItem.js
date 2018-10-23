@@ -11,6 +11,11 @@ import Badge from "@material-ui/core/Badge";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Tooltip from "@material-ui/core/Tooltip";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContentText from "@material-ui/core/DialogContentText";
 import format from "date-fns/format";
 
 import { assignAssignment } from "../../../redux/actions/assignmentActions";
@@ -26,11 +31,33 @@ const styles = theme => ({
 });
 
 class TeacherAssignmentListItem extends React.Component {
+  state = {
+    open: false,
+    openWithWarning: false
+  };
+
   handleAssign = assignmentId => {
     this.props.assignAssignment(assignmentId);
   };
 
   handleUnassign = (assignmentId, studentAssignments) => {
+    const studentAssignmentsStarted = studentAssignments.filter(
+      studentAssignment =>
+        studentAssignment.assignment_id === assignmentId &&
+        studentAssignment.status !== "not_started"
+    );
+    if (studentAssignmentsStarted.length > 0) {
+      this.setState({ openWithWarning: true });
+    } else {
+      this.setState({ open: true });
+    }
+  };
+
+  handleClose = () => {
+    this.setState({ openWithWarning: false, open: false });
+  };
+
+  unassign = (assignmentId, studentAssignments) => {
     this.props.unassignAssignment(assignmentId, studentAssignments);
   };
 
@@ -102,45 +129,87 @@ class TeacherAssignmentListItem extends React.Component {
       classes
     } = this.props;
     return (
-      <ListItem
-        key={assignment.id}
-        divider
-        button
-        component={Link}
-        to={`/course/${assignment.course_id}/assignment/${assignment.id}`}
-      >
-        {coursesName ? (
-          <ListItemText
-            primary={`${assignment.name} - due ${format(
-              assignment.due_date,
-              "M/d @ p"
-            )}`}
-            secondary={`
+      <>
+        <ListItem
+          key={assignment.id}
+          divider
+          button
+          component={Link}
+          to={`/course/${assignment.course_id}/assignment/${assignment.id}`}
+        >
+          {coursesName ? (
+            <ListItemText
+              primary={`${assignment.name} - due ${format(
+                assignment.due_date,
+                "M/d @ p"
+              )}`}
+              secondary={`
               ${coursesName[assignment.course_id]} - ${assignment.category}`}
-          />
-        ) : (
-          <ListItemText
-            primary={`${assignment.name} - due ${format(
-              assignment.due_date,
-              "M/d @ p"
-            )}`}
-            secondary={`${assignment.category} - ${assignment.points} points`}
-          />
-        )}
-        <ListItemSecondaryAction>
-          {assignment.assigned ? (
-            this.renderGradeButton(studentAssignments, assignment, teacher)
+            />
           ) : (
-            <Tooltip
-              title="Assign"
-              placement="left"
-              classes={{ tooltip: classes.lightTooltip }}
-            >
-              <Switch onChange={() => this.handleAssign(assignment.id)} />
-            </Tooltip>
+            <ListItemText
+              primary={`${assignment.name} - due ${format(
+                assignment.due_date,
+                "M/d @ p"
+              )}`}
+              secondary={`${assignment.category} - ${assignment.points} points`}
+            />
           )}
-        </ListItemSecondaryAction>
-      </ListItem>
+          <ListItemSecondaryAction>
+            {assignment.assigned ? (
+              this.renderGradeButton(studentAssignments, assignment, teacher)
+            ) : (
+              <Tooltip
+                title="Assign"
+                placement="left"
+                classes={{ tooltip: classes.lightTooltip }}
+              >
+                <Switch onChange={() => this.handleAssign(assignment.id)} />
+              </Tooltip>
+            )}
+          </ListItemSecondaryAction>
+        </ListItem>
+        <Dialog open={this.state.openWithWarning} onClose={this.handleClose}>
+          <DialogContent>
+            <DialogTitle>Unassign?</DialogTitle>
+            <DialogContentText>
+              Some students have already started working on this assignment and
+              their progress will be lost.
+            </DialogContentText>
+            <DialogActions>
+              <Button color="secondary" onClick={this.handleClose}>
+                Cancel
+              </Button>
+              <Button
+                color="primary"
+                onClick={() => this.unassign(assignment.id, studentAssignments)}
+              >
+                Unassign
+              </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
+        <Dialog open={this.state.open} onClose={this.handleClose}>
+          <DialogContent>
+            <DialogTitle>Unassign?</DialogTitle>
+            <DialogContentText>
+              Students will not be able to view or begin working on this
+              assignment.
+            </DialogContentText>
+            <DialogActions>
+              <Button color="secondary" onClick={this.handleClose}>
+                Cancel
+              </Button>
+              <Button
+                color="primary"
+                onClick={() => this.unassign(assignment.id, studentAssignments)}
+              >
+                Unassign
+              </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
+      </>
     );
   }
 }
