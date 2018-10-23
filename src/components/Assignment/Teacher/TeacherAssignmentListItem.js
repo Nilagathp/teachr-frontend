@@ -18,6 +18,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import Chip from "@material-ui/core/Chip";
 import format from "date-fns/format";
 import isSameDay from "date-fns/isSameDay";
+import isBefore from "date-fns/isBefore";
 
 import { assignAssignment } from "../../../redux/actions/assignmentActions";
 import { unassignAssignment } from "../../../redux/actions/assignmentActions";
@@ -138,7 +139,8 @@ class TeacherAssignmentListItem extends React.Component {
           component={Link}
           to={`/course/${assignment.course_id}/assignment/${assignment.id}`}
         >
-          {isSameDay(assignment.due_date, new Date()) ? (
+          {isSameDay(assignment.due_date, new Date()) ||
+          isBefore(assignment.due_date, new Date()) ? (
             <Chip
               label={`${format(assignment.due_date, "M/d @ p")}`}
               variant="outlined"
