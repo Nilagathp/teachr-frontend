@@ -14,7 +14,12 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import compareAsc from "date-fns/compareAsc";
+import isSameDay from "date-fns/isSameDay";
+import isBefore from "date-fns/isBefore";
 
 import AssignmentList from "../Assignment/AssignmentList";
 
@@ -39,6 +44,7 @@ const styles = {
 
 class StudentHome extends React.Component {
   state = {
+    value: 0,
     course: "",
     category: "",
     status: ""
@@ -52,6 +58,10 @@ class StudentHome extends React.Component {
     this.setState({ course: "", category: "", status: "" });
   };
 
+  handleChangeTab = (event, value) => {
+    this.setState({ value });
+  };
+
   render() {
     const { student, coursesName, classes } = this.props;
     let assignments = student.assignments
@@ -59,7 +69,16 @@ class StudentHome extends React.Component {
       .sort(function(a, b) {
         return compareAsc(a.due_date, b.due_date);
       });
-
+    if (this.state.value === 0) {
+      assignments = assignments.filter(
+        assignment => !isBefore(assignment.due_date, new Date())
+      );
+    }
+    if (this.state.value === 1) {
+      assignments = assignments.filter(assignment =>
+        isBefore(assignment.due_date, new Date())
+      );
+    }
     if (this.state.course) {
       assignments = assignments.filter(
         assignment => assignment.course_id === this.state.course
@@ -83,7 +102,7 @@ class StudentHome extends React.Component {
     return (
       <React.Fragment>
         <Grid container spacing={24}>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             {student.courses.map(course => (
               <Card key={course.id} className={classes.card}>
                 <CardActionArea component={Link} to={`/course/${course.id}`}>
@@ -101,10 +120,22 @@ class StudentHome extends React.Component {
               </Card>
             ))}
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={9}>
             <Paper className={classes.paper}>
-              <Typography variant="h4" className={classes.heading}>
-                Assignments
+              <Paper position="static">
+                <Tabs
+                  textColor="primary"
+                  indicatorColor="primary"
+                  value={this.state.value}
+                  onChange={this.handleChangeTab}
+                  centered
+                >
+                  <Tab label="Upcoming Assignments" />
+                  <Tab label="Past Assignments" />
+                  <Tab label="All Assignments" />
+                </Tabs>
+              </Paper>
+              <div className={classes.paper}>
                 <FormControl className={classes.formControl}>
                   <InputLabel shrink>Filter by course:</InputLabel>
                   <Select
@@ -164,7 +195,7 @@ class StudentHome extends React.Component {
                 <Button size="small" color="primary" onClick={this.handleClick}>
                   Clear Filter
                 </Button>
-              </Typography>
+              </div>
               <Divider />
               <AssignmentList
                 assignments={assignments}

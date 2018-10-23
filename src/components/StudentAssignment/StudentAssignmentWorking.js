@@ -121,7 +121,7 @@ class StudentAssignmentWorking extends React.PureComponent {
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
             <Chip
-              color="primary"
+              color="secondary"
               label={`${studentAssignment.status.split("_").join(" ")}`}
               className={classes.question}
               variant="outlined"

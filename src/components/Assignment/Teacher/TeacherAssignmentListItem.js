@@ -64,6 +64,34 @@ class TeacherAssignmentListItem extends React.Component {
     this.handleClose();
   };
 
+  renderDueDate = dueDate => {
+    if (isSameDay(dueDate, new Date())) {
+      return (
+        <Chip
+          label={`${format(dueDate, "M/d @ p")}`}
+          variant="outlined"
+          color="primary"
+        />
+      );
+    } else if (isBefore(dueDate, new Date())) {
+      return (
+        <Chip
+          label={`${format(dueDate, "M/d @ p")}`}
+          variant="outlined"
+          color="secondary"
+        />
+      );
+    } else {
+      return (
+        <Chip
+          label={`${format(dueDate, "M/d @ p")}`}
+          variant="outlined"
+          color="default"
+        />
+      );
+    }
+  };
+
   renderGradeButton = (submittedStudentAssignments, assignment, teacher) => {
     if (submittedStudentAssignments.length > 0) {
       return (
@@ -139,20 +167,7 @@ class TeacherAssignmentListItem extends React.Component {
           component={Link}
           to={`/course/${assignment.course_id}/assignment/${assignment.id}`}
         >
-          {isSameDay(assignment.due_date, new Date()) ||
-          isBefore(assignment.due_date, new Date()) ? (
-            <Chip
-              label={`${format(assignment.due_date, "M/d @ p")}`}
-              variant="outlined"
-              color="secondary"
-            />
-          ) : (
-            <Chip
-              label={`${format(assignment.due_date, "M/d @ p")}`}
-              variant="outlined"
-              color="primary"
-            />
-          )}
+          {this.renderDueDate(assignment.due_date)}
           {coursesName ? (
             <ListItemText
               primary={`${assignment.name}`}

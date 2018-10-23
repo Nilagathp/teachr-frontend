@@ -74,7 +74,7 @@ class StudentAssignmentCompleted extends React.Component {
               />
             ) : (
               <Chip
-                color="primary"
+                color="default"
                 label={`${studentAssignment.status}`}
                 className={classes.question}
                 variant="outlined"

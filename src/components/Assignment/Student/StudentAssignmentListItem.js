@@ -6,13 +6,15 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Chip from "@material-ui/core/Chip";
 import format from "date-fns/format";
+import isSameDay from "date-fns/isSameDay";
+import isBefore from "date-fns/isBefore";
 
 import { startStudentAssignment } from "../../../redux/actions/studentAssignmentActions";
 
 const renderChip = (studentAssignment, assignment) => {
   switch (studentAssignment.status) {
     case "submitted":
-      return <Chip color="primary" label="submitted" variant="outlined" />;
+      return <Chip color="default" label="submitted" variant="outlined" />;
     case "graded":
       return (
         <Chip
@@ -34,6 +36,34 @@ const renderChip = (studentAssignment, assignment) => {
   }
 };
 
+const renderDueDate = dueDate => {
+  if (isSameDay(dueDate, new Date())) {
+    return (
+      <Chip
+        label={`${format(dueDate, "M/d @ p")}`}
+        variant="outlined"
+        color="primary"
+      />
+    );
+  } else if (isBefore(dueDate, new Date())) {
+    return (
+      <Chip
+        label={`${format(dueDate, "M/d @ p")}`}
+        variant="outlined"
+        color="secondary"
+      />
+    );
+  } else {
+    return (
+      <Chip
+        label={`${format(dueDate, "M/d @ p")}`}
+        variant="outlined"
+        color="default"
+      />
+    );
+  }
+};
+
 class StudentAssignmentListItem extends React.Component {
   render() {
     const { assignment, studentAssignment, coursesName } = this.props;
@@ -48,30 +78,21 @@ class StudentAssignmentListItem extends React.Component {
           )
         }
       >
+        {renderDueDate(assignment.due_date)}
         {coursesName ? (
           <ListItemText
-            primary={`${assignment.name} - due ${format(
-              assignment.due_date,
-              "M/d @ p"
-            )}`}
+            primary={`${assignment.name}`}
             secondary={`${coursesName[assignment.course_id]} - ${
               assignment.category
             } - ${assignment.points} points`}
           />
         ) : (
           <ListItemText
-            primary={`${assignment.name} - due ${format(
-              assignment.due_date,
-              "M/d @ p"
-            )}`}
+            primary={`${assignment.name}`}
             secondary={`${assignment.category} - ${assignment.points} points`}
           />
         )}
-        {studentAssignment ? (
-          renderChip(studentAssignment, assignment)
-        ) : (
-          <Chip color="secondary" label="not started" variant="outlined" />
-        )}
+        {renderChip(studentAssignment, assignment)}
       </ListItem>
     );
   }
