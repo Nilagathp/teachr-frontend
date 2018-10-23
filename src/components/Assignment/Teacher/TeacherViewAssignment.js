@@ -14,7 +14,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Divider from "@material-ui/core/Divider";
 import Switch from "@material-ui/core/Switch";
 import Badge from "@material-ui/core/Badge";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Tooltip from "@material-ui/core/Tooltip";
 import format from "date-fns/format";
 

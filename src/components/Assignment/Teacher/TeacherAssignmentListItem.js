@@ -9,7 +9,6 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Button from "@material-ui/core/Button";
 import Badge from "@material-ui/core/Badge";
 import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Tooltip from "@material-ui/core/Tooltip";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -126,8 +125,6 @@ class TeacherAssignmentListItem extends React.Component {
       allStudentAssignments,
       submittedStudentAssignments,
       coursesName,
-      students,
-      course,
       classes
     } = this.props;
     return (

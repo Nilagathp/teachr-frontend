@@ -10,6 +10,10 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import format from "date-fns/format";
 
 const styles = {
@@ -31,64 +35,115 @@ const styles = {
   text: {
     marginLeft: "20px",
     paddingBottom: "10px"
+  },
+  formControl: {
+    marginLeft: "20px",
+    marginBottom: "10px",
+    minWidth: 120
   }
 };
 
-const AssignmentsToGrade = ({
-  user,
-  assignment,
-  course,
-  studentAssignments,
-  students,
-  history,
-  classes
-}) => {
-  return user ? (
-    <Paper className={classes.paper}>
-      <Typography variant="h4" className={classes.heading}>
-        {assignment.name}
-        <Button color="primary" onClick={() => history.goBack()}>
-          Back
-        </Button>
-      </Typography>
-      <Typography variant="h6" className={classes.text}>
-        {`${course.name} - ${assignment.category} - ${
-          assignment.points
-        } points`}
-      </Typography>
-      <Typography variant="h6" className={classes.text}>
-        {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
-      </Typography>
-      <Divider />
-      <List>
-        {studentAssignments
-          ? studentAssignments.map(assignment => (
-              <ListItem
-                key={assignment.id}
-                divider
-                button
-                component={Link}
-                to={`/course/${course.id}/assignment/${
-                  assignment.assignment_id
-                }/grade/student/${assignment.student_id}`}
-              >
-                <ListItemText
-                  primary={
-                    students.find(
-                      student => student.id === assignment.student_id
-                    ).name
-                  }
-                  secondary={`Status: ${assignment.status
-                    .split("_")
-                    .join(" ")}`}
-                />
-              </ListItem>
-            ))
-          : null}
-      </List>
-    </Paper>
-  ) : null;
-};
+class AssignmentsToGrade extends React.Component {
+  state = {
+    status: ""
+  };
+
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleClick = event => {
+    this.setState({ status: "" });
+  };
+
+  render() {
+    const {
+      user,
+      assignment,
+      course,
+      studentAssignments,
+      students,
+      history,
+      classes
+    } = this.props;
+    let assignments = studentAssignments;
+    if (this.state.status) {
+      assignments = assignments.filter(
+        assignment => assignment.status === this.state.status
+      );
+    }
+    return user ? (
+      <Paper className={classes.paper}>
+        <Typography variant="h4" className={classes.heading}>
+          {assignment.name}
+          <Button color="primary" onClick={() => history.goBack()}>
+            Back
+          </Button>
+        </Typography>
+        <Typography variant="h6" className={classes.text}>
+          {`${course.name} - ${assignment.category} - ${
+            assignment.points
+          } points`}
+        </Typography>
+        <Typography variant="h6" className={classes.text}>
+          {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink>Filter by status:</InputLabel>
+            <Select
+              value={this.state.status}
+              onChange={this.handleChange}
+              inputProps={{ name: "status" }}
+            >
+              <MenuItem value="" />
+              <MenuItem key={0} value={"not_started"}>
+                not started
+              </MenuItem>
+              <MenuItem key={1} value={"in_progress"}>
+                in progress
+              </MenuItem>
+              <MenuItem key={2} value={"submitted"}>
+                submitted
+              </MenuItem>
+              <MenuItem key={3} value={"graded"}>
+                graded
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <Button size="small" color="primary" onClick={this.handleClick}>
+            Clear Filter
+          </Button>
+        </Typography>
+        <Divider />
+        <List>
+          {assignments
+            ? assignments.map(assignment => (
+                <ListItem
+                  key={assignment.id}
+                  divider
+                  button
+                  component={Link}
+                  to={`/course/${course.id}/assignment/${
+                    assignment.assignment_id
+                  }/grade/student/${assignment.student_id}`}
+                >
+                  <ListItemText
+                    primary={
+                      students.find(
+                        student => student.id === assignment.student_id
+                      ).name
+                    }
+                    secondary={`Status: ${assignment.status
+                      .split("_")
+                      .join(" ")}`}
+                  />
+                </ListItem>
+              ))
+            : null}
+        </List>
+      </Paper>
+    ) : null;
+  }
+}
 
 const mapStateToProps = (state, ownProps) => {
   let assignment;
