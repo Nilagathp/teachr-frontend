@@ -74,7 +74,7 @@ function saveStudentAssignment(studentAssignmentId, answers, courseId, push) {
       .then(r => r.json())
       .then(json => {
         dispatch(getUserFromToken(token));
-        push(`/course/${courseId}/`);
+        push("/home");
       });
   };
 }
@@ -97,7 +97,7 @@ function submitStudentAssignment(studentAssignmentId, answers, courseId, push) {
       .then(r => r.json())
       .then(json => {
         dispatch(getUserFromToken(token));
-        push(`/course/${courseId}/`);
+        push("/home");
       });
   };
 }

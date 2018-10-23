@@ -14,6 +14,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
+import compareAsc from "date-fns/compareAsc";
 
 import AssignmentList from "../Assignment/AssignmentList";
 
@@ -53,9 +54,12 @@ class StudentHome extends React.Component {
 
   render() {
     const { student, coursesName, classes } = this.props;
-    let assignments = student.assignments.filter(
-      assignment => assignment.assigned
-    );
+    let assignments = student.assignments
+      .filter(assignment => assignment.assigned)
+      .sort(function(a, b) {
+        return compareAsc(a.due_date, b.due_date);
+      });
+
     if (this.state.course) {
       assignments = assignments.filter(
         assignment => assignment.course_id === this.state.course
@@ -76,7 +80,6 @@ class StudentHome extends React.Component {
         assignmentIds.includes(assignment.id)
       );
     }
-
     return (
       <React.Fragment>
         <Grid container spacing={24}>
