@@ -87,7 +87,13 @@ class StudentAssignmentToGrade extends React.Component {
   };
 
   render() {
-    const { assignment, course, studentAssignment, classes } = this.props;
+    const {
+      assignment,
+      course,
+      studentAssignment,
+      student,
+      classes
+    } = this.props;
     if (assignment && studentAssignment) {
       return (
         <Paper className={classes.paper}>
@@ -111,13 +117,28 @@ class StudentAssignmentToGrade extends React.Component {
                   variant="outlined"
                 />
               )}
+              <Button
+                color="primary"
+                onClick={() => this.props.history.goBack()}
+              >
+                Back to All Students
+              </Button>
+              <Button
+                color="primary"
+                onClick={() => this.props.history.push(`/course/${course.id}`)}
+              >
+                Back to Course
+              </Button>
             </Typography>
             <Typography variant="h6" className={classes.text}>
+              {student.name}
+            </Typography>
+            <Typography variant="subtitle1" className={classes.text}>
               {`${course.name} - ${assignment.category} - ${
                 assignment.points
               } points`}
             </Typography>
-            <Typography variant="h6" className={classes.text}>
+            <Typography variant="subtitle1" className={classes.text}>
               {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
             </Typography>
             <Divider />
@@ -209,6 +230,7 @@ const mapStateToProps = (state, ownProps) => {
   let assignment;
   let course;
   let studentAssignment;
+  let student;
   const urlArray = ownProps.match.url.split("/");
   const assignmentId = parseInt(urlArray[4]);
   const courseId = parseInt(urlArray[2]);
@@ -225,11 +247,15 @@ const mapStateToProps = (state, ownProps) => {
         studentAssignment.assignment_id === assignmentId &&
         studentAssignment.student_id === studentId
     );
+    student = state.user.person.teacher.students.find(
+      student => student.id === studentId
+    );
   }
   return {
     assignment: assignment,
     course: course,
-    studentAssignment: studentAssignment
+    studentAssignment: studentAssignment,
+    student: student
   };
 };
 

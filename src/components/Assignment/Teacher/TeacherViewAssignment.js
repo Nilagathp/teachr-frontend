@@ -214,6 +214,12 @@ class TeacherViewAssignment extends React.Component {
           </Dialog>
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
+            <Button
+              color="primary"
+              onClick={() => this.props.history.push(`/course/${course.id}`)}
+            >
+              View Course
+            </Button>
             {assignment.assigned ? (
               this.renderGradeButton(
                 submittedStudentAssignments,

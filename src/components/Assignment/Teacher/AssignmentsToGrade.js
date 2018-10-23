@@ -79,39 +79,45 @@ class AssignmentsToGrade extends React.Component {
           <Button color="primary" onClick={() => history.goBack()}>
             Back
           </Button>
+          <Button
+            color="primary"
+            onClick={() => this.props.history.push(`/course/${course.id}`)}
+          >
+            View Course
+          </Button>
         </Typography>
         <Typography variant="h6" className={classes.text}>
           {`${course.name} - ${assignment.category} - ${
             assignment.points
           } points`}
         </Typography>
+        <FormControl className={classes.formControl}>
+          <InputLabel shrink>Filter by status:</InputLabel>
+          <Select
+            value={this.state.status}
+            onChange={this.handleChange}
+            inputProps={{ name: "status" }}
+          >
+            <MenuItem value="" />
+            <MenuItem key={0} value={"not_started"}>
+              not started
+            </MenuItem>
+            <MenuItem key={1} value={"in_progress"}>
+              in progress
+            </MenuItem>
+            <MenuItem key={2} value={"submitted"}>
+              submitted
+            </MenuItem>
+            <MenuItem key={3} value={"graded"}>
+              graded
+            </MenuItem>
+          </Select>
+        </FormControl>
+        <Button size="small" color="primary" onClick={this.handleClick}>
+          Clear Filter
+        </Button>
         <Typography variant="h6" className={classes.text}>
           {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
-          <FormControl className={classes.formControl}>
-            <InputLabel shrink>Filter by status:</InputLabel>
-            <Select
-              value={this.state.status}
-              onChange={this.handleChange}
-              inputProps={{ name: "status" }}
-            >
-              <MenuItem value="" />
-              <MenuItem key={0} value={"not_started"}>
-                not started
-              </MenuItem>
-              <MenuItem key={1} value={"in_progress"}>
-                in progress
-              </MenuItem>
-              <MenuItem key={2} value={"submitted"}>
-                submitted
-              </MenuItem>
-              <MenuItem key={3} value={"graded"}>
-                graded
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <Button size="small" color="primary" onClick={this.handleClick}>
-            Clear Filter
-          </Button>
         </Typography>
         <Divider />
         <List>
