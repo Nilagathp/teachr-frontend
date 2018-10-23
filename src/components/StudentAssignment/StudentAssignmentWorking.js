@@ -102,6 +102,7 @@ class StudentAssignmentWorking extends React.PureComponent {
   };
 
   handleSubmit = event => {
+    event.preventDefault();
     const studentAssignmentId = this.props.studentAssignment.id;
     const answers = this.state.answers;
     this.props.submitStudentAssignment(

@@ -22,11 +22,12 @@ const AssignmentList = ({
             teacher={teacher}
             coursesName={coursesName}
             students={teacher.students}
-            studentAssignments={studentAssignments.filter(
+            submittedStudentAssignments={studentAssignments.filter(
               studentAssignment =>
                 studentAssignment.assignment_id === assignment.id &&
                 studentAssignment.status === "submitted"
             )}
+            allStudentAssignments={studentAssignments}
             course={courses.find(course => course.id === assignment.course_id)}
           />
         ))}

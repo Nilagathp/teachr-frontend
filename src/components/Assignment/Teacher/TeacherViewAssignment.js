@@ -64,27 +64,47 @@ const styles = theme => ({
 
 class TeacherViewAssignment extends React.Component {
   state = {
-    open: false
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
+    openDelete: false,
+    open: false,
+    openWithWarning: false
   };
 
   handleAssign = assignmentId => {
     this.props.assignAssignment(assignmentId);
   };
 
-  handleUnassign = (assignmentId, studentAssignments) => {
-    this.props.unassignAssignment(assignmentId, studentAssignments);
+  handleUnassign = (assignmentId, allStudentAssignments) => {
+    const studentAssignmentsStarted = allStudentAssignments.filter(
+      studentAssignment =>
+        studentAssignment.assignment_id === assignmentId &&
+        studentAssignment.status !== "not_started"
+    );
+    if (studentAssignmentsStarted.length > 0) {
+      this.setState({ openWithWarning: true });
+    } else {
+      this.setState({ open: true });
+    }
   };
 
-  renderGradeButton = (studentAssignments, assignment, teacher) => {
-    if (studentAssignments.length > 0) {
+  handleClose = () => {
+    this.setState({ openWithWarning: false, open: false });
+  };
+
+  unassign = (assignmentId, allStudentAssignments) => {
+    this.props.unassignAssignment(assignmentId, allStudentAssignments);
+    this.handleClose();
+  };
+
+  handleOpenDelete = () => {
+    this.setState({ openDelete: true });
+  };
+
+  handleCloseDelete = () => {
+    this.setState({ openDelete: false });
+  };
+
+  renderGradeButton = (submittedStudentAssignments, assignment, teacher) => {
+    if (submittedStudentAssignments.length > 0) {
       return (
         <>
           <Switch
@@ -95,7 +115,7 @@ class TeacherViewAssignment extends React.Component {
             checked={true}
           />
           <Badge
-            badgeContent={`${studentAssignments.length}`}
+            badgeContent={`${submittedStudentAssignments.length}`}
             color="secondary"
             style={{ margin: "20px" }}
           >
@@ -140,7 +160,8 @@ class TeacherViewAssignment extends React.Component {
   render() {
     const {
       user,
-      studentAssignments,
+      submittedStudentAssignments,
+      allStudentAssignments,
       course,
       assignment,
       classes
@@ -148,11 +169,55 @@ class TeacherViewAssignment extends React.Component {
     if (assignment) {
       return (
         <Paper className={classes.paper}>
+          <Dialog open={this.state.openWithWarning} onClose={this.handleClose}>
+            <DialogContent>
+              <DialogTitle>Unassign?</DialogTitle>
+              <DialogContentText>
+                Some students have already started working on this assignment
+                and their progress will be lost.
+              </DialogContentText>
+              <DialogActions>
+                <Button color="secondary" onClick={this.handleClose}>
+                  Cancel
+                </Button>
+                <Button
+                  color="primary"
+                  onClick={() =>
+                    this.unassign(assignment.id, allStudentAssignments)
+                  }
+                >
+                  Unassign
+                </Button>
+              </DialogActions>
+            </DialogContent>
+          </Dialog>
+          <Dialog open={this.state.open} onClose={this.handleClose}>
+            <DialogContent>
+              <DialogTitle>Unassign?</DialogTitle>
+              <DialogContentText>
+                Students will not be able to view or begin working on this
+                assignment.
+              </DialogContentText>
+              <DialogActions>
+                <Button color="secondary" onClick={this.handleClose}>
+                  Cancel
+                </Button>
+                <Button
+                  color="primary"
+                  onClick={() =>
+                    this.unassign(assignment.id, allStudentAssignments)
+                  }
+                >
+                  Unassign
+                </Button>
+              </DialogActions>
+            </DialogContent>
+          </Dialog>
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
             {assignment.assigned ? (
               this.renderGradeButton(
-                studentAssignments,
+                submittedStudentAssignments,
                 assignment,
                 user.person.teacher
               )
@@ -181,18 +246,21 @@ class TeacherViewAssignment extends React.Component {
               className={classes.button}
               color="primary"
               variant="outlined"
-              onClick={this.handleClickOpen}
+              onClick={this.handleOpenDelete}
             >
               Delete
             </Button>
-            <Dialog open={this.state.open} onClose={this.handleClose}>
+            <Dialog
+              open={this.state.openDelete}
+              onClose={this.handleCloseDelete}
+            >
               <DialogTitle>{"Delete this assignment?"}</DialogTitle>
               <DialogContent>
                 <DialogContentText>
                   The assignment will be permanently deleted.
                 </DialogContentText>
                 <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
+                  <Button onClick={this.handleCloseDelete} color="primary">
                     Cancel
                   </Button>
                   <Button
@@ -258,16 +326,17 @@ class TeacherViewAssignment extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   const teacher = ownProps.user.person.teacher;
   const assignment = ownProps.assignment;
-  let studentAssignments;
+  let submittedStudentAssignments;
   if (assignment) {
-    studentAssignments = teacher.student_assignments.filter(
+    submittedStudentAssignments = teacher.student_assignments.filter(
       studentAssignment =>
         studentAssignment.assignment_id === assignment.id &&
         studentAssignment.status === "submitted"
     );
   }
   return {
-    studentAssignments: studentAssignments
+    submittedStudentAssignments: submittedStudentAssignments,
+    allStudentAssignments: teacher.student_assignments
   };
 };
 

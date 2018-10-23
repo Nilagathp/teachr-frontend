@@ -40,8 +40,8 @@ class TeacherAssignmentListItem extends React.Component {
     this.props.assignAssignment(assignmentId);
   };
 
-  handleUnassign = (assignmentId, studentAssignments) => {
-    const studentAssignmentsStarted = studentAssignments.filter(
+  handleUnassign = (assignmentId, allStudentAssignments) => {
+    const studentAssignmentsStarted = allStudentAssignments.filter(
       studentAssignment =>
         studentAssignment.assignment_id === assignmentId &&
         studentAssignment.status !== "not_started"
@@ -57,16 +57,17 @@ class TeacherAssignmentListItem extends React.Component {
     this.setState({ openWithWarning: false, open: false });
   };
 
-  unassign = (assignmentId, studentAssignments) => {
-    this.props.unassignAssignment(assignmentId, studentAssignments);
+  unassign = (assignmentId, allStudentAssignments) => {
+    this.props.unassignAssignment(assignmentId, allStudentAssignments);
+    this.handleClose();
   };
 
-  renderGradeButton = (studentAssignments, assignment, teacher) => {
-    if (studentAssignments.length > 0) {
+  renderGradeButton = (submittedStudentAssignments, assignment, teacher) => {
+    if (submittedStudentAssignments.length > 0) {
       return (
         <>
           <Badge
-            badgeContent={`${studentAssignments.length}`}
+            badgeContent={`${submittedStudentAssignments.length}`}
             color="secondary"
             style={{ margin: "20px" }}
           >
@@ -122,7 +123,8 @@ class TeacherAssignmentListItem extends React.Component {
     const {
       teacher,
       assignment,
-      studentAssignments,
+      allStudentAssignments,
+      submittedStudentAssignments,
       coursesName,
       students,
       course,
@@ -157,7 +159,11 @@ class TeacherAssignmentListItem extends React.Component {
           )}
           <ListItemSecondaryAction>
             {assignment.assigned ? (
-              this.renderGradeButton(studentAssignments, assignment, teacher)
+              this.renderGradeButton(
+                submittedStudentAssignments,
+                assignment,
+                teacher
+              )
             ) : (
               <Tooltip
                 title="Assign"
@@ -182,7 +188,9 @@ class TeacherAssignmentListItem extends React.Component {
               </Button>
               <Button
                 color="primary"
-                onClick={() => this.unassign(assignment.id, studentAssignments)}
+                onClick={() =>
+                  this.unassign(assignment.id, allStudentAssignments)
+                }
               >
                 Unassign
               </Button>
@@ -202,7 +210,9 @@ class TeacherAssignmentListItem extends React.Component {
               </Button>
               <Button
                 color="primary"
-                onClick={() => this.unassign(assignment.id, studentAssignments)}
+                onClick={() =>
+                  this.unassign(assignment.id, allStudentAssignments)
+                }
               >
                 Unassign
               </Button>
