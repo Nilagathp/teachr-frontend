@@ -1,47 +1,73 @@
 import React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import Drawer from "@material-ui/core/Drawer";
+import MenuList from "@material-ui/core/MenuList";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import Button from "@material-ui/core/Button";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import compareAsc from "date-fns/compareAsc";
 import isBefore from "date-fns/isBefore";
 
 import AssignmentList from "../Assignment/AssignmentList";
+import NavBar from "../Navbar";
 
-const styles = {
+const styles = theme => ({
+  card: {
+    maxWidth: 345,
+    margin: "20px"
+  },
   paper: {
     margin: "20px"
   },
-  card: {
-    margin: "20px",
-    maxWidth: 400
-  },
   heading: {
-    padding: "20px"
-  },
-  button: {
+    paddingTop: "20px",
     paddingLeft: "20px"
   },
   formControl: {
     marginLeft: "20px",
     marginBottom: "10px",
     minWidth: 120
+  },
+  list: {
+    maxHeight: 500,
+    overflow: "auto"
+  },
+  drawer: {
+    width: 200,
+    flexShrink: 0
+  },
+  toolbar: theme.mixins.toolbar,
+  root: {
+    display: "flex"
+  },
+  drawerPaper: {
+    width: 200
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    marginLeft: 200
   }
-};
+});
 
 class StudentCourse extends React.Component {
   state = {
     value: 0,
+    course: "",
     category: "",
     status: ""
   };
@@ -51,7 +77,7 @@ class StudentCourse extends React.Component {
   };
 
   handleClick = event => {
-    this.setState({ category: "", status: "" });
+    this.setState({ course: "", category: "", status: "" });
   };
 
   handleChangeTab = (event, value) => {
@@ -59,8 +85,8 @@ class StudentCourse extends React.Component {
   };
 
   render() {
-    const { course, student, classes } = this.props;
-    let assignments = this.props.assignments
+    const { student, coursesName, classes } = this.props;
+    let assignments = student.assignments
       .filter(assignment => assignment.assigned)
       .sort(function(a, b) {
         return compareAsc(a.due_date, b.due_date);
@@ -75,6 +101,11 @@ class StudentCourse extends React.Component {
         isBefore(assignment.due_date, new Date())
       );
     }
+    if (this.state.course) {
+      assignments = assignments.filter(
+        assignment => assignment.course_id === this.state.course
+      );
+    }
     if (this.state.category) {
       assignments = assignments.filter(
         assignment => assignment.category === this.state.category
@@ -86,81 +117,119 @@ class StudentCourse extends React.Component {
           student_assignment => student_assignment.status === this.state.status
         )
         .map(student_assignment => student_assignment.assignment_id);
-
       assignments = assignments.filter(assignment =>
         assignmentIds.includes(assignment.id)
       );
     }
     return (
       <React.Fragment>
-        <Typography variant="h4" className={classes.heading}>
-          {course.name}
-        </Typography>
+        <div className={classes.root}>
+          <CssBaseline />
+          <NavBar />
 
-        <Paper className={classes.paper}>
-          <Paper className={classes.paper}>
-            <Paper position="static">
-              <Tabs
-                textColor="primary"
-                indicatorColor="primary"
-                value={this.state.value}
-                onChange={this.handleChangeTab}
-                centered
+          <Drawer
+            variant="permanent"
+            className={classes.drawer}
+            classes={{ paper: classes.drawerPaper }}
+          >
+            <div className={classes.toolbar} />
+            <MenuList>
+              {student.courses.map(course => (
+                <MenuItem
+                  key={course.id}
+                  value={`${course.name}`}
+                  className={classes.card}
+                  component={Link}
+                  to={`/course/${course.id}`}
+                >
+                  {course.name}
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Drawer>
+        </div>
+
+        <Paper className={classes.content}>
+          <div className={classes.toolbar} />
+          <Paper position="static">
+            <Tabs
+              textColor="primary"
+              indicatorColor="primary"
+              value={this.state.value}
+              onChange={this.handleChangeTab}
+              centered
+            >
+              <Tab label="Upcoming Assignments" />
+              <Tab label="Past Assignments" />
+              <Tab label="All Assignments" />
+            </Tabs>
+          </Paper>
+          <div className={classes.paper}>
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink>Filter by course:</InputLabel>
+              <Select
+                value={this.state.course}
+                onChange={this.handleChange}
+                inputProps={{ name: "course" }}
               >
-                <Tab label="Upcoming Assignments" />
-                <Tab label="Past Assignments" />
-                <Tab label="All Assignments" />
-              </Tabs>
-            </Paper>
-            <div className={classes.paper}>
-              <FormControl className={classes.formControl}>
-                <InputLabel shrink>Filter by category:</InputLabel>
-                <Select
-                  value={this.state.category}
-                  onChange={this.handleChange}
-                  inputProps={{ name: "category" }}
-                >
-                  <MenuItem value="" />
-                  <MenuItem key={0} value={"CW"}>
-                    CW
+                <MenuItem value="" />
+                {student.courses.map(option => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.name}
                   </MenuItem>
-                  <MenuItem key={1} value={"HW"}>
-                    HW
-                  </MenuItem>
-                  <MenuItem key={2} value={"TQP"}>
-                    TQP
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl className={classes.formControl}>
-                <InputLabel shrink>Filter by status:</InputLabel>
-                <Select
-                  value={this.state.status}
-                  onChange={this.handleChange}
-                  inputProps={{ name: "status" }}
-                >
-                  <MenuItem value="" />
-                  <MenuItem key={"not_started"} value={"not_started"}>
-                    not started
-                  </MenuItem>
-                  <MenuItem key={"in_progress"} value={"in_progress"}>
-                    in progress
-                  </MenuItem>
-                  <MenuItem key={"submitted"} value={"submitted"}>
-                    submitted
-                  </MenuItem>
-                  <MenuItem key={"graded"} value={"graded"}>
-                    graded
-                  </MenuItem>
-                </Select>
-              </FormControl>
-              <Button size="small" color="primary" onClick={this.handleClick}>
-                Clear Filter
-              </Button>
-            </div>
-            <Divider />
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink>Filter by category:</InputLabel>
+              <Select
+                value={this.state.category}
+                onChange={this.handleChange}
+                inputProps={{ name: "category" }}
+              >
+                <MenuItem value="" />
+                <MenuItem key={0} value={"CW"}>
+                  CW
+                </MenuItem>
+                <MenuItem key={1} value={"HW"}>
+                  HW
+                </MenuItem>
+                <MenuItem key={2} value={"TQP"}>
+                  TQP
+                </MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink>Filter by status:</InputLabel>
+              <Select
+                value={this.state.status}
+                onChange={this.handleChange}
+                inputProps={{ name: "status" }}
+              >
+                <MenuItem value="" />
+                <MenuItem key={"not_started"} value={"not_started"}>
+                  not started
+                </MenuItem>
+                <MenuItem key={"in_progress"} value={"in_progress"}>
+                  in progress
+                </MenuItem>
+                <MenuItem key={"submitted"} value={"submitted"}>
+                  submitted
+                </MenuItem>
+                <MenuItem key={"graded"} value={"graded"}>
+                  graded
+                </MenuItem>
+              </Select>
+            </FormControl>
+            <Button size="small" color="primary" onClick={this.handleClick}>
+              Clear Filter
+            </Button>
+          </div>
+          <Divider />
+          <Paper className={classes.list}>
             <AssignmentList
               assignments={assignments}
+              coursesName={coursesName}
               studentAssignments={student.student_assignments}
             />
           </Paper>
@@ -171,14 +240,9 @@ class StudentCourse extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  let courses = state.user.person.student.courses;
-  let assignments = state.user.person.student.assignments;
-  let courseId = parseInt(ownProps.match.params.id);
-  return {
-    course: courses.find(c => c.id === courseId),
-    assignments: assignments.filter(a => a.course_id === courseId)
-  };
+  console.log(ownProps);
+  // const courseId =
+  // return {course: course}
 };
 
-const styledStudentCourse = withStyles(styles)(StudentCourse);
-export default withRouter(connect(mapStateToProps)(styledStudentCourse));
+export default withStyles(styles)(StudentCourse);

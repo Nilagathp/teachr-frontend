@@ -6,9 +6,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+import MenuList from "@material-ui/core/MenuList";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
@@ -82,6 +80,10 @@ class StudentHome extends React.Component {
     this.setState({ course: "", category: "", status: "" });
   };
 
+  handleClickCourse = course => {
+    this.setState({ course: course.id });
+  };
+
   handleChangeTab = (event, value) => {
     this.setState({ value });
   };
@@ -128,25 +130,24 @@ class StudentHome extends React.Component {
         <div className={classes.root}>
           <CssBaseline />
           <NavBar />
-
           <Drawer
             variant="permanent"
             className={classes.drawer}
             classes={{ paper: classes.drawerPaper }}
           >
             <div className={classes.toolbar} />
-            <List>
+            <MenuList>
               {student.courses.map(course => (
-                <ListItem
+                <MenuItem
                   key={course.id}
+                  value={course}
                   className={classes.card}
-                  component={Link}
-                  to={`/course/${course.id}`}
+                  onClick={() => this.handleClickCourse(course)}
                 >
-                  <ListItemText primary={`${course.name}`} />
-                </ListItem>
+                  {course.name}
+                </MenuItem>
               ))}
-            </List>
+            </MenuList>
           </Drawer>
         </div>
 
