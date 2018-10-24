@@ -60,7 +60,8 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    marginLeft: 180
+    marginLeft: 180,
+    minHeight: 820
   }
 });
 
@@ -126,132 +127,94 @@ class StudentHome extends React.Component {
       );
     }
     return (
-      <Paper>
-        <div className={classes.root}>
-          <CssBaseline />
-          <NavBar handleClick={this.handleClick} />
-          <Drawer
-            variant="permanent"
-            className={classes.drawer}
-            classes={{ paper: classes.drawerPaper }}
+      <>
+        <Paper position="static">
+          <Tabs
+            textColor="primary"
+            indicatorColor="primary"
+            value={this.state.value}
+            onChange={this.handleChangeTab}
+            centered
           >
-            <div className={classes.toolbar} />
-            <MenuList>
-              {student.courses.map(
-                course =>
-                  course.id === this.state.course ? (
-                    <MenuItem
-                      selected
-                      key={course.id}
-                      value={course}
-                      className={classes.menuItem}
-                      onClick={() => this.handleClickCourse(course)}
-                    >
-                      {course.name}
-                    </MenuItem>
-                  ) : (
-                    <MenuItem
-                      key={course.id}
-                      value={course}
-                      className={classes.menuItem}
-                      onClick={() => this.handleClickCourse(course)}
-                    >
-                      {course.name}
-                    </MenuItem>
-                  )
-              )}
-            </MenuList>
-          </Drawer>
-        </div>
-        <Paper className={classes.content}>
-          <Paper position="static">
-            <Tabs
-              textColor="primary"
-              indicatorColor="primary"
-              value={this.state.value}
-              onChange={this.handleChangeTab}
-              centered
-            >
-              <Tab label="Upcoming Assignments" />
-              <Tab label="Past Assignments" />
-              <Tab label="All Assignments" />
-            </Tabs>
-          </Paper>
-          <div className={classes.paper}>
-            <FormControl className={classes.formControl}>
-              <InputLabel shrink>Filter by course:</InputLabel>
-              <Select
-                value={this.state.course}
-                onChange={this.handleChange}
-                inputProps={{ name: "course" }}
-              >
-                <MenuItem value="" />
-                {student.courses.map(option => (
-                  <MenuItem key={option.id} value={option.id}>
-                    {option.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel shrink>Filter by category:</InputLabel>
-              <Select
-                value={this.state.category}
-                onChange={this.handleChange}
-                inputProps={{ name: "category" }}
-              >
-                <MenuItem value="" />
-                <MenuItem key={0} value={"CW"}>
-                  CW
-                </MenuItem>
-                <MenuItem key={1} value={"HW"}>
-                  HW
-                </MenuItem>
-                <MenuItem key={2} value={"TQP"}>
-                  TQP
-                </MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel shrink>Filter by status:</InputLabel>
-              <Select
-                value={this.state.status}
-                onChange={this.handleChange}
-                inputProps={{ name: "status" }}
-              >
-                <MenuItem value="" />
-                <MenuItem key={"not_started"} value={"not_started"}>
-                  not started
-                </MenuItem>
-                <MenuItem key={"in_progress"} value={"in_progress"}>
-                  in progress
-                </MenuItem>
-                <MenuItem key={"submitted"} value={"submitted"}>
-                  submitted
-                </MenuItem>
-                <MenuItem key={"graded"} value={"graded"}>
-                  graded
-                </MenuItem>
-              </Select>
-            </FormControl>
-            <Button
-              classnName={classes.filter}
-              color="primary"
-              onClick={this.handleClick}
-            >
-              Clear Filters
-            </Button>
-          </div>
-          <Divider />
-          <div className={classes.list}>
-            <AssignmentList
-              assignments={assignments}
-              coursesName={coursesName}
-              studentAssignments={student.student_assignments}
-            />
-          </div>
+            <Tab label="Upcoming Assignments" />
+            <Tab label="Past Assignments" />
+            <Tab label="All Assignments" />
+          </Tabs>
         </Paper>
-      </Paper>
+        <div className={classes.paper}>
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink>Filter by course:</InputLabel>
+            <Select
+              value={this.state.course}
+              onChange={this.handleChange}
+              inputProps={{ name: "course" }}
+            >
+              <MenuItem value="" />
+              {student.courses.map(option => (
+                <MenuItem key={option.id} value={option.id}>
+                  {option.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink>Filter by category:</InputLabel>
+            <Select
+              value={this.state.category}
+              onChange={this.handleChange}
+              inputProps={{ name: "category" }}
+            >
+              <MenuItem value="" />
+              <MenuItem key={0} value={"CW"}>
+                CW
+              </MenuItem>
+              <MenuItem key={1} value={"HW"}>
+                HW
+              </MenuItem>
+              <MenuItem key={2} value={"TQP"}>
+                TQP
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink>Filter by status:</InputLabel>
+            <Select
+              value={this.state.status}
+              onChange={this.handleChange}
+              inputProps={{ name: "status" }}
+            >
+              <MenuItem value="" />
+              <MenuItem key={"not_started"} value={"not_started"}>
+                not started
+              </MenuItem>
+              <MenuItem key={"in_progress"} value={"in_progress"}>
+                in progress
+              </MenuItem>
+              <MenuItem key={"submitted"} value={"submitted"}>
+                submitted
+              </MenuItem>
+              <MenuItem key={"graded"} value={"graded"}>
+                graded
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <Button
+            className={classes.filter}
+            color="primary"
+            onClick={this.handleClick}
+          >
+            Clear Filters
+          </Button>
+        </div>
+        <Divider />
+        <div className={classes.list}>
+          <AssignmentList
+            assignments={assignments}
+            coursesName={coursesName}
+            studentAssignments={student.student_assignments}
+          />
+        </div>
+      </>
     );
   }
 }

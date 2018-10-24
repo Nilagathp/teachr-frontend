@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 // import { connect } from "react-redux";
 
 import { withStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
+import Drawer from "@material-ui/core/Drawer";
+import MenuList from "@material-ui/core/MenuList";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -16,32 +19,57 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import compareAsc from "date-fns/compareAsc";
+import isBefore from "date-fns/isBefore";
 
 import AssignmentList from "../Assignment/AssignmentList";
 import Navbar from "../Navbar";
 
-const styles = {
-  card: {
-    maxWidth: 345,
-    margin: "20px"
-  },
+const styles = theme => ({
   paper: {
-    margin: "20px"
+    padding: theme.spacing.unit * 2
   },
   heading: {
-    paddingTop: "20px",
-    paddingLeft: "20px"
+    paddingTop: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit
   },
   formControl: {
-    marginLeft: "20px",
-    marginBottom: "10px",
-    minWidth: 120
+    marginLeft: theme.spacing.unit * 5,
+    marginBottom: theme.spacing.unit,
+    minWidth: 140
+  },
+  filter: {
+    marginLeft: theme.spacing.unit * 5,
+    marginBottom: theme.spacing.unit
+  },
+  list: {
+    maxHeight: 640,
+    overflow: "auto"
+  },
+  drawer: {
+    width: 200,
+    flexShrink: 0
+  },
+  toolbar: theme.mixins.toolbar,
+  root: {
+    display: "flex"
+  },
+  drawerPaper: {
+    width: 180
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    marginLeft: 180,
+    minHeight: 820
   }
-};
+});
 
 class TeacherHome extends React.Component {
   state = {
+    value: 0,
     course: "",
     category: "",
     dueDate: ""
@@ -55,6 +83,14 @@ class TeacherHome extends React.Component {
     this.setState({ course: "", category: "", dueDate: "" });
   };
 
+  handleClickCourse = course => {
+    this.setState({ course: course.id });
+  };
+
+  handleChangeTab = (event, value) => {
+    this.setState({ value });
+  };
+
   render() {
     const { teacher, coursesName, classes } = this.props;
     let assignments = teacher.assignments.sort(function(a, b) {
@@ -65,103 +101,85 @@ class TeacherHome extends React.Component {
         assignment => assignment.course_id === this.state.course
       );
     }
+    if (this.state.value === 0) {
+      assignments = assignments.filter(
+        assignment => !isBefore(assignment.due_date, new Date())
+      );
+    }
+    if (this.state.value === 1) {
+      assignments = assignments.filter(assignment =>
+        isBefore(assignment.due_date, new Date())
+      );
+    }
     if (this.state.category) {
       assignments = assignments.filter(
         assignment => assignment.category === this.state.category
       );
     }
     return (
-      <React.Fragment>
-        <Navbar />
-        <Grid container spacing={24}>
-          <Grid item xs={3}>
-            {teacher.courses.map(course => (
-              <Card key={course.id} className={classes.card}>
-                <CardActionArea component={Link} to={`/course/${course.id}`}>
-                  <CardContent>
-                    <Typography
-                      variant="h4"
-                      component="h2"
-                      className={classes.title}
-                      gutterBottom
-                    >
-                      {course.name}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <Button
-                    size="small"
-                    color="primary"
-                    component={Link}
-                    to={`/course/${course.id}/assignment/create`}
-                  >
-                    Create Assignment
-                  </Button>
-                </CardActions>
-              </Card>
-            ))}
-          </Grid>
-          <Grid item xs={9}>
-            <Paper className={classes.paper}>
-              <div>
-                <Typography variant="h4" className={classes.heading}>
-                  Assignments
-                  <FormControl className={classes.formControl}>
-                    <InputLabel shrink>Filter by course:</InputLabel>
-                    <Select
-                      value={this.state.course}
-                      onChange={this.handleChange}
-                      inputProps={{ name: "course" }}
-                    >
-                      <MenuItem value="" />
-                      {teacher.courses.map(option => (
-                        <MenuItem key={option.id} value={option.id}>
-                          {option.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel shrink>Filter by category:</InputLabel>
-                    <Select
-                      value={this.state.category}
-                      onChange={this.handleChange}
-                      inputProps={{ name: "category" }}
-                    >
-                      <MenuItem value="" />
-                      <MenuItem key={0} value={"CW"}>
-                        CW
-                      </MenuItem>
-                      <MenuItem key={1} value={"HW"}>
-                        HW
-                      </MenuItem>
-                      <MenuItem key={2} value={"TQP"}>
-                        TQP
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                  <Button
-                    size="small"
-                    color="primary"
-                    onClick={this.handleClick}
-                  >
-                    Clear Filter
-                  </Button>
-                </Typography>
-              </div>
-              <Divider />
-              <AssignmentList
-                teacher={teacher}
-                assignments={assignments}
-                coursesName={coursesName}
-                studentAssignments={teacher.student_assignments}
-                courses={teacher.courses}
-              />
-            </Paper>
-          </Grid>
-        </Grid>
-      </React.Fragment>
+      <>
+        <Paper position="static">
+          <Tabs
+            textColor="primary"
+            indicatorColor="primary"
+            value={this.state.value}
+            onChange={this.handleChangeTab}
+            centered
+          >
+            <Tab label="Upcoming Assignments" />
+            <Tab label="Past Assignments" />
+            <Tab label="All Assignments" />
+          </Tabs>
+        </Paper>
+        <div className={classes.paper}>
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink>Filter by course:</InputLabel>
+            <Select
+              value={this.state.course}
+              onChange={this.handleChange}
+              inputProps={{ name: "course" }}
+            >
+              <MenuItem value="" />
+              {teacher.courses.map(option => (
+                <MenuItem key={option.id} value={option.id}>
+                  {option.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink>Filter by category:</InputLabel>
+            <Select
+              value={this.state.category}
+              onChange={this.handleChange}
+              inputProps={{ name: "category" }}
+            >
+              <MenuItem value="" />
+              <MenuItem key={0} value={"CW"}>
+                CW
+              </MenuItem>
+              <MenuItem key={1} value={"HW"}>
+                HW
+              </MenuItem>
+              <MenuItem key={2} value={"TQP"}>
+                TQP
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <Button size="small" color="primary" onClick={this.handleClick}>
+            Clear Filter
+          </Button>
+        </div>
+
+        <Divider />
+        <AssignmentList
+          teacher={teacher}
+          assignments={assignments}
+          coursesName={coursesName}
+          studentAssignments={teacher.student_assignments}
+          courses={teacher.courses}
+        />
+      </>
     );
   }
 }

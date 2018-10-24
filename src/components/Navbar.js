@@ -21,34 +21,23 @@ const styles = theme => ({
 
 function Navbar({ person, logOutUser, handleClick, classes }) {
   return (
-    <AppBar position="static" color="default" className={classes.appBar}>
+    <AppBar position="fixed" color="default" className={classes.appBar}>
       <Toolbar>
         {person.teacher ? (
-          <React.Fragment>
-            <Typography
-              variant="h6"
-              component={NavLink}
-              style={{ textDecoration: "none" }}
-              to="/home"
-            >
-              {person.teacher.name}
-            </Typography>
-            {person.teacher.courses.map(course => (
-              <div key={course.id} style={{ marginLeft: "20px" }}>
-                <Typography
-                  component={NavLink}
-                  style={{ textDecoration: "none" }}
-                  to={`/course/${course.id}`}
-                >
-                  {course.name}
-                </Typography>
-              </div>
-            ))}
-          </React.Fragment>
+          <Button
+            onClick={handleClick}
+            style={{
+              textDecoration: "none",
+              textTransform: "none",
+              fontSize: 20,
+              paddingLeft: 0,
+              margin: 0
+            }}
+          >
+            {person.teacher.name}
+          </Button>
         ) : (
           <Button
-            variant="h6"
-            as={Button}
             onClick={handleClick}
             style={{
               textDecoration: "none",
