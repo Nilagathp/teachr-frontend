@@ -167,7 +167,7 @@ class TeacherViewAssignment extends React.Component {
     } = this.props;
     if (assignment) {
       return (
-        <Paper className={classes.paper}>
+        <>
           <Dialog open={this.state.openWithWarning} onClose={this.handleClose}>
             <DialogContent>
               <DialogTitle>Unassign?</DialogTitle>
@@ -212,7 +212,7 @@ class TeacherViewAssignment extends React.Component {
               </DialogActions>
             </DialogContent>
           </Dialog>
-          <Typography variant="h4" className={classes.heading}>
+          <Typography variant="h4" className={classes.text}>
             {assignment.name}
             <Button
               color="primary"
@@ -320,7 +320,7 @@ class TeacherViewAssignment extends React.Component {
               );
             }
           })}
-        </Paper>
+        </>
       );
     } else {
       return null;

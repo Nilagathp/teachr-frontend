@@ -64,7 +64,7 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
     marginLeft: 180,
-    minHeight: 820
+    minHeight: 900
   }
 });
 

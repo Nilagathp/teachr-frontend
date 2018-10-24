@@ -25,7 +25,7 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
     marginLeft: 180,
-    minHeight: 820
+    minHeight: 900
   },
   toolbar: theme.mixins.toolbar
 });
@@ -37,6 +37,8 @@ class App extends Component {
       this.props.getUserFromToken(token);
     }
   }
+
+  handleClick;
 
   render() {
     const { classes, user } = this.props;

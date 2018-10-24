@@ -197,8 +197,8 @@ class EditAssignment extends React.Component {
   render() {
     const { courses, history, classes } = this.props;
     return courses ? (
-      <Paper className={classes.paper}>
-        <Typography variant="h4" className={classes.heading}>
+      <>
+        <Typography variant="h4">
           Edit Assignment
           <Button color="primary" onClick={() => history.goBack()}>
             Cancel
@@ -338,7 +338,7 @@ class EditAssignment extends React.Component {
             Update Assignment
           </Button>
         </form>
-      </Paper>
+      </>
     ) : null;
   }
 }

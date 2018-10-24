@@ -73,7 +73,7 @@ class AssignmentsToGrade extends React.Component {
       );
     }
     return user ? (
-      <Paper className={classes.paper}>
+      <>
         <Typography variant="h4" className={classes.heading}>
           {assignment.name}
           <Button color="primary" onClick={() => history.goBack()}>
@@ -146,7 +146,7 @@ class AssignmentsToGrade extends React.Component {
               ))
             : null}
         </List>
-      </Paper>
+      </>
     ) : null;
   }
 }

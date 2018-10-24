@@ -334,8 +334,8 @@ class CreateAssignment extends React.Component {
   render() {
     const { courses, classes } = this.props;
     return courses ? (
-      <Paper className={classes.paper}>
-        <Typography variant="h4" className={classes.heading}>
+      <>
+        <Typography variant="h4" className={classes.text}>
           Create Assignment
           <Button color="primary" onClick={() => this.props.history.goBack()}>
             Cancel
@@ -454,7 +454,7 @@ class CreateAssignment extends React.Component {
             </DialogContent>
           </Dialog>
         </form>
-      </Paper>
+      </>
     ) : null;
   }
 }

@@ -96,129 +96,124 @@ class StudentAssignmentToGrade extends React.Component {
     } = this.props;
     if (assignment && studentAssignment) {
       return (
-        <Paper className={classes.paper}>
-          <div>
-            <Typography variant="h4" className={classes.heading}>
-              {assignment.name}
-              {studentAssignment.status === "graded" ? (
-                <Chip
-                  color="primary"
-                  label={`graded: ${studentAssignment.points_earned}/${
-                    assignment.points
-                  }`}
-                  className={classes.question}
-                  variant="outlined"
-                />
-              ) : (
-                <Chip
-                  color="primary"
-                  label={`${studentAssignment.status.split("_").join(" ")}`}
-                  className={classes.question}
-                  variant="outlined"
-                />
-              )}
-              <Button
+        <>
+          <Typography variant="h4" className={classes.heading}>
+            {assignment.name}
+            {studentAssignment.status === "graded" ? (
+              <Chip
                 color="primary"
-                onClick={() => this.props.history.goBack()}
-              >
-                Back to All Students
-              </Button>
-              <Button
-                color="primary"
-                onClick={() => this.props.history.push(`/course/${course.id}`)}
-              >
-                Back to Course
-              </Button>
-            </Typography>
-            <Typography variant="h6" className={classes.text}>
-              {student.name}
-            </Typography>
-            <Typography variant="subtitle1" className={classes.text}>
-              {`${course.name} - ${assignment.category} - ${
-                assignment.points
-              } points`}
-            </Typography>
-            <Typography variant="subtitle1" className={classes.text}>
-              {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
-            </Typography>
-            <Divider />
-            <Typography className={classes.content} variant="subtitle1">
-              Directions: {assignment.directions}
-            </Typography>
-            {Object.keys(assignment.content).map(key => {
-              const item = assignment.content[key];
-              switch (item.type) {
-                case "Multiple Choice":
-                  const answerChoices = Object.values(item.content.answers);
-                  return (
-                    <ViewStudentMultipleChoice
-                      key={key}
-                      id={key}
-                      content={item.content}
-                      classes={classes}
-                      answer={studentAssignment.answers[key]}
-                      answerChoices={answerChoices}
-                    />
-                  );
-                case "Short Answer":
-                  return (
-                    <ViewStudentShortAnswer
-                      key={key}
-                      id={key}
-                      content={item.content}
-                      classes={classes}
-                      answer={studentAssignment.answers[key]}
-                    />
-                  );
-                case "Essay":
-                  return (
-                    <ViewStudentEssay
-                      id={key}
-                      key={key}
-                      content={item.content}
-                      classes={classes}
-                      answer={studentAssignment.answers[key]}
-                    />
-                  );
-                default:
-                  return (
-                    <StudentText
-                      key={key}
-                      content={item.content}
-                      classes={classes}
-                    />
-                  );
-              }
-            })}
-            {studentAssignment.status === "submitted" ? (
-              <React.Fragment>
-                <InputLabel shrink className={classes.points}>{`Points out of ${
+                label={`graded: ${studentAssignment.points_earned}/${
                   assignment.points
-                }`}</InputLabel>
-                <TextField
-                  value={this.state.points}
-                  onChange={this.handleChange("points")}
-                  type="number"
-                  className={classes.points}
-                  InputProps={{
-                    inputProps: {
-                      min: 0,
-                      max: 10
-                    }
-                  }}
-                  margin="normal"
-                />
-                <Button
-                  color="primary"
-                  className={classes.button}
-                  onClick={this.handleSubmit}
-                >
-                  Submit Grade
-                </Button>
-              </React.Fragment>
-            ) : null}
-          </div>
-        </Paper>
+                }`}
+                className={classes.question}
+                variant="outlined"
+              />
+            ) : (
+              <Chip
+                color="primary"
+                label={`${studentAssignment.status.split("_").join(" ")}`}
+                className={classes.question}
+                variant="outlined"
+              />
+            )}
+            <Button color="primary" onClick={() => this.props.history.goBack()}>
+              Back to All Students
+            </Button>
+            <Button
+              color="primary"
+              onClick={() => this.props.history.push(`/course/${course.id}`)}
+            >
+              Back to Course
+            </Button>
+          </Typography>
+          <Typography variant="h6" className={classes.text}>
+            {student.name}
+          </Typography>
+          <Typography variant="subtitle1" className={classes.text}>
+            {`${course.name} - ${assignment.category} - ${
+              assignment.points
+            } points`}
+          </Typography>
+          <Typography variant="subtitle1" className={classes.text}>
+            {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
+          </Typography>
+          <Divider />
+          <Typography className={classes.content} variant="subtitle1">
+            Directions: {assignment.directions}
+          </Typography>
+          {Object.keys(assignment.content).map(key => {
+            const item = assignment.content[key];
+            switch (item.type) {
+              case "Multiple Choice":
+                const answerChoices = Object.values(item.content.answers);
+                return (
+                  <ViewStudentMultipleChoice
+                    key={key}
+                    id={key}
+                    content={item.content}
+                    classes={classes}
+                    answer={studentAssignment.answers[key]}
+                    answerChoices={answerChoices}
+                  />
+                );
+              case "Short Answer":
+                return (
+                  <ViewStudentShortAnswer
+                    key={key}
+                    id={key}
+                    content={item.content}
+                    classes={classes}
+                    answer={studentAssignment.answers[key]}
+                  />
+                );
+              case "Essay":
+                return (
+                  <ViewStudentEssay
+                    id={key}
+                    key={key}
+                    content={item.content}
+                    classes={classes}
+                    answer={studentAssignment.answers[key]}
+                  />
+                );
+              default:
+                return (
+                  <StudentText
+                    key={key}
+                    content={item.content}
+                    classes={classes}
+                  />
+                );
+            }
+          })}
+          {studentAssignment.status === "submitted" ? (
+            <React.Fragment>
+              <InputLabel shrink className={classes.points}>{`Points out of ${
+                assignment.points
+              }`}</InputLabel>
+              <TextField
+                value={this.state.points}
+                onChange={this.handleChange("points")}
+                type="number"
+                className={classes.points}
+                InputProps={{
+                  inputProps: {
+                    min: 0,
+                    max: 10
+                  }
+                }}
+                margin="normal"
+              />
+              <Button
+                color="primary"
+                className={classes.button}
+                onClick={this.handleSubmit}
+              >
+                Submit Grade
+              </Button>
+            </React.Fragment>
+          ) : null}
+        </>
       );
     } else {
       return null;
