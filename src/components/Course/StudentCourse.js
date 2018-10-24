@@ -11,7 +11,10 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import compareAsc from "date-fns/compareAsc";
+import isBefore from "date-fns/isBefore";
 
 import AssignmentList from "../Assignment/AssignmentList";
 
@@ -38,6 +41,7 @@ const styles = {
 
 class StudentCourse extends React.Component {
   state = {
+    value: 0,
     category: "",
     status: ""
   };
@@ -50,6 +54,10 @@ class StudentCourse extends React.Component {
     this.setState({ category: "", status: "" });
   };
 
+  handleChangeTab = (event, value) => {
+    this.setState({ value });
+  };
+
   render() {
     const { course, student, classes } = this.props;
     let assignments = this.props.assignments
@@ -57,6 +65,16 @@ class StudentCourse extends React.Component {
       .sort(function(a, b) {
         return compareAsc(a.due_date, b.due_date);
       });
+    if (this.state.value === 0) {
+      assignments = assignments.filter(
+        assignment => !isBefore(assignment.due_date, new Date())
+      );
+    }
+    if (this.state.value === 1) {
+      assignments = assignments.filter(assignment =>
+        isBefore(assignment.due_date, new Date())
+      );
+    }
     if (this.state.category) {
       assignments = assignments.filter(
         assignment => assignment.category === this.state.category
@@ -80,58 +98,72 @@ class StudentCourse extends React.Component {
         </Typography>
 
         <Paper className={classes.paper}>
-          <Typography variant="h4" className={classes.heading}>
-            Assignments
-            <FormControl className={classes.formControl}>
-              <InputLabel shrink>Filter by category:</InputLabel>
-              <Select
-                value={this.state.category}
-                onChange={this.handleChange}
-                inputProps={{ name: "category" }}
+          <Paper className={classes.paper}>
+            <Paper position="static">
+              <Tabs
+                textColor="primary"
+                indicatorColor="primary"
+                value={this.state.value}
+                onChange={this.handleChangeTab}
+                centered
               >
-                <MenuItem value="" />
-                <MenuItem key={0} value={"CW"}>
-                  CW
-                </MenuItem>
-                <MenuItem key={1} value={"HW"}>
-                  HW
-                </MenuItem>
-                <MenuItem key={2} value={"TQP"}>
-                  TQP
-                </MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel shrink>Filter by status:</InputLabel>
-              <Select
-                value={this.state.status}
-                onChange={this.handleChange}
-                inputProps={{ name: "status" }}
-              >
-                <MenuItem value="" />
-                <MenuItem key={"not_started"} value={"not_started"}>
-                  not started
-                </MenuItem>
-                <MenuItem key={"in_progress"} value={"in_progress"}>
-                  in progress
-                </MenuItem>
-                <MenuItem key={"submitted"} value={"submitted"}>
-                  submitted
-                </MenuItem>
-                <MenuItem key={"graded"} value={"graded"}>
-                  graded
-                </MenuItem>
-              </Select>
-            </FormControl>
-            <Button size="small" color="primary" onClick={this.handleClick}>
-              Clear Filter
-            </Button>
-          </Typography>
-          <Divider />
-          <AssignmentList
-            assignments={assignments}
-            studentAssignments={student.student_assignments}
-          />
+                <Tab label="Upcoming Assignments" />
+                <Tab label="Past Assignments" />
+                <Tab label="All Assignments" />
+              </Tabs>
+            </Paper>
+            <div className={classes.paper}>
+              <FormControl className={classes.formControl}>
+                <InputLabel shrink>Filter by category:</InputLabel>
+                <Select
+                  value={this.state.category}
+                  onChange={this.handleChange}
+                  inputProps={{ name: "category" }}
+                >
+                  <MenuItem value="" />
+                  <MenuItem key={0} value={"CW"}>
+                    CW
+                  </MenuItem>
+                  <MenuItem key={1} value={"HW"}>
+                    HW
+                  </MenuItem>
+                  <MenuItem key={2} value={"TQP"}>
+                    TQP
+                  </MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <InputLabel shrink>Filter by status:</InputLabel>
+                <Select
+                  value={this.state.status}
+                  onChange={this.handleChange}
+                  inputProps={{ name: "status" }}
+                >
+                  <MenuItem value="" />
+                  <MenuItem key={"not_started"} value={"not_started"}>
+                    not started
+                  </MenuItem>
+                  <MenuItem key={"in_progress"} value={"in_progress"}>
+                    in progress
+                  </MenuItem>
+                  <MenuItem key={"submitted"} value={"submitted"}>
+                    submitted
+                  </MenuItem>
+                  <MenuItem key={"graded"} value={"graded"}>
+                    graded
+                  </MenuItem>
+                </Select>
+              </FormControl>
+              <Button size="small" color="primary" onClick={this.handleClick}>
+                Clear Filter
+              </Button>
+            </div>
+            <Divider />
+            <AssignmentList
+              assignments={assignments}
+              studentAssignments={student.student_assignments}
+            />
+          </Paper>
         </Paper>
       </React.Fragment>
     );

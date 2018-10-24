@@ -5,9 +5,13 @@ import { connect } from "react-redux";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Chip from "@material-ui/core/Chip";
+import Badge from "@material-ui/core/Badge";
+import Button from "@material-ui/core/Button";
 import format from "date-fns/format";
 import isSameDay from "date-fns/isSameDay";
 import isBefore from "date-fns/isBefore";
+import isWithinInterval from "date-fns/isWithinInterval";
+import addDays from "date-fns/addDays";
 
 import { startStudentAssignment } from "../../../redux/actions/studentAssignmentActions";
 
@@ -25,7 +29,7 @@ const renderChip = (studentAssignment, assignment) => {
           variant="outlined"
         />
       );
-    default:
+    case "in_progress":
       return (
         <Chip
           color="secondary"
@@ -33,33 +37,37 @@ const renderChip = (studentAssignment, assignment) => {
           variant="outlined"
         />
       );
+    default:
+      return (
+        <Chip
+          color="secondary"
+          label={`${studentAssignment.status.split("_").join(" ")}`}
+        />
+      );
   }
 };
 
-const renderDueDate = dueDate => {
-  if (isSameDay(dueDate, new Date())) {
+const renderDueDate = assignment => {
+  if (isBefore(assignment.due_date, new Date())) {
     return (
-      <Chip
-        label={`${format(dueDate, "M/d @ p")}`}
-        variant="outlined"
-        color="primary"
-      />
+      <Button variant="outlined" color="secondary">{`due ${format(
+        assignment.due_date,
+        "M/d @ p"
+      )}`}</Button>
     );
-  } else if (isBefore(dueDate, new Date())) {
+  } else if (isSameDay(assignment.due_date, new Date())) {
     return (
-      <Chip
-        label={`${format(dueDate, "M/d @ p")}`}
-        variant="outlined"
-        color="secondary"
-      />
+      <Button variant="contained" color="secondary">{`due ${format(
+        assignment.due_date,
+        "M/d @ p"
+      )}`}</Button>
     );
   } else {
     return (
-      <Chip
-        label={`${format(dueDate, "M/d @ p")}`}
-        variant="outlined"
-        color="default"
-      />
+      <Button variant="outlined" color="default">{`due ${format(
+        assignment.due_date,
+        "M/d @ p"
+      )}`}</Button>
     );
   }
 };
@@ -78,7 +86,7 @@ class StudentAssignmentListItem extends React.Component {
           )
         }
       >
-        {renderDueDate(assignment.due_date)}
+        {renderDueDate(assignment)}
         {coursesName ? (
           <ListItemText
             primary={`${assignment.name}`}

@@ -69,11 +69,6 @@ class TeacherHome extends React.Component {
         assignment => assignment.category === this.state.category
       );
     }
-    // if (this.state.dueDate) {
-    //   assignments = assignments.filter(
-    //     assignment => a
-    //   )
-    // }
     return (
       <React.Fragment>
         <Grid container spacing={24}>

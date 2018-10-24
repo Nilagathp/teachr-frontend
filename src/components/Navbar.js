@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+
+import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -8,9 +10,18 @@ import Button from "@material-ui/core/Button";
 
 import { logOutUser } from "../redux/actions/userActions";
 
-const Navbar = ({ person, logOutUser }) => {
+const styles = theme => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    root: {
+      display: "flex"
+    }
+  }
+});
+
+function Navbar({ person, logOutUser, classes }) {
   return (
-    <AppBar position="static" color="default">
+    <AppBar position="static" color="default" className={classes.appBar}>
       <Toolbar>
         {person.teacher ? (
           <React.Fragment>
@@ -44,7 +55,7 @@ const Navbar = ({ person, logOutUser }) => {
             >
               {person.student.name}
             </Typography>
-            {person.student.courses.map(course => (
+            {/* {person.student.courses.map(course => (
               <div key={course.id} style={{ marginLeft: "20px" }}>
                 <Typography
                   component={NavLink}
@@ -54,7 +65,7 @@ const Navbar = ({ person, logOutUser }) => {
                   {course.name}
                 </Typography>
               </div>
-            ))}
+            ))} */}
           </React.Fragment>
         )}
         {person ? (
@@ -65,13 +76,15 @@ const Navbar = ({ person, logOutUser }) => {
       </Toolbar>
     </AppBar>
   );
-};
+}
 
 const mapStateToProps = state => {
   return { person: state.user.person };
 };
 
-export default connect(
-  mapStateToProps,
-  { logOutUser }
-)(Navbar);
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    { logOutUser }
+  )(Navbar)
+);
