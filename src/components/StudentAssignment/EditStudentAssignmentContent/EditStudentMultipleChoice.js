@@ -5,7 +5,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-class EditStudentMultipleChoice extends React.PureComponent {
+class EditStudentMultipleChoice extends React.Component {
   state = {
     value: ""
   };
@@ -13,6 +13,15 @@ class EditStudentMultipleChoice extends React.PureComponent {
   componentDidMount() {
     this.setState({ value: this.props.answer });
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log("nextProps", nextProps);
+  //   console.log("nextState", nextState);
+  //   console.log("state", this.state);
+  //   console.log("props", this.props);
+  //   console.log("props equal?", nextProps === this.props);
+  //   console.log("state equal?", nextState === this.state);
+  // }
 
   handleClick = event => {
     this.setState({ value: event.target.value });
@@ -25,10 +34,9 @@ class EditStudentMultipleChoice extends React.PureComponent {
         <Typography className={classes.text} variant="subtitle2">
           {content.question}
         </Typography>
-        <FormControl required component="fieldset">
+        <FormControl component="fieldset">
           <RadioGroup
             id={id}
-            name="answerChoices"
             onChange={this.handleClick}
             value={this.state.value}
             className={classes.group}
@@ -38,7 +46,7 @@ class EditStudentMultipleChoice extends React.PureComponent {
                 onClick={handleChange}
                 key={index}
                 value={answerChoice}
-                control={<Radio required id={id} />}
+                control={<Radio id={id} />}
                 label={answerChoice}
               />
             ))}
