@@ -6,6 +6,11 @@ import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import Icon from "@material-ui/core/Icon";
 
 import { changeCourse } from "../redux/actions/courseActions";
 
@@ -17,6 +22,13 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: 180
+  },
+  nested: {
+    marginLeft: "10px",
+    marginBottom: "10px"
+  },
+  icon: {
+    margin: theme.spacing.unit / 2
   }
 });
 
@@ -26,7 +38,7 @@ class Sidebar extends React.Component {
   };
 
   render() {
-    const { courses, selectedCourseId, classes } = this.props;
+    const { user, selectedCourseId, classes } = this.props;
     return (
       <Drawer
         variant="permanent"
@@ -35,27 +47,81 @@ class Sidebar extends React.Component {
         classes={{ paper: classes.drawerPaper }}
       >
         <div className={classes.toolbar} />
-        <MenuList>
-          {courses.map(
-            course =>
-              course.id === selectedCourseId ? (
-                <MenuItem
-                  selected
-                  key={course.id}
-                  onClick={() => this.selectCourse(course)}
-                >
-                  {course.name}
-                </MenuItem>
-              ) : (
-                <MenuItem
-                  key={course.id}
-                  onClick={() => this.selectCourse(course)}
-                >
-                  {course.name}
-                </MenuItem>
-              )
-          )}
-        </MenuList>
+        {user.person.teacher ? (
+          <MenuList component="div">
+            {user.person.teacher.courses.map(
+              course =>
+                course.id === selectedCourseId ? (
+                  <div key={course.id}>
+                    <MenuItem
+                      selected
+                      onClick={() => this.selectCourse(course)}
+                    >
+                      <ListItemText primary={`${course.name}`} />
+                    </MenuItem>
+                    <Button
+                      color="primary"
+                      className={classes.nested}
+                      onClick={() =>
+                        this.props.history.push(
+                          `/course/${course.id}/assignment/create`
+                        )
+                      }
+                    >
+                      <Icon className={classes.icon} color="primary">
+                        add_circle
+                      </Icon>
+                      Assignment
+                    </Button>
+                    <Divider />
+                  </div>
+                ) : (
+                  <div key={course.id}>
+                    <MenuItem onClick={() => this.selectCourse(course)}>
+                      {course.name}
+                    </MenuItem>
+                    <Button
+                      color="primary"
+                      className={classes.nested}
+                      onClick={() =>
+                        this.props.history.push(
+                          `/course/${course.id}/assignment/create`
+                        )
+                      }
+                    >
+                      <Icon className={classes.icon} color="primary">
+                        add_circle
+                      </Icon>
+                      Assignment
+                    </Button>
+                    <Divider />
+                  </div>
+                )
+            )}
+          </MenuList>
+        ) : (
+          <MenuList>
+            {user.person.student.courses.map(
+              course =>
+                course.id === selectedCourseId ? (
+                  <MenuItem
+                    selected
+                    key={course.id}
+                    onClick={() => this.selectCourse(course)}
+                  >
+                    {course.name}
+                  </MenuItem>
+                ) : (
+                  <MenuItem
+                    key={course.id}
+                    onClick={() => this.selectCourse(course)}
+                  >
+                    {course.name}
+                  </MenuItem>
+                )
+            )}
+          </MenuList>
+        )}
       </Drawer>
     );
   }

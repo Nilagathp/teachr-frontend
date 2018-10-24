@@ -89,6 +89,51 @@ class AssignmentsToGrade extends React.Component {
     }
   };
 
+  renderStudentAssignmentListItem = (
+    studentAssignment,
+    assignment,
+    course,
+    students
+  ) => {
+    switch (studentAssignment.status) {
+      case "submitted":
+      case "graded":
+        return (
+          <ListItem
+            key={studentAssignment.id}
+            divider
+            button
+            component={Link}
+            to={`/course/${course.id}/assignment/${
+              studentAssignment.assignment_id
+            }/grade/student/${studentAssignment.student_id}`}
+          >
+            {this.renderChip(studentAssignment, assignment)}
+            <ListItemText
+              primary={
+                students.find(
+                  student => student.id === studentAssignment.student_id
+                ).name
+              }
+            />
+          </ListItem>
+        );
+      default:
+        return (
+          <ListItem key={studentAssignment.id} divider button>
+            {this.renderChip(studentAssignment, assignment)}
+            <ListItemText
+              primary={
+                students.find(
+                  student => student.id === studentAssignment.student_id
+                ).name
+              }
+            />
+          </ListItem>
+        );
+    }
+  };
+
   render() {
     const {
       user,
@@ -152,26 +197,14 @@ class AssignmentsToGrade extends React.Component {
         <Divider />
         <List>
           {studentAssignments
-            ? studentAssignmentsToMap.map(studentAssignment => (
-                <ListItem
-                  key={studentAssignment.id}
-                  divider
-                  button
-                  component={Link}
-                  to={`/course/${course.id}/assignment/${
-                    studentAssignment.assignment_id
-                  }/grade/student/${studentAssignment.student_id}`}
-                >
-                  {this.renderChip(studentAssignment, assignment)}
-                  <ListItemText
-                    primary={
-                      students.find(
-                        student => student.id === studentAssignment.student_id
-                      ).name
-                    }
-                  />
-                </ListItem>
-              ))
+            ? studentAssignmentsToMap.map(studentAssignment =>
+                this.renderStudentAssignmentListItem(
+                  studentAssignment,
+                  assignment,
+                  course,
+                  students
+                )
+              )
             : null}
         </List>
       </>

@@ -42,18 +42,12 @@ class App extends Component {
 
   render() {
     const { classes, user } = this.props;
-    let courses;
-    if (user && user.person.teacher) {
-      courses = user.person.teacher.courses;
-    } else if (user) {
-      courses = user.person.student.courses;
-    }
-    return user && courses ? (
+    return user ? (
       <>
         <div className={classes.root}>
           <CssBaseline />
           <Navbar handleClick={this.handleClick} />
-          <Sidebar courses={courses} />
+          <Sidebar user={user} />
         </div>
         <Paper className={classes.content}>
           <div className={classes.toolbar} />

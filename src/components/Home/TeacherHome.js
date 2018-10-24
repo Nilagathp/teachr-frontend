@@ -184,7 +184,6 @@ class TeacherHome extends React.Component {
             Clear Filters
           </Button>
         </div>
-
         <Divider />
         <AssignmentList
           teacher={teacher}
