@@ -1,10 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
+
+import { changeCourse } from "../redux/actions/courseActions";
 
 const styles = theme => ({
   drawer: {
@@ -17,28 +20,41 @@ const styles = theme => ({
   }
 });
 
-const Sidebar = ({ courses, classes }) => {
-  return (
-    <Drawer
-      variant="permanent"
-      position="fixed"
-      className={classes.drawer}
-      classes={{ paper: classes.drawerPaper }}
-    >
-      <div className={classes.toolbar} />
-      <MenuList>
-        {courses.map(course => (
-          <Link
-            to={`/course/${course.id}`}
-            style={{ textDecoration: "none" }}
-            key={course.id}
-          >
-            <MenuItem>{course.name}</MenuItem>
-          </Link>
-        ))}
-      </MenuList>
-    </Drawer>
-  );
+class Sidebar extends React.Component {
+  selectCourse = course => {
+    this.props.changeCourse(course.id, this.props.history.push);
+  };
+
+  render() {
+    const { courses, classes } = this.props;
+    return (
+      <Drawer
+        variant="permanent"
+        position="fixed"
+        className={classes.drawer}
+        classes={{ paper: classes.drawerPaper }}
+      >
+        <div className={classes.toolbar} />
+        <MenuList>
+          {courses.map(course => (
+            <MenuItem key={course.id} onClick={() => this.selectCourse(course)}>
+              {course.name}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Drawer>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return { selectedCourseId: state.selectedCourseId };
 };
 
-export default withStyles(styles)(Sidebar);
+const styledSidebar = withStyles(styles)(Sidebar);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { changeCourse }
+  )(styledSidebar)
+);

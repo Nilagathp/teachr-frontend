@@ -10,7 +10,6 @@ import LogIn from "./components/LogIn";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Home from "./components/Home/Home";
-import Course from "./components/Course/Course";
 import Assignment from "./components/Assignment/Assignment";
 import CreateAssignment from "./components/Assignment/Teacher/CreateAssignment";
 import EditAssignment from "./components/Assignment/Teacher/EditAssignment";
@@ -78,7 +77,7 @@ class App extends Component {
               path="/course/:id/assignment/:id"
               component={Assignment}
             />
-            <Route exact path="/course/:id" component={Course} />
+            <Route exact path="/course/:id" component={Home} />
             <Route path="/home" component={Home} />
           </Switch>
         </Paper>

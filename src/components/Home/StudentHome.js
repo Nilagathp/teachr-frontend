@@ -1,16 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Drawer from "@material-ui/core/Drawer";
-import MenuList from "@material-ui/core/MenuList";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -23,7 +16,7 @@ import compareAsc from "date-fns/compareAsc";
 import isBefore from "date-fns/isBefore";
 
 import AssignmentList from "../Assignment/AssignmentList";
-import NavBar from "../Navbar";
+import { changeCourse, clearCourse } from "../../redux/actions/courseActions";
 
 const styles = theme => ({
   paper: {
@@ -68,9 +61,22 @@ const styles = theme => ({
 class StudentHome extends React.Component {
   state = {
     value: 0,
-    course: "",
+    courseId: "",
     category: "",
     status: ""
+  };
+
+  static getDerivedStateFromProps = (props, state) => {
+    if (props.selectedCourseId) {
+      return {
+        courseId: props.selectedCourseId,
+        value: state.value,
+        category: state.category,
+        status: state.status
+      };
+    } else {
+      return null;
+    }
   };
 
   handleChange = event => {
@@ -78,11 +84,13 @@ class StudentHome extends React.Component {
   };
 
   handleClick = event => {
-    this.setState({ course: "", category: "", status: "" });
+    this.setState({ courseId: "", category: "", status: "" });
+    this.props.clearCourse(this.props.history.push);
   };
 
-  handleClickCourse = course => {
-    this.setState({ course: course.id });
+  handleChangeCourse = event => {
+    this.setState({ courseId: event.target.value });
+    this.props.changeCourse(event.target.value, this.props.history.push);
   };
 
   handleChangeTab = (event, value) => {
@@ -106,9 +114,9 @@ class StudentHome extends React.Component {
         isBefore(assignment.due_date, new Date())
       );
     }
-    if (this.state.course) {
+    if (this.state.courseId) {
       assignments = assignments.filter(
-        assignment => assignment.course_id === this.state.course
+        assignment => assignment.course_id === this.state.courseId
       );
     }
     if (this.state.category) {
@@ -128,83 +136,85 @@ class StudentHome extends React.Component {
     }
     return (
       <>
-        <Paper position="static">
-          <Tabs
-            textColor="primary"
-            indicatorColor="primary"
-            value={this.state.value}
-            onChange={this.handleChangeTab}
-            centered
-          >
-            <Tab label="Upcoming Assignments" />
-            <Tab label="Past Assignments" />
-            <Tab label="All Assignments" />
-          </Tabs>
-        </Paper>
-        <div className={classes.paper}>
-          <FormControl className={classes.formControl}>
-            <InputLabel shrink>Filter by course:</InputLabel>
-            <Select
-              value={this.state.course}
-              onChange={this.handleChange}
-              inputProps={{ name: "course" }}
+        <div position="static">
+          <Paper position="static">
+            <Tabs
+              textColor="primary"
+              indicatorColor="primary"
+              value={this.state.value}
+              onChange={this.handleChangeTab}
+              centered
             >
-              <MenuItem value="" />
-              {student.courses.map(option => (
-                <MenuItem key={option.id} value={option.id}>
-                  {option.name}
+              <Tab label="Upcoming Assignments" />
+              <Tab label="Past Assignments" />
+              <Tab label="All Assignments" />
+            </Tabs>
+          </Paper>
+          <div position="static" className={classes.paper}>
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink>Filter by course:</InputLabel>
+              <Select
+                value={this.state.courseId}
+                onChange={this.handleChangeCourse}
+                inputProps={{ name: "course" }}
+              >
+                <MenuItem value="" />
+                {student.courses.map(option => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink>Filter by category:</InputLabel>
+              <Select
+                value={this.state.category}
+                onChange={this.handleChange}
+                inputProps={{ name: "category" }}
+              >
+                <MenuItem value="" />
+                <MenuItem key={0} value={"CW"}>
+                  CW
                 </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <InputLabel shrink>Filter by category:</InputLabel>
-            <Select
-              value={this.state.category}
-              onChange={this.handleChange}
-              inputProps={{ name: "category" }}
+                <MenuItem key={1} value={"HW"}>
+                  HW
+                </MenuItem>
+                <MenuItem key={2} value={"TQP"}>
+                  TQP
+                </MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink>Filter by status:</InputLabel>
+              <Select
+                value={this.state.status}
+                onChange={this.handleChange}
+                inputProps={{ name: "status" }}
+              >
+                <MenuItem value="" />
+                <MenuItem key={"not_started"} value={"not_started"}>
+                  not started
+                </MenuItem>
+                <MenuItem key={"in_progress"} value={"in_progress"}>
+                  in progress
+                </MenuItem>
+                <MenuItem key={"submitted"} value={"submitted"}>
+                  submitted
+                </MenuItem>
+                <MenuItem key={"graded"} value={"graded"}>
+                  graded
+                </MenuItem>
+              </Select>
+            </FormControl>
+            <Button
+              className={classes.filter}
+              color="primary"
+              onClick={this.handleClick}
             >
-              <MenuItem value="" />
-              <MenuItem key={0} value={"CW"}>
-                CW
-              </MenuItem>
-              <MenuItem key={1} value={"HW"}>
-                HW
-              </MenuItem>
-              <MenuItem key={2} value={"TQP"}>
-                TQP
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <InputLabel shrink>Filter by status:</InputLabel>
-            <Select
-              value={this.state.status}
-              onChange={this.handleChange}
-              inputProps={{ name: "status" }}
-            >
-              <MenuItem value="" />
-              <MenuItem key={"not_started"} value={"not_started"}>
-                not started
-              </MenuItem>
-              <MenuItem key={"in_progress"} value={"in_progress"}>
-                in progress
-              </MenuItem>
-              <MenuItem key={"submitted"} value={"submitted"}>
-                submitted
-              </MenuItem>
-              <MenuItem key={"graded"} value={"graded"}>
-                graded
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <Button
-            className={classes.filter}
-            color="primary"
-            onClick={this.handleClick}
-          >
-            Clear Filters
-          </Button>
+              Clear Filters
+            </Button>
+          </div>
         </div>
         <Divider />
         <div className={classes.list}>
@@ -219,4 +229,16 @@ class StudentHome extends React.Component {
   }
 }
 
-export default withStyles(styles)(StudentHome);
+const mapStateToProps = state => {
+  return {
+    selectedCourseId: state.selectedCourseId
+  };
+};
+
+const styledStudentHome = withStyles(styles)(StudentHome);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { changeCourse, clearCourse }
+  )(styledStudentHome)
+);

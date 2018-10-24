@@ -5,13 +5,10 @@ import { connect } from "react-redux";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Chip from "@material-ui/core/Chip";
-import Badge from "@material-ui/core/Badge";
 import Button from "@material-ui/core/Button";
 import format from "date-fns/format";
 import isSameDay from "date-fns/isSameDay";
 import isBefore from "date-fns/isBefore";
-import isWithinInterval from "date-fns/isWithinInterval";
-import addDays from "date-fns/addDays";
 
 import { startStudentAssignment } from "../../../redux/actions/studentAssignmentActions";
 

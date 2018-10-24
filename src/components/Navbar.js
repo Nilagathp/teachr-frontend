@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
 import { logOutUser } from "../redux/actions/userActions";
@@ -20,10 +19,12 @@ const styles = theme => ({
 });
 
 function Navbar({ person, logOutUser, handleClick, classes }) {
+  let name;
+  person.teacher ? (name = person.teacher.name) : (name = person.student.name);
   return (
     <AppBar position="fixed" color="default" className={classes.appBar}>
       <Toolbar>
-        {person.teacher ? (
+        <Link to="/home" style={{ textDecoration: "none" }}>
           <Button
             onClick={handleClick}
             style={{
@@ -34,22 +35,9 @@ function Navbar({ person, logOutUser, handleClick, classes }) {
               margin: 0
             }}
           >
-            {person.teacher.name}
+            {name}
           </Button>
-        ) : (
-          <Button
-            onClick={handleClick}
-            style={{
-              textDecoration: "none",
-              textTransform: "none",
-              fontSize: 20,
-              paddingLeft: 0,
-              margin: 0
-            }}
-          >
-            {person.student.name}
-          </Button>
-        )}
+        </Link>
         {person ? (
           <Button style={{ marginLeft: "auto" }} onClick={logOutUser}>
             Logout
