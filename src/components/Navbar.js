@@ -19,7 +19,7 @@ const styles = theme => ({
   }
 });
 
-function Navbar({ person, logOutUser, classes }) {
+function Navbar({ person, logOutUser, handleClick, classes }) {
   return (
     <AppBar position="static" color="default" className={classes.appBar}>
       <Toolbar>
@@ -46,27 +46,20 @@ function Navbar({ person, logOutUser, classes }) {
             ))}
           </React.Fragment>
         ) : (
-          <React.Fragment>
-            <Typography
-              variant="h6"
-              component={NavLink}
-              style={{ textDecoration: "none" }}
-              to="/home"
-            >
-              {person.student.name}
-            </Typography>
-            {/* {person.student.courses.map(course => (
-              <div key={course.id} style={{ marginLeft: "20px" }}>
-                <Typography
-                  component={NavLink}
-                  style={{ textDecoration: "none" }}
-                  to={`/course/${course.id}`}
-                >
-                  {course.name}
-                </Typography>
-              </div>
-            ))} */}
-          </React.Fragment>
+          <Button
+            variant="h6"
+            as={Button}
+            onClick={handleClick}
+            style={{
+              textDecoration: "none",
+              textTransform: "none",
+              fontSize: 20,
+              paddingLeft: 0,
+              margin: 0
+            }}
+          >
+            {person.student.name}
+          </Button>
         )}
         {person ? (
           <Button style={{ marginLeft: "auto" }} onClick={logOutUser}>

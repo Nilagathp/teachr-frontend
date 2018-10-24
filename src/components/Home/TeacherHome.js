@@ -19,6 +19,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import compareAsc from "date-fns/compareAsc";
 
 import AssignmentList from "../Assignment/AssignmentList";
+import Navbar from "../Navbar";
 
 const styles = {
   card: {
@@ -71,6 +72,7 @@ class TeacherHome extends React.Component {
     }
     return (
       <React.Fragment>
+        <Navbar />
         <Grid container spacing={24}>
           <Grid item xs={3}>
             {teacher.courses.map(course => (

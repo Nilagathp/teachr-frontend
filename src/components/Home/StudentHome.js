@@ -26,24 +26,24 @@ import AssignmentList from "../Assignment/AssignmentList";
 import NavBar from "../Navbar";
 
 const styles = theme => ({
-  card: {
-    maxWidth: 345,
-    margin: "20px"
-  },
   paper: {
-    margin: "20px"
+    padding: theme.spacing.unit * 2
   },
   heading: {
-    paddingTop: "20px",
-    paddingLeft: "20px"
+    paddingTop: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit
   },
   formControl: {
-    marginLeft: "20px",
-    marginBottom: "10px",
-    minWidth: 120
+    marginLeft: theme.spacing.unit * 5,
+    marginBottom: theme.spacing.unit,
+    minWidth: 140
+  },
+  filter: {
+    marginLeft: theme.spacing.unit * 5,
+    marginBottom: theme.spacing.unit
   },
   list: {
-    maxHeight: 500,
+    maxHeight: 640,
     overflow: "auto"
   },
   drawer: {
@@ -55,12 +55,12 @@ const styles = theme => ({
     display: "flex"
   },
   drawerPaper: {
-    width: 200
+    width: 180
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    marginLeft: 200
+    marginLeft: 180
   }
 });
 
@@ -126,10 +126,10 @@ class StudentHome extends React.Component {
       );
     }
     return (
-      <React.Fragment>
+      <Paper>
         <div className={classes.root}>
           <CssBaseline />
-          <NavBar />
+          <NavBar handleClick={this.handleClick} />
           <Drawer
             variant="permanent"
             className={classes.drawer}
@@ -137,22 +137,33 @@ class StudentHome extends React.Component {
           >
             <div className={classes.toolbar} />
             <MenuList>
-              {student.courses.map(course => (
-                <MenuItem
-                  key={course.id}
-                  value={course}
-                  className={classes.card}
-                  onClick={() => this.handleClickCourse(course)}
-                >
-                  {course.name}
-                </MenuItem>
-              ))}
+              {student.courses.map(
+                course =>
+                  course.id === this.state.course ? (
+                    <MenuItem
+                      selected
+                      key={course.id}
+                      value={course}
+                      className={classes.menuItem}
+                      onClick={() => this.handleClickCourse(course)}
+                    >
+                      {course.name}
+                    </MenuItem>
+                  ) : (
+                    <MenuItem
+                      key={course.id}
+                      value={course}
+                      className={classes.menuItem}
+                      onClick={() => this.handleClickCourse(course)}
+                    >
+                      {course.name}
+                    </MenuItem>
+                  )
+              )}
             </MenuList>
           </Drawer>
         </div>
-
         <Paper className={classes.content}>
-          <div className={classes.toolbar} />
           <Paper position="static">
             <Tabs
               textColor="primary"
@@ -223,20 +234,24 @@ class StudentHome extends React.Component {
                 </MenuItem>
               </Select>
             </FormControl>
-            <Button size="small" color="primary" onClick={this.handleClick}>
-              Clear Filter
+            <Button
+              classnName={classes.filter}
+              color="primary"
+              onClick={this.handleClick}
+            >
+              Clear Filters
             </Button>
           </div>
           <Divider />
-          <Paper className={classes.list}>
+          <div className={classes.list}>
             <AssignmentList
               assignments={assignments}
               coursesName={coursesName}
               studentAssignments={student.student_assignments}
             />
-          </Paper>
+          </div>
         </Paper>
-      </React.Fragment>
+      </Paper>
     );
   }
 }

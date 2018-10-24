@@ -24,7 +24,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        {/* {this.props.user ? <NavBar /> : <LogIn />} */}
+        {this.props.user ? null : <LogIn />}
         <Switch>
           <Route
             path="/course/:id/assignment/create"
