@@ -51,7 +51,7 @@ const styles = {
     paddingBottom: "10px",
     paddingTop: "10px"
   },
-  question: {
+  chip: {
     marginLeft: "20px"
   },
   group: {
@@ -86,6 +86,47 @@ class StudentAssignmentToGrade extends React.Component {
     );
   };
 
+  renderChip = (studentAssignment, assignment) => {
+    switch (studentAssignment.status) {
+      case "submitted":
+        return (
+          <Chip
+            style={{ marginLeft: "20px" }}
+            color="secondary"
+            label="submitted"
+          />
+        );
+      case "graded":
+        return (
+          <Chip
+            style={{ marginLeft: "20px" }}
+            color="primary"
+            label={`graded: ${studentAssignment.points_earned}/${
+              assignment.points
+            }`}
+            variant="outlined"
+          />
+        );
+      case "in_progress":
+        return (
+          <Chip
+            style={{ marginLeft: "20px" }}
+            color="secondary"
+            label={`${studentAssignment.status.split("_").join(" ")}`}
+            variant="outlined"
+          />
+        );
+      default:
+        return (
+          <Chip
+            style={{ marginLeft: "20px" }}
+            color="default"
+            label={`${studentAssignment.status.split("_").join(" ")}`}
+          />
+        );
+    }
+  };
+
   render() {
     const {
       assignment,
@@ -99,23 +140,6 @@ class StudentAssignmentToGrade extends React.Component {
         <>
           <Typography variant="h4" className={classes.heading}>
             {assignment.name}
-            {studentAssignment.status === "graded" ? (
-              <Chip
-                color="primary"
-                label={`graded: ${studentAssignment.points_earned}/${
-                  assignment.points
-                }`}
-                className={classes.question}
-                variant="outlined"
-              />
-            ) : (
-              <Chip
-                color="primary"
-                label={`${studentAssignment.status.split("_").join(" ")}`}
-                className={classes.question}
-                variant="outlined"
-              />
-            )}
             <Button color="primary" onClick={() => this.props.history.goBack()}>
               Back to All Students
             </Button>
@@ -128,6 +152,7 @@ class StudentAssignmentToGrade extends React.Component {
           </Typography>
           <Typography variant="h6" className={classes.text}>
             {student.name}
+            {this.renderChip(studentAssignment, assignment)}
           </Typography>
           <Typography variant="subtitle1" className={classes.text}>
             {`${course.name} - ${assignment.category} - ${
@@ -135,7 +160,7 @@ class StudentAssignmentToGrade extends React.Component {
             } points`}
           </Typography>
           <Typography variant="subtitle1" className={classes.text}>
-            {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
+            {`Due: ${format(assignment.due_date, "PPPP @ p")}`}
           </Typography>
           <Divider />
           <Typography className={classes.content} variant="subtitle1">

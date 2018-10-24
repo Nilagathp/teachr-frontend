@@ -181,7 +181,7 @@ class TeacherHome extends React.Component {
             </Select>
           </FormControl>
           <Button size="small" color="primary" onClick={this.handleClick}>
-            Clear Filter
+            Clear Filters
           </Button>
         </div>
 

@@ -14,6 +14,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import Chip from "@material-ui/core/Chip";
 import format from "date-fns/format";
 
 const styles = {
@@ -56,6 +57,38 @@ class AssignmentsToGrade extends React.Component {
     this.setState({ status: "" });
   };
 
+  renderChip = (studentAssignment, assignment) => {
+    switch (studentAssignment.status) {
+      case "submitted":
+        return <Chip color="secondary" label="submitted" />;
+      case "graded":
+        return (
+          <Chip
+            color="primary"
+            label={`graded: ${studentAssignment.points_earned}/${
+              assignment.points
+            }`}
+            variant="outlined"
+          />
+        );
+      case "in_progress":
+        return (
+          <Chip
+            color="secondary"
+            label={`${studentAssignment.status.split("_").join(" ")}`}
+            variant="outlined"
+          />
+        );
+      default:
+        return (
+          <Chip
+            color="default"
+            label={`${studentAssignment.status.split("_").join(" ")}`}
+          />
+        );
+    }
+  };
+
   render() {
     const {
       user,
@@ -66,9 +99,9 @@ class AssignmentsToGrade extends React.Component {
       history,
       classes
     } = this.props;
-    let assignments = studentAssignments;
+    let studentAssignmentsToMap = studentAssignments;
     if (this.state.status) {
-      assignments = assignments.filter(
+      studentAssignmentsToMap = studentAssignments.filter(
         assignment => assignment.status === this.state.status
       );
     }
@@ -76,9 +109,6 @@ class AssignmentsToGrade extends React.Component {
       <>
         <Typography variant="h4" className={classes.heading}>
           {assignment.name}
-          <Button color="primary" onClick={() => history.goBack()}>
-            Back
-          </Button>
           <Button
             color="primary"
             onClick={() => this.props.history.push(`/course/${course.id}`)}
@@ -117,30 +147,28 @@ class AssignmentsToGrade extends React.Component {
           Clear Filter
         </Button>
         <Typography variant="h6" className={classes.text}>
-          {`Due on: ${format(assignment.due_date, "PPPP @ p")}`}
+          {`Due: ${format(assignment.due_date, "PPPP @ p")}`}
         </Typography>
         <Divider />
         <List>
-          {assignments
-            ? assignments.map(assignment => (
+          {studentAssignments
+            ? studentAssignmentsToMap.map(studentAssignment => (
                 <ListItem
-                  key={assignment.id}
+                  key={studentAssignment.id}
                   divider
                   button
                   component={Link}
                   to={`/course/${course.id}/assignment/${
-                    assignment.assignment_id
-                  }/grade/student/${assignment.student_id}`}
+                    studentAssignment.assignment_id
+                  }/grade/student/${studentAssignment.student_id}`}
                 >
+                  {this.renderChip(studentAssignment, assignment)}
                   <ListItemText
                     primary={
                       students.find(
-                        student => student.id === assignment.student_id
+                        student => student.id === studentAssignment.student_id
                       ).name
                     }
-                    secondary={`Status: ${assignment.status
-                      .split("_")
-                      .join(" ")}`}
                   />
                 </ListItem>
               ))
