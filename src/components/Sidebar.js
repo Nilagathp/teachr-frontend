@@ -26,7 +26,7 @@ class Sidebar extends React.Component {
   };
 
   render() {
-    const { courses, classes } = this.props;
+    const { courses, selectedCourseId, classes } = this.props;
     return (
       <Drawer
         variant="permanent"
@@ -36,11 +36,25 @@ class Sidebar extends React.Component {
       >
         <div className={classes.toolbar} />
         <MenuList>
-          {courses.map(course => (
-            <MenuItem key={course.id} onClick={() => this.selectCourse(course)}>
-              {course.name}
-            </MenuItem>
-          ))}
+          {courses.map(
+            course =>
+              course.id === selectedCourseId ? (
+                <MenuItem
+                  selected
+                  key={course.id}
+                  onClick={() => this.selectCourse(course)}
+                >
+                  {course.name}
+                </MenuItem>
+              ) : (
+                <MenuItem
+                  key={course.id}
+                  onClick={() => this.selectCourse(course)}
+                >
+                  {course.name}
+                </MenuItem>
+              )
+          )}
         </MenuList>
       </Drawer>
     );

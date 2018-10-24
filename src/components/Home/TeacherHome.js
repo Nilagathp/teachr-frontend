@@ -1,14 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Card from "@material-ui/core/Card";
 import Drawer from "@material-ui/core/Drawer";
 import MenuList from "@material-ui/core/MenuList";
+import MenuItem from "@material-ui/core/MenuItem";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -17,13 +18,13 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import compareAsc from "date-fns/compareAsc";
 import isBefore from "date-fns/isBefore";
 
+import { changeCourse, clearCourse } from "../../redux/actions/courseActions";
 import AssignmentList from "../Assignment/AssignmentList";
 import Navbar from "../Navbar";
 
@@ -70,9 +71,20 @@ const styles = theme => ({
 class TeacherHome extends React.Component {
   state = {
     value: 0,
-    course: "",
-    category: "",
-    dueDate: ""
+    courseId: "",
+    category: ""
+  };
+
+  static getDerivedStateFromProps = (props, state) => {
+    if (props.selectedCourseId) {
+      return {
+        courseId: props.selectedCourseId,
+        value: state.value,
+        category: state.category
+      };
+    } else {
+      return null;
+    }
   };
 
   handleChange = event => {
@@ -80,11 +92,13 @@ class TeacherHome extends React.Component {
   };
 
   handleClick = event => {
-    this.setState({ course: "", category: "", dueDate: "" });
+    this.setState({ courseId: "", category: "" });
+    this.props.clearCourse(this.props.history.push);
   };
 
-  handleClickCourse = course => {
-    this.setState({ course: course.id });
+  handleChangeCourse = event => {
+    this.setState({ courseId: event.target.value });
+    this.props.changeCourse(event.target.value, this.props.history.push);
   };
 
   handleChangeTab = (event, value) => {
@@ -96,9 +110,9 @@ class TeacherHome extends React.Component {
     let assignments = teacher.assignments.sort(function(a, b) {
       return compareAsc(a.due_date, b.due_date);
     });
-    if (this.state.course) {
+    if (this.state.courseId) {
       assignments = assignments.filter(
-        assignment => assignment.course_id === this.state.course
+        assignment => assignment.course_id === this.state.courseId
       );
     }
     if (this.state.value === 0) {
@@ -135,8 +149,8 @@ class TeacherHome extends React.Component {
           <FormControl className={classes.formControl}>
             <InputLabel shrink>Filter by course:</InputLabel>
             <Select
-              value={this.state.course}
-              onChange={this.handleChange}
+              value={this.state.courseId}
+              onChange={this.handleChangeCourse}
               inputProps={{ name: "course" }}
             >
               <MenuItem value="" />
@@ -184,4 +198,16 @@ class TeacherHome extends React.Component {
   }
 }
 
-export default withStyles(styles)(TeacherHome);
+const mapStateToProps = state => {
+  return {
+    selectedCourseId: state.selectedCourseId
+  };
+};
+
+const styledTeacherHome = withStyles(styles)(TeacherHome);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { changeCourse, clearCourse }
+  )(styledTeacherHome)
+);
