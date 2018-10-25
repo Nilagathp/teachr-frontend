@@ -131,8 +131,10 @@ class CreateAssignment extends React.Component {
 
   removeInput = index => event => {
     let inputs = this.state.contentInputs;
+    let contents = this.state.content;
     delete inputs[index];
-    this.setState({ contentInputs: inputs });
+    delete contents[`item${index + 1}`];
+    this.setState({ contentInputs: inputs, content: contents });
   };
 
   renderContentInputs() {
