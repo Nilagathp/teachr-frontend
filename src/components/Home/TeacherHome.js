@@ -132,66 +132,70 @@ class TeacherHome extends React.Component {
     }
     return (
       <>
-        <Paper position="static">
-          <Tabs
-            textColor="primary"
-            indicatorColor="primary"
-            value={this.state.value}
-            onChange={this.handleChangeTab}
-            centered
-          >
-            <Tab label="Upcoming Assignments" />
-            <Tab label="Past Assignments" />
-            <Tab label="All Assignments" />
-          </Tabs>
-        </Paper>
-        <div className={classes.paper}>
-          <FormControl className={classes.formControl}>
-            <InputLabel shrink>Filter by course:</InputLabel>
-            <Select
-              value={this.state.courseId}
-              onChange={this.handleChangeCourse}
-              inputProps={{ name: "course" }}
+        <div position="static">
+          <Paper position="static">
+            <Tabs
+              textColor="primary"
+              indicatorColor="primary"
+              value={this.state.value}
+              onChange={this.handleChangeTab}
+              centered
             >
-              <MenuItem value="" />
-              {teacher.courses.map(option => (
-                <MenuItem key={option.id} value={option.id}>
-                  {option.name}
+              <Tab label="Upcoming Assignments" />
+              <Tab label="Past Assignments" />
+              <Tab label="All Assignments" />
+            </Tabs>
+          </Paper>
+          <div position="static" className={classes.paper}>
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink>Filter by course:</InputLabel>
+              <Select
+                value={this.state.courseId}
+                onChange={this.handleChangeCourse}
+                inputProps={{ name: "course" }}
+              >
+                <MenuItem value="" />
+                {teacher.courses.map(option => (
+                  <MenuItem key={option.id} value={option.id}>
+                    {option.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel shrink>Filter by category:</InputLabel>
+              <Select
+                value={this.state.category}
+                onChange={this.handleChange}
+                inputProps={{ name: "category" }}
+              >
+                <MenuItem value="" />
+                <MenuItem key={0} value={"CW"}>
+                  CW
                 </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <InputLabel shrink>Filter by category:</InputLabel>
-            <Select
-              value={this.state.category}
-              onChange={this.handleChange}
-              inputProps={{ name: "category" }}
-            >
-              <MenuItem value="" />
-              <MenuItem key={0} value={"CW"}>
-                CW
-              </MenuItem>
-              <MenuItem key={1} value={"HW"}>
-                HW
-              </MenuItem>
-              <MenuItem key={2} value={"TQP"}>
-                TQP
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <Button size="small" color="primary" onClick={this.handleClick}>
-            Clear Filters
-          </Button>
+                <MenuItem key={1} value={"HW"}>
+                  HW
+                </MenuItem>
+                <MenuItem key={2} value={"TQP"}>
+                  TQP
+                </MenuItem>
+              </Select>
+            </FormControl>
+            <Button size="small" color="primary" onClick={this.handleClick}>
+              Clear Filters
+            </Button>
+          </div>
         </div>
         <Divider />
-        <AssignmentList
-          teacher={teacher}
-          assignments={assignments}
-          coursesName={coursesName}
-          studentAssignments={teacher.student_assignments}
-          courses={teacher.courses}
-        />
+        <div className={classes.list}>
+          <AssignmentList
+            teacher={teacher}
+            assignments={assignments}
+            coursesName={coursesName}
+            studentAssignments={teacher.student_assignments}
+            courses={teacher.courses}
+          />
+        </div>
       </>
     );
   }

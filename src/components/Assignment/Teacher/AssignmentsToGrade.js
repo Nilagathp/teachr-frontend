@@ -57,6 +57,44 @@ class AssignmentsToGrade extends React.Component {
     this.setState({ status: "" });
   };
 
+  renderChipButtons = (studentAssignment, assignment) => {
+    switch (studentAssignment.status) {
+      case "submitted":
+        return (
+          <Chip
+            color="secondary"
+            label="submitted"
+            onClick={this.handleChange}
+          />
+        );
+      case "graded":
+        return (
+          <Chip
+            color="primary"
+            label={`graded: ${studentAssignment.points_earned}/${
+              assignment.points
+            }`}
+            variant="outlined"
+          />
+        );
+      case "in_progress":
+        return (
+          <Chip
+            color="secondary"
+            label={`${studentAssignment.status.split("_").join(" ")}`}
+            variant="outlined"
+          />
+        );
+      default:
+        return (
+          <Chip
+            color="default"
+            label={`${studentAssignment.status.split("_").join(" ")}`}
+          />
+        );
+    }
+  };
+
   renderChip = (studentAssignment, assignment) => {
     switch (studentAssignment.status) {
       case "submitted":
@@ -166,7 +204,8 @@ class AssignmentsToGrade extends React.Component {
             assignment.points
           } points`}
         </Typography>
-        <FormControl className={classes.formControl}>
+
+        {/* <FormControl className={classes.formControl}>
           <InputLabel shrink>Filter by status:</InputLabel>
           <Select
             value={this.state.status}
@@ -187,7 +226,7 @@ class AssignmentsToGrade extends React.Component {
               graded
             </MenuItem>
           </Select>
-        </FormControl>
+        </FormControl> */}
         <Button size="small" color="primary" onClick={this.handleClick}>
           Clear Filter
         </Button>
