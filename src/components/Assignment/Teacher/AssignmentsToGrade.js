@@ -49,50 +49,45 @@ class AssignmentsToGrade extends React.Component {
     status: ""
   };
 
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  handleChange = value => {
+    this.setState({ status: value });
   };
 
   handleClick = event => {
     this.setState({ status: "" });
   };
 
-  renderChipButtons = (studentAssignment, assignment) => {
-    switch (studentAssignment.status) {
-      case "submitted":
-        return (
-          <Chip
-            color="secondary"
-            label="submitted"
-            onClick={this.handleChange}
-          />
-        );
-      case "graded":
-        return (
-          <Chip
-            color="primary"
-            label={`graded: ${studentAssignment.points_earned}/${
-              assignment.points
-            }`}
-            variant="outlined"
-          />
-        );
-      case "in_progress":
-        return (
-          <Chip
-            color="secondary"
-            label={`${studentAssignment.status.split("_").join(" ")}`}
-            variant="outlined"
-          />
-        );
-      default:
-        return (
-          <Chip
-            color="default"
-            label={`${studentAssignment.status.split("_").join(" ")}`}
-          />
-        );
-    }
+  renderChipButtons = () => {
+    return (
+      <>
+        <Chip
+          style={{ marginLeft: "10px" }}
+          color="primary"
+          label="graded"
+          variant="outlined"
+          onClick={() => this.handleChange("graded")}
+        />
+        <Chip
+          style={{ marginLeft: "10px" }}
+          color="secondary"
+          label="submitted"
+          onClick={() => this.handleChange("submitted")}
+        />
+        <Chip
+          style={{ marginLeft: "10px" }}
+          color="secondary"
+          label="in progress"
+          variant="outlined"
+          onClick={() => this.handleChange("in_progress")}
+        />
+        <Chip
+          style={{ marginLeft: "10px" }}
+          color="default"
+          label="not started"
+          onClick={() => this.handleChange("not_started")}
+        />
+      </>
+    );
   };
 
   renderChip = (studentAssignment, assignment) => {
@@ -190,7 +185,7 @@ class AssignmentsToGrade extends React.Component {
     }
     return user ? (
       <>
-        <Typography variant="h4" className={classes.heading}>
+        <Typography variant="h4">
           {assignment.name}
           <Button
             color="primary"
@@ -204,35 +199,20 @@ class AssignmentsToGrade extends React.Component {
             assignment.points
           } points`}
         </Typography>
-
-        {/* <FormControl className={classes.formControl}>
-          <InputLabel shrink>Filter by status:</InputLabel>
-          <Select
-            value={this.state.status}
-            onChange={this.handleChange}
-            inputProps={{ name: "status" }}
-          >
-            <MenuItem value="" />
-            <MenuItem key={0} value={"not_started"}>
-              not started
-            </MenuItem>
-            <MenuItem key={1} value={"in_progress"}>
-              in progress
-            </MenuItem>
-            <MenuItem key={2} value={"submitted"}>
-              submitted
-            </MenuItem>
-            <MenuItem key={3} value={"graded"}>
-              graded
-            </MenuItem>
-          </Select>
-        </FormControl> */}
-        <Button size="small" color="primary" onClick={this.handleClick}>
-          Clear Filter
-        </Button>
         <Typography variant="h6" className={classes.text}>
           {`Due: ${format(assignment.due_date, "PPPP @ p")}`}
         </Typography>
+        <div className={classes.text}>
+          Filter by status: {this.renderChipButtons()}
+          <Button
+            className={classes.text}
+            size="small"
+            color="primary"
+            onClick={this.handleClick}
+          >
+            Clear Filter
+          </Button>
+        </div>
         <Divider />
         <List>
           {studentAssignments
