@@ -121,10 +121,13 @@ class StudentAssignmentWorking extends React.PureComponent {
           {assignment.name}
           <Chip
             color="secondary"
-            label={`${studentAssignment.status.split("_").join(" ")}`}
+            label="in progress"
             className={classes.question}
             variant="outlined"
           />
+          <Button color="primary" onClick={this.props.history.goBack}>
+            Back
+          </Button>
         </Typography>
         <Typography variant="h6" className={classes.text}>
           {`${course.name} - ${assignment.category} - ${

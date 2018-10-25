@@ -1,10 +1,12 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
+import Button from "@material-ui/core/Button";
 
 import { shuffle } from "../../functions";
 import ViewStudentMultipleChoice from "./ViewStudentAssignmentContent/ViewStudentMultipleChoice";
@@ -79,6 +81,9 @@ class StudentAssignmentCompleted extends React.Component {
               variant="outlined"
             />
           )}
+          <Button color="primary" onClick={this.props.history.goBack}>
+            Back
+          </Button>
         </Typography>
         <Typography variant="h6" className={classes.text}>
           {`${course.name} - ${assignment.category} - ${
@@ -144,4 +149,4 @@ class StudentAssignmentCompleted extends React.Component {
   }
 }
 
-export default withStyles(styles)(StudentAssignmentCompleted);
+export default withRouter(withStyles(styles)(StudentAssignmentCompleted));
