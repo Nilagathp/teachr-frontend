@@ -3,17 +3,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
-import Drawer from "@material-ui/core/Drawer";
-import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import FormControl from "@material-ui/core/FormControl";
@@ -26,7 +17,6 @@ import isBefore from "date-fns/isBefore";
 
 import { changeCourse, clearCourse } from "../../redux/actions/courseActions";
 import AssignmentList from "../Assignment/AssignmentList";
-import Navbar from "../Navbar";
 
 const styles = theme => ({
   paper: {
