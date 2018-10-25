@@ -15,6 +15,7 @@ import Divider from "@material-ui/core/Divider";
 import Switch from "@material-ui/core/Switch";
 import Badge from "@material-ui/core/Badge";
 import Tooltip from "@material-ui/core/Tooltip";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import format from "date-fns/format";
 
 import {
@@ -58,6 +59,9 @@ const styles = theme => ({
   },
   switch: {
     marginRight: "80px"
+  },
+  progress: {
+    margin: theme.spacing.unit * 8
   }
 });
 
@@ -323,7 +327,7 @@ class TeacherViewAssignment extends React.Component {
         </>
       );
     } else {
-      return null;
+      return <CircularProgress className={classes.progress} />;
     }
   }
 }
