@@ -21,6 +21,13 @@ class EditStudentMultipleChoice extends React.Component {
   //   console.log("props", this.props);
   //   console.log("props equal?", nextProps === this.props);
   //   console.log("state equal?", nextState === this.state);
+  //   if (nextProps !== this.props && nextState === this.state) {
+  //     return true;
+  //   } else if (nextState !== this.state && nextProps === this.props) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
   // }
 
   handleClick = event => {

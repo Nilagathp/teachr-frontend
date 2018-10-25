@@ -65,7 +65,7 @@ class StudentAssignmentWorking extends React.PureComponent {
 
   static getDerivedStateFromProps(props, state) {
     if (
-      props.studentAssignment &&
+      props.studentAssignment !== null &&
       props.studentAssignment.id !== state.studentAssignmentId
     ) {
       return {
@@ -143,9 +143,12 @@ class StudentAssignmentWorking extends React.PureComponent {
             const item = assignment.content[key];
             switch (item.type) {
               case "Multiple Choice":
-                const shuffledAnswers = shuffle(
-                  Object.values(item.content.answers)
-                );
+                const shuffledAnswers = [
+                  Object.values(item.content.answers)[3],
+                  Object.values(item.content.answers)[1],
+                  Object.values(item.content.answers)[0],
+                  Object.values(item.content.answers)[2]
+                ];
                 if (this.state.answers && this.state.answers[key]) {
                   return (
                     <EditStudentMultipleChoice
