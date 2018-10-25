@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
 
-import LogIn from "./components/LogIn";
+import LogInStyled from "./components/LogInStyled";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Home from "./components/Home/Home";
@@ -79,7 +79,7 @@ class App extends Component {
         </Paper>
       </>
     ) : (
-      <LogIn />
+      <LogInStyled />
     );
   }
 }

@@ -13,34 +13,36 @@ import isBefore from "date-fns/isBefore";
 import { startStudentAssignment } from "../../../redux/actions/studentAssignmentActions";
 
 const renderChip = (studentAssignment, assignment) => {
-  switch (studentAssignment.status) {
-    case "submitted":
-      return <Chip color="default" label="submitted" variant="outlined" />;
-    case "graded":
-      return (
-        <Chip
-          color="primary"
-          label={`graded: ${studentAssignment.points_earned}/${
-            assignment.points
-          }`}
-          variant="outlined"
-        />
-      );
-    case "in_progress":
-      return (
-        <Chip
-          color="secondary"
-          label={`${studentAssignment.status.split("_").join(" ")}`}
-          variant="outlined"
-        />
-      );
-    default:
-      return (
-        <Chip
-          color="secondary"
-          label={`${studentAssignment.status.split("_").join(" ")}`}
-        />
-      );
+  if (studentAssignment) {
+    switch (studentAssignment.status) {
+      case "submitted":
+        return <Chip color="default" label="submitted" variant="outlined" />;
+      case "graded":
+        return (
+          <Chip
+            color="primary"
+            label={`graded: ${studentAssignment.points_earned}/${
+              assignment.points
+            }`}
+            variant="outlined"
+          />
+        );
+      case "in_progress":
+        return (
+          <Chip
+            color="secondary"
+            label={`${studentAssignment.status.split("_").join(" ")}`}
+            variant="outlined"
+          />
+        );
+      default:
+        return (
+          <Chip
+            color="secondary"
+            label={`${studentAssignment.status.split("_").join(" ")}`}
+          />
+        );
+    }
   }
 };
 
