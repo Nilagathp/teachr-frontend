@@ -15,8 +15,7 @@ function removeCourse() {
 
 function clearCourse(push) {
   return function(dispatch) {
-    dispatch(removeCourse(null));
-    push(`/home`);
+    dispatch(removeCourse());
   };
 }
 

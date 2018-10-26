@@ -17,6 +17,11 @@ import isBefore from "date-fns/isBefore";
 
 import { changeCourse, clearCourse } from "../../redux/actions/courseActions";
 import AssignmentList from "../Assignment/AssignmentList";
+import {
+  changeCategory,
+  clearCategory
+} from "../../redux/actions/categoryActions";
+import { changeValue, clearValue } from "../../redux/actions/valueActions";
 
 const styles = theme => ({
   paper: {
@@ -59,40 +64,21 @@ const styles = theme => ({
 });
 
 class TeacherHome extends React.Component {
-  state = {
-    value: 0,
-    courseId: "",
-    category: ""
-  };
-
-  static getDerivedStateFromProps = (props, state) => {
-    if (props.selectedCourseId) {
-      return {
-        courseId: props.selectedCourseId,
-        value: state.value,
-        category: state.category
-      };
-    } else {
-      return null;
-    }
-  };
-
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
   handleClick = event => {
-    this.setState({ courseId: "", category: "" });
     this.props.clearCourse(this.props.history.push);
+    this.props.clearCategory();
   };
 
   handleChangeCourse = event => {
-    this.setState({ courseId: event.target.value });
     this.props.changeCourse(event.target.value, this.props.history.push);
   };
 
+  handleChangeCategory = event => {
+    this.props.changeCategory(event.target.value);
+  };
+
   handleChangeTab = (event, value) => {
-    this.setState({ value });
+    this.props.changeValue(value);
   };
 
   render() {
@@ -100,24 +86,24 @@ class TeacherHome extends React.Component {
     let assignments = teacher.assignments.sort(function(a, b) {
       return compareAsc(a.due_date, b.due_date);
     });
-    if (this.state.courseId) {
+    if (this.props.selectedCourseId) {
       assignments = assignments.filter(
-        assignment => assignment.course_id === this.state.courseId
+        assignment => assignment.course_id === this.props.selectedCourseId
       );
     }
-    if (this.state.value === 0) {
+    if (this.props.value === 0) {
       assignments = assignments.filter(
         assignment => !isBefore(assignment.due_date, new Date())
       );
     }
-    if (this.state.value === 1) {
+    if (this.props.value === 1) {
       assignments = assignments.filter(assignment =>
         isBefore(assignment.due_date, new Date())
       );
     }
-    if (this.state.category) {
+    if (this.props.selectedCategory) {
       assignments = assignments.filter(
-        assignment => assignment.category === this.state.category
+        assignment => assignment.category === this.props.selectedCategory
       );
     }
     return (
@@ -127,7 +113,7 @@ class TeacherHome extends React.Component {
             <Tabs
               textColor="primary"
               indicatorColor="primary"
-              value={this.state.value}
+              value={this.props.value}
               onChange={this.handleChangeTab}
               centered
             >
@@ -140,7 +126,7 @@ class TeacherHome extends React.Component {
             <FormControl className={classes.formControl}>
               <InputLabel shrink>Filter by course:</InputLabel>
               <Select
-                value={this.state.courseId}
+                value={this.props.selectedCourseId}
                 onChange={this.handleChangeCourse}
                 inputProps={{ name: "course" }}
               >
@@ -155,8 +141,8 @@ class TeacherHome extends React.Component {
             <FormControl className={classes.formControl}>
               <InputLabel shrink>Filter by category:</InputLabel>
               <Select
-                value={this.state.category}
-                onChange={this.handleChange}
+                value={this.props.selectedCategory}
+                onChange={this.handleChangeCategory}
                 inputProps={{ name: "category" }}
               >
                 <MenuItem value="" />
@@ -193,7 +179,10 @@ class TeacherHome extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    selectedCourseId: state.selectedCourseId
+    selectedCourseId: state.selectedCourseId,
+    selectedCategory: state.selectedCategory,
+    selectedStatus: state.selectedStatus,
+    value: state.value
   };
 };
 
@@ -201,6 +190,13 @@ const styledTeacherHome = withStyles(styles)(TeacherHome);
 export default withRouter(
   connect(
     mapStateToProps,
-    { changeCourse, clearCourse }
+    {
+      changeCourse,
+      clearCourse,
+      changeCategory,
+      clearCategory,
+      changeValue,
+      clearValue
+    }
   )(styledTeacherHome)
 );

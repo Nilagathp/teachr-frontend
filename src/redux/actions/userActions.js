@@ -1,4 +1,7 @@
 import { removeCourse } from "./courseActions";
+import { removeStatus } from "./statusActions";
+import { removeCategory } from "./categoryActions";
+import { removeValue } from "./valueActions";
 
 function updateUser(user) {
   return { type: "UPDATE_USER", user };
@@ -29,6 +32,9 @@ function logOutUser() {
     localStorage.clear();
     dispatch(updateUser(null));
     dispatch(removeCourse());
+    dispatch(removeStatus());
+    dispatch(removeCategory());
+    dispatch(removeValue());
   };
 }
 

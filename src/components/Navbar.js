@@ -6,6 +6,10 @@ import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
+import { clearCourse } from "../redux/actions/courseActions";
+import { clearCategory } from "../redux/actions/categoryActions";
+import { clearStatus } from "../redux/actions/statusActions";
+import { clearValue } from "../redux/actions/valueActions";
 
 import { logOutUser } from "../redux/actions/userActions";
 
@@ -18,34 +22,51 @@ const styles = theme => ({
   }
 });
 
-function Navbar({ person, logOutUser, handleClick, classes }) {
-  let name;
-  person.teacher ? (name = person.teacher.name) : (name = person.student.name);
-  return (
-    <AppBar position="fixed" color="default" className={classes.appBar}>
-      <Toolbar>
-        <Link to="/home" style={{ textDecoration: "none" }}>
-          <Button
-            onClick={handleClick}
-            style={{
-              textDecoration: "none",
-              textTransform: "none",
-              fontSize: 20,
-              paddingLeft: 0,
-              margin: 0
-            }}
-          >
-            {name}
-          </Button>
-        </Link>
-        {person ? (
-          <Button style={{ marginLeft: "auto" }} onClick={logOutUser}>
-            Logout
-          </Button>
-        ) : null}
-      </Toolbar>
-    </AppBar>
-  );
+class Navbar extends React.Component {
+  // handleClick() {
+  //   this.props.clearValue();
+  //   this.props.clearCategory();
+  //   this.props.clearCourse();
+  //   this.props.clearStatus();
+  // }
+
+  render() {
+    const { person, logOutUser, classes } = this.props;
+    let name;
+    person.teacher
+      ? (name = person.teacher.name)
+      : (name = person.student.name);
+    return (
+      <AppBar position="fixed" color="default" className={classes.appBar}>
+        <Toolbar>
+          <Link to="/home" style={{ textDecoration: "none" }}>
+            <Button
+              onClick={() => {
+                this.props.clearValue();
+                this.props.clearCategory();
+                this.props.clearCourse();
+                this.props.clearStatus();
+              }}
+              style={{
+                textDecoration: "none",
+                textTransform: "none",
+                fontSize: 20,
+                paddingLeft: 0,
+                margin: 0
+              }}
+            >
+              {name}
+            </Button>
+          </Link>
+          {person ? (
+            <Button style={{ marginLeft: "auto" }} onClick={logOutUser}>
+              Logout
+            </Button>
+          ) : null}
+        </Toolbar>
+      </AppBar>
+    );
+  }
 }
 
 const mapStateToProps = state => {
@@ -55,6 +76,6 @@ const mapStateToProps = state => {
 export default withStyles(styles)(
   connect(
     mapStateToProps,
-    { logOutUser }
+    { logOutUser, clearCategory, clearValue, clearCourse, clearStatus }
   )(Navbar)
 );

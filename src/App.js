@@ -38,8 +38,6 @@ class App extends Component {
     }
   }
 
-  handleClick;
-
   render() {
     const { classes, user } = this.props;
     return user ? (
@@ -94,6 +92,9 @@ const styledApp = withStyles(styles)(App);
 export default withRouter(
   connect(
     mapStateToProps,
-    { updateUser, getUserFromToken }
+    {
+      updateUser,
+      getUserFromToken
+    }
   )(styledApp)
 );

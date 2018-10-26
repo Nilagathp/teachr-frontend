@@ -1,9 +1,9 @@
-const courseReducer = (state = null, action) => {
+const courseReducer = (state = "", action) => {
   switch (action.type) {
     case "UPDATE_SELECTED_COURSE":
       return action.courseId;
     case "REMOVE_COURSE":
-      return null;
+      return "";
     default:
       return state;
   }
