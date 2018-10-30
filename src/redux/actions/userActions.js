@@ -2,6 +2,7 @@ import { removeCourse } from "./courseActions";
 import { removeStatus } from "./statusActions";
 import { removeCategory } from "./categoryActions";
 import { removeValue } from "./valueActions";
+import { logInError, removeError } from "./errorActions";
 import { BASE_URL } from "../../config";
 
 function updateUser(user) {
@@ -23,6 +24,9 @@ function logInUser(userParams) {
         if (json.jwt) {
           localStorage.setItem("token", json.jwt);
           dispatch(updateUser(json.user));
+          dispatch(removeError());
+        } else {
+          dispatch(logInError(json.message));
         }
       });
   };

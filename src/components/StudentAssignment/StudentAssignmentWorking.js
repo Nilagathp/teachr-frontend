@@ -112,7 +112,7 @@ class StudentAssignmentWorking extends React.PureComponent {
   };
 
   render() {
-    const { studentAssignment, assignment, course, classes } = this.props;
+    const { assignment, course, classes } = this.props;
     return (
       <div>
         <Typography variant="h4" className={classes.heading}>

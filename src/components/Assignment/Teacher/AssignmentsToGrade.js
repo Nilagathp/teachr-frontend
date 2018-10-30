@@ -169,7 +169,6 @@ class AssignmentsToGrade extends React.Component {
       course,
       studentAssignments,
       students,
-      history,
       classes
     } = this.props;
     let studentAssignmentsToMap = studentAssignments;
