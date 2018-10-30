@@ -23,13 +23,6 @@ const styles = theme => ({
 });
 
 class Navbar extends React.Component {
-  // handleClick() {
-  //   this.props.clearValue();
-  //   this.props.clearCategory();
-  //   this.props.clearCourse();
-  //   this.props.clearStatus();
-  // }
-
   render() {
     const { person, logOutUser, classes } = this.props;
     let name;

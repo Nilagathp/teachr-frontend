@@ -9,8 +9,11 @@ import Avatar from "@material-ui/core/Avatar";
 import LockIcon from "@material-ui/icons/LockOutlined";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
 
 import { logInUser } from "../redux/actions/userActions";
+import { removeError } from "../redux/actions/errorActions";
 
 const styles = theme => ({
   layout: {
@@ -42,6 +45,10 @@ const styles = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3
+  },
+  error: {
+    backgroundColor: theme.palette.secondary.main,
+    margin: theme.spacing.unit
   }
 });
 
@@ -66,7 +73,7 @@ class LogIn extends React.Component {
   };
 
   render() {
-    const { classes, error } = this.props;
+    const { error, removeError, classes } = this.props;
 
     return (
       <React.Fragment>
@@ -79,7 +86,23 @@ class LogIn extends React.Component {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            {error ? <Typography variant="h5">{error}</Typography> : null}
+            {error ? (
+              <Snackbar
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left"
+                }}
+                open
+                autoHideDuration={3000}
+                onClose={removeError}
+              >
+                <SnackbarContent
+                  variant="h6"
+                  className={classes.error}
+                  message="Invalid email or password"
+                />
+              </Snackbar>
+            ) : null}
             <form onSubmit={this.handleSubmit}>
               <TextField
                 style={{ display: "block" }}
@@ -128,6 +151,6 @@ const styledLogIn = withStyles(styles)(LogIn);
 export default withRouter(
   connect(
     mapStateToProps,
-    { logInUser }
+    { logInUser, removeError }
   )(styledLogIn)
 );
