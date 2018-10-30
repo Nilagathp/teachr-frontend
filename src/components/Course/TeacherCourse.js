@@ -84,14 +84,14 @@ class TeacherCourse extends React.Component {
                 inputProps={{ name: "category" }}
               >
                 <MenuItem value="" />
-                <MenuItem key={0} value={"CW"}>
-                  CW
+                <MenuItem key={0} value={"Classwork"}>
+                  Classwork
                 </MenuItem>
-                <MenuItem key={1} value={"HW"}>
-                  HW
+                <MenuItem key={1} value={"Homework"}>
+                  Homework
                 </MenuItem>
-                <MenuItem key={2} value={"TQP"}>
-                  TQP
+                <MenuItem key={2} value={"Assessment"}>
+                  Assessment
                 </MenuItem>
               </Select>
             </FormControl>

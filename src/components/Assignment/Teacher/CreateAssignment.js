@@ -47,15 +47,15 @@ const styles = {
 const categories = [
   {
     value: 0,
-    label: "CW"
+    label: "Classwork"
   },
   {
     value: 1,
-    label: "HW"
+    label: "Homework"
   },
   {
     value: 2,
-    label: "TQP"
+    label: "Assessment"
   }
 ];
 

@@ -55,15 +55,15 @@ const styles = {
 const categories = [
   {
     value: 0,
-    label: "CW"
+    label: "Classwork"
   },
   {
     value: 1,
-    label: "HW"
+    label: "Homework"
   },
   {
     value: 2,
-    label: "TQP"
+    label: "Assessment"
   }
 ];
 
@@ -72,7 +72,7 @@ class EditAssignment extends React.Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.assignment && props.assignment.id !== state.assignmentId) {
-      let categoryHash = { CW: 0, HW: 1, TQP: 2 };
+      let categoryHash = { Classwork: 0, Homework: 1, Assessment: 2 };
       return {
         courseId: props.assignment.course_id,
         name: props.assignment.name,
