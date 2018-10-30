@@ -1,11 +1,12 @@
 import { getUserFromToken } from "./userActions";
 import { createStudentAssignment } from "./studentAssignmentActions";
 import { deleteStudentAssignment } from "./studentAssignmentActions";
+import { BASE_URL } from "../../config";
 
 function createAssignment(assignmentParams, push) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:3000/assignments", {
+    fetch(`${BASE_URL}/assignments`, {
       method: "POST",
       body: JSON.stringify({ assignment: assignmentParams }),
       headers: {
@@ -25,7 +26,7 @@ function createAssignment(assignmentParams, push) {
 function createAndAssignAssignment(assignmentParams, push) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:3000/assignments", {
+    fetch(`${BASE_URL}/assignments`, {
       method: "POST",
       body: JSON.stringify({ assignment: assignmentParams }),
       headers: {
@@ -45,7 +46,7 @@ function createAndAssignAssignment(assignmentParams, push) {
 function assignAssignment(assignmentId) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/assignments/${assignmentId}`, {
+    fetch(`${BASE_URL}/assignments/${assignmentId}`, {
       method: "PATCH",
       body: JSON.stringify({ assignment: { assigned: true } }),
       headers: {
@@ -67,7 +68,7 @@ function assignAssignment(assignmentId) {
 function unassignAssignment(assignmentId, studentAssignments) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/assignments/${assignmentId}`, {
+    fetch(`${BASE_URL}/assignments/${assignmentId}`, {
       method: "PATCH",
       body: JSON.stringify({ assignment: { assigned: false } }),
       headers: {
@@ -94,7 +95,7 @@ function unassignAssignment(assignmentId, studentAssignments) {
 function updateAssignment(assignmentId, assignmentParams, push) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/assignments/${assignmentId}`, {
+    fetch(`${BASE_URL}/assignments/${assignmentId}`, {
       method: "PATCH",
       body: JSON.stringify({ assignment: assignmentParams }),
       headers: {
@@ -114,7 +115,7 @@ function updateAssignment(assignmentId, assignmentParams, push) {
 function deleteAssignment(assignmentId, push) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/assignments/${assignmentId}`, {
+    fetch(`${BASE_URL}/assignments/${assignmentId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`

@@ -2,6 +2,7 @@ import { removeCourse } from "./courseActions";
 import { removeStatus } from "./statusActions";
 import { removeCategory } from "./categoryActions";
 import { removeValue } from "./valueActions";
+import { BASE_URL } from "../../config";
 
 function updateUser(user) {
   return { type: "UPDATE_USER", user };
@@ -9,7 +10,7 @@ function updateUser(user) {
 
 function logInUser(userParams) {
   return function(dispatch) {
-    fetch("http://localhost:3000/login", {
+    fetch(`${BASE_URL}/login`, {
       method: "POST",
       body: JSON.stringify({ user: userParams }),
       headers: {
@@ -40,7 +41,7 @@ function logOutUser() {
 
 function getUserFromToken(token) {
   return function(dispatch) {
-    fetch("http://localhost:3000/profile", {
+    fetch(`${BASE_URL}/profile`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

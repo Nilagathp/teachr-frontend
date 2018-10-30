@@ -1,9 +1,10 @@
 import { getUserFromToken } from "./userActions";
+import { BASE_URL } from "../../config";
 
 function createStudentAssignment(studentId, assignmentId) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:3000/student_assignments", {
+    fetch(`${BASE_URL}/student_assignments`, {
       method: "POST",
       body: JSON.stringify({
         student_id: studentId,
@@ -23,7 +24,7 @@ function createStudentAssignment(studentId, assignmentId) {
 function deleteStudentAssignment(studentAssignmentId) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/student_assignments/${studentAssignmentId}`, {
+    fetch(`${BASE_URL}/student_assignments/${studentAssignmentId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`
@@ -37,7 +38,7 @@ function deleteStudentAssignment(studentAssignmentId) {
 function startStudentAssignment(studentAssignmentId, courseId, push) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/student_assignments/${studentAssignmentId}`, {
+    fetch(`${BASE_URL}/student_assignments/${studentAssignmentId}`, {
       method: "PATCH",
       body: JSON.stringify({
         status: "in_progress"
@@ -59,7 +60,7 @@ function startStudentAssignment(studentAssignmentId, courseId, push) {
 function saveStudentAssignment(studentAssignmentId, answers, courseId, push) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/student_assignments/${studentAssignmentId}`, {
+    fetch(`${BASE_URL}/student_assignments/${studentAssignmentId}`, {
       method: "PATCH",
       body: JSON.stringify({
         answers: answers,
@@ -82,7 +83,7 @@ function saveStudentAssignment(studentAssignmentId, answers, courseId, push) {
 function submitStudentAssignment(studentAssignmentId, answers, courseId, push) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/student_assignments/${studentAssignmentId}`, {
+    fetch(`${BASE_URL}/student_assignments/${studentAssignmentId}`, {
       method: "PATCH",
       body: JSON.stringify({
         answers: answers,
@@ -105,7 +106,7 @@ function submitStudentAssignment(studentAssignmentId, answers, courseId, push) {
 function gradeStudentAssignment(studentAssignmentId, points, courseId, push) {
   return function(dispatch) {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/student_assignments/${studentAssignmentId}`, {
+    fetch(`${BASE_URL}/student_assignments/${studentAssignmentId}`, {
       method: "PATCH",
       body: JSON.stringify({
         points_earned: points,
