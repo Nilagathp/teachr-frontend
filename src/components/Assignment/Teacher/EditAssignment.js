@@ -207,6 +207,7 @@ class EditAssignment extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <TextField
             select
+            disabled
             variant="outlined"
             label="Course"
             className={classes.textField}
