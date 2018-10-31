@@ -80,6 +80,21 @@ class LogIn extends React.Component {
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>
+            <Typography variant="h6">
+              Thank you for viewing my Flatiron School final project, designed
+              for a teacher to easily manage assignments in a paperless
+              classroom.
+            </Typography>
+            <br />
+            <Typography variant="h5">Sign in as a teacher:</Typography>
+            <Typography variant="subtitle">
+              <b>email:</b> snyder@flatiron.com <b>password:</b> snyder
+            </Typography>
+            <br />
+            <Typography variant="h5">Sign in as a student:</Typography>
+            <Typography variant="subtitle">
+              <b>email:</b> daniel@flatiron.com <b>password:</b> daniel
+            </Typography>
             <Avatar className={classes.avatar}>
               <LockIcon />
             </Avatar>
