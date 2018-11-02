@@ -1,6 +1,6 @@
 # Flatiron Final Project - Teachr
 
-This project was created as a streamlined single-page web application for teacher to create and manage their students' assignments. 
+This project was created as a streamlined single-page web application for teachers to create and manage their students' assignments. 
 Live demo: https://teachr-app.herokuapp.com
 
 ## Teachers are able to:
