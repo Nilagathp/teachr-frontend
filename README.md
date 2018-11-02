@@ -22,6 +22,6 @@ Live demo: https://teachr-app.herokuapp.com
 * submit assignments to their teachers 
 * view their grades on graded assignments 
 
-Back end respository: https://github.com/jensnyder/teachr-backend
+Back end repository: https://github.com/jensnyder/teachr-backend
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
