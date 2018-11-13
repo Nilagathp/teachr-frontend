@@ -14,8 +14,8 @@ describe("Home", () => {
     let wrapper = shallow(<Home />);
     expect(wrapper.find(".home").length).toEqual(1);
   });
-  // it("matches its snapshot", () => {
-  //   let wrapper = shallow(<Home posts={posts} />);
-  //   expect(wrapper).toMatchSnapshot();
-  // });
+  it("matches its snapshot", () => {
+    let wrapper = shallow(<Home />);
+    expect(wrapper).toMatchSnapshot();
+  });
 });
