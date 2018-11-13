@@ -41,7 +41,7 @@ class App extends Component {
   render() {
     const { classes, user } = this.props;
     return user ? (
-      <>
+      <div className="App">
         <div className={classes.root}>
           <CssBaseline />
           <Navbar handleClick={this.handleClick} />
@@ -75,9 +75,11 @@ class App extends Component {
             <Route path="/home" component={Home} />
           </Switch>
         </Paper>
-      </>
+      </div>
     ) : (
-      <LogIn />
+      <div className="App">
+        <LogIn />
+      </div>
     );
   }
 }
@@ -98,3 +100,5 @@ export default withRouter(
     }
   )(styledApp)
 );
+
+export { App };
