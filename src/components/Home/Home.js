@@ -14,7 +14,12 @@ const Home = ({ user }) => {
       );
 
       return (
-        <TeacherHome teacher={user.person.teacher} coursesName={coursesName} />
+        <div className="home">
+          <TeacherHome
+            teacher={user.person.teacher}
+            coursesName={coursesName}
+          />
+        </div>
       );
     } else {
       let coursesName = {};
@@ -23,11 +28,16 @@ const Home = ({ user }) => {
       );
 
       return (
-        <StudentHome student={user.person.student} coursesName={coursesName} />
+        <div className="home">
+          <StudentHome
+            student={user.person.student}
+            coursesName={coursesName}
+          />
+        </div>
       );
     }
   } else {
-    return null;
+    return <div className="home" />;
   }
 };
 
@@ -38,3 +48,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(Home);
+
+export { Home };
