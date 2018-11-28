@@ -1,0 +1,743 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar displays teacher's name when user is a teacher 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Navbar
+    classes={
+      Object {
+        "appBar": Object {
+          "root": Object {
+            "display": "flex",
+          },
+        },
+      }
+    }
+    person={
+      Object {
+        "teacher": Object {
+          "name": "Test Teacher",
+        },
+      }
+    }
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "class",
+    "props": Object {
+      "children": <WithStyles(Toolbar)>
+        <Link
+          replace={false}
+          style={
+            Object {
+              "textDecoration": "none",
+            }
+          }
+          to="/home"
+        >
+          <WithStyles(Button)
+            onClick={[Function]}
+            style={
+              Object {
+                "fontSize": 20,
+                "margin": 0,
+                "paddingLeft": 0,
+                "textDecoration": "none",
+                "textTransform": "none",
+              }
+            }
+          >
+            Test Teacher
+          </WithStyles(Button)>
+        </Link>
+        <WithStyles(Button)
+          style={
+            Object {
+              "marginLeft": "auto",
+            }
+          }
+        >
+          Logout
+        </WithStyles(Button)>
+      </WithStyles(Toolbar)>,
+      "className": Object {
+        "root": Object {
+          "display": "flex",
+        },
+      },
+      "color": "default",
+      "id": "navbar",
+      "position": "fixed",
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "children": Array [
+          <Link
+            replace={false}
+            style={
+              Object {
+                "textDecoration": "none",
+              }
+            }
+            to="/home"
+          >
+            <WithStyles(Button)
+              onClick={[Function]}
+              style={
+                Object {
+                  "fontSize": 20,
+                  "margin": 0,
+                  "paddingLeft": 0,
+                  "textDecoration": "none",
+                  "textTransform": "none",
+                }
+              }
+            >
+              Test Teacher
+            </WithStyles(Button)>
+          </Link>,
+          <WithStyles(Button)
+            style={
+              Object {
+                "marginLeft": "auto",
+              }
+            }
+          >
+            Logout
+          </WithStyles(Button)>,
+        ],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": <WithStyles(Button)
+              onClick={[Function]}
+              style={
+                Object {
+                  "fontSize": 20,
+                  "margin": 0,
+                  "paddingLeft": 0,
+                  "textDecoration": "none",
+                  "textTransform": "none",
+                }
+              }
+            >
+              Test Teacher
+            </WithStyles(Button)>,
+            "replace": false,
+            "style": Object {
+              "textDecoration": "none",
+            },
+            "to": "/home",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": "Test Teacher",
+              "onClick": [Function],
+              "style": Object {
+                "fontSize": 20,
+                "margin": 0,
+                "paddingLeft": 0,
+                "textDecoration": "none",
+                "textTransform": "none",
+              },
+            },
+            "ref": null,
+            "rendered": "Test Teacher",
+            "type": [Function],
+          },
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": "Logout",
+            "onClick": undefined,
+            "style": Object {
+              "marginLeft": "auto",
+            },
+          },
+          "ref": null,
+          "rendered": "Logout",
+          "type": [Function],
+        },
+      ],
+      "type": [Function],
+    },
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "children": <WithStyles(Toolbar)>
+          <Link
+            replace={false}
+            style={
+              Object {
+                "textDecoration": "none",
+              }
+            }
+            to="/home"
+          >
+            <WithStyles(Button)
+              onClick={[Function]}
+              style={
+                Object {
+                  "fontSize": 20,
+                  "margin": 0,
+                  "paddingLeft": 0,
+                  "textDecoration": "none",
+                  "textTransform": "none",
+                }
+              }
+            >
+              Test Teacher
+            </WithStyles(Button)>
+          </Link>
+          <WithStyles(Button)
+            style={
+              Object {
+                "marginLeft": "auto",
+              }
+            }
+          >
+            Logout
+          </WithStyles(Button)>
+        </WithStyles(Toolbar)>,
+        "className": Object {
+          "root": Object {
+            "display": "flex",
+          },
+        },
+        "color": "default",
+        "id": "navbar",
+        "position": "fixed",
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "children": Array [
+            <Link
+              replace={false}
+              style={
+                Object {
+                  "textDecoration": "none",
+                }
+              }
+              to="/home"
+            >
+              <WithStyles(Button)
+                onClick={[Function]}
+                style={
+                  Object {
+                    "fontSize": 20,
+                    "margin": 0,
+                    "paddingLeft": 0,
+                    "textDecoration": "none",
+                    "textTransform": "none",
+                  }
+                }
+              >
+                Test Teacher
+              </WithStyles(Button)>
+            </Link>,
+            <WithStyles(Button)
+              style={
+                Object {
+                  "marginLeft": "auto",
+                }
+              }
+            >
+              Logout
+            </WithStyles(Button)>,
+          ],
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": <WithStyles(Button)
+                onClick={[Function]}
+                style={
+                  Object {
+                    "fontSize": 20,
+                    "margin": 0,
+                    "paddingLeft": 0,
+                    "textDecoration": "none",
+                    "textTransform": "none",
+                  }
+                }
+              >
+                Test Teacher
+              </WithStyles(Button)>,
+              "replace": false,
+              "style": Object {
+                "textDecoration": "none",
+              },
+              "to": "/home",
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "children": "Test Teacher",
+                "onClick": [Function],
+                "style": Object {
+                  "fontSize": 20,
+                  "margin": 0,
+                  "paddingLeft": 0,
+                  "textDecoration": "none",
+                  "textTransform": "none",
+                },
+              },
+              "ref": null,
+              "rendered": "Test Teacher",
+              "type": [Function],
+            },
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": "Logout",
+              "onClick": undefined,
+              "style": Object {
+                "marginLeft": "auto",
+              },
+            },
+            "ref": null,
+            "rendered": "Logout",
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`Navbar matches its snapshot 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Navbar
+    classes={
+      Object {
+        "appBar": Object {
+          "root": Object {
+            "display": "flex",
+          },
+        },
+      }
+    }
+    person={
+      Object {
+        "teacher": Object {
+          "name": "Test Teacher",
+        },
+      }
+    }
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "class",
+    "props": Object {
+      "children": <WithStyles(Toolbar)>
+        <Link
+          replace={false}
+          style={
+            Object {
+              "textDecoration": "none",
+            }
+          }
+          to="/home"
+        >
+          <WithStyles(Button)
+            onClick={[Function]}
+            style={
+              Object {
+                "fontSize": 20,
+                "margin": 0,
+                "paddingLeft": 0,
+                "textDecoration": "none",
+                "textTransform": "none",
+              }
+            }
+          >
+            Test Teacher
+          </WithStyles(Button)>
+        </Link>
+        <WithStyles(Button)
+          style={
+            Object {
+              "marginLeft": "auto",
+            }
+          }
+        >
+          Logout
+        </WithStyles(Button)>
+      </WithStyles(Toolbar)>,
+      "className": Object {
+        "root": Object {
+          "display": "flex",
+        },
+      },
+      "color": "default",
+      "id": "navbar",
+      "position": "fixed",
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "children": Array [
+          <Link
+            replace={false}
+            style={
+              Object {
+                "textDecoration": "none",
+              }
+            }
+            to="/home"
+          >
+            <WithStyles(Button)
+              onClick={[Function]}
+              style={
+                Object {
+                  "fontSize": 20,
+                  "margin": 0,
+                  "paddingLeft": 0,
+                  "textDecoration": "none",
+                  "textTransform": "none",
+                }
+              }
+            >
+              Test Teacher
+            </WithStyles(Button)>
+          </Link>,
+          <WithStyles(Button)
+            style={
+              Object {
+                "marginLeft": "auto",
+              }
+            }
+          >
+            Logout
+          </WithStyles(Button)>,
+        ],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": <WithStyles(Button)
+              onClick={[Function]}
+              style={
+                Object {
+                  "fontSize": 20,
+                  "margin": 0,
+                  "paddingLeft": 0,
+                  "textDecoration": "none",
+                  "textTransform": "none",
+                }
+              }
+            >
+              Test Teacher
+            </WithStyles(Button)>,
+            "replace": false,
+            "style": Object {
+              "textDecoration": "none",
+            },
+            "to": "/home",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": "Test Teacher",
+              "onClick": [Function],
+              "style": Object {
+                "fontSize": 20,
+                "margin": 0,
+                "paddingLeft": 0,
+                "textDecoration": "none",
+                "textTransform": "none",
+              },
+            },
+            "ref": null,
+            "rendered": "Test Teacher",
+            "type": [Function],
+          },
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "children": "Logout",
+            "onClick": undefined,
+            "style": Object {
+              "marginLeft": "auto",
+            },
+          },
+          "ref": null,
+          "rendered": "Logout",
+          "type": [Function],
+        },
+      ],
+      "type": [Function],
+    },
+    "type": [Function],
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "children": <WithStyles(Toolbar)>
+          <Link
+            replace={false}
+            style={
+              Object {
+                "textDecoration": "none",
+              }
+            }
+            to="/home"
+          >
+            <WithStyles(Button)
+              onClick={[Function]}
+              style={
+                Object {
+                  "fontSize": 20,
+                  "margin": 0,
+                  "paddingLeft": 0,
+                  "textDecoration": "none",
+                  "textTransform": "none",
+                }
+              }
+            >
+              Test Teacher
+            </WithStyles(Button)>
+          </Link>
+          <WithStyles(Button)
+            style={
+              Object {
+                "marginLeft": "auto",
+              }
+            }
+          >
+            Logout
+          </WithStyles(Button)>
+        </WithStyles(Toolbar)>,
+        "className": Object {
+          "root": Object {
+            "display": "flex",
+          },
+        },
+        "color": "default",
+        "id": "navbar",
+        "position": "fixed",
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "children": Array [
+            <Link
+              replace={false}
+              style={
+                Object {
+                  "textDecoration": "none",
+                }
+              }
+              to="/home"
+            >
+              <WithStyles(Button)
+                onClick={[Function]}
+                style={
+                  Object {
+                    "fontSize": 20,
+                    "margin": 0,
+                    "paddingLeft": 0,
+                    "textDecoration": "none",
+                    "textTransform": "none",
+                  }
+                }
+              >
+                Test Teacher
+              </WithStyles(Button)>
+            </Link>,
+            <WithStyles(Button)
+              style={
+                Object {
+                  "marginLeft": "auto",
+                }
+              }
+            >
+              Logout
+            </WithStyles(Button)>,
+          ],
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": <WithStyles(Button)
+                onClick={[Function]}
+                style={
+                  Object {
+                    "fontSize": 20,
+                    "margin": 0,
+                    "paddingLeft": 0,
+                    "textDecoration": "none",
+                    "textTransform": "none",
+                  }
+                }
+              >
+                Test Teacher
+              </WithStyles(Button)>,
+              "replace": false,
+              "style": Object {
+                "textDecoration": "none",
+              },
+              "to": "/home",
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "children": "Test Teacher",
+                "onClick": [Function],
+                "style": Object {
+                  "fontSize": 20,
+                  "margin": 0,
+                  "paddingLeft": 0,
+                  "textDecoration": "none",
+                  "textTransform": "none",
+                },
+              },
+              "ref": null,
+              "rendered": "Test Teacher",
+              "type": [Function],
+            },
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "children": "Logout",
+              "onClick": undefined,
+              "style": Object {
+                "marginLeft": "auto",
+              },
+            },
+            "ref": null,
+            "rendered": "Logout",
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      "type": [Function],
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getDerivedStateFromProps": true,
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+}
+`;

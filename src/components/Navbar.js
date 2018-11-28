@@ -30,7 +30,12 @@ class Navbar extends React.Component {
       ? (name = person.teacher.name)
       : (name = person.student.name);
     return (
-      <AppBar position="fixed" color="default" className={classes.appBar}>
+      <AppBar
+        id="navbar"
+        position="fixed"
+        color="default"
+        className={classes.appBar}
+      >
         <Toolbar>
           <Link to="/home" style={{ textDecoration: "none" }}>
             <Button
@@ -72,3 +77,5 @@ export default withStyles(styles)(
     { logOutUser, clearCategory, clearValue, clearCourse, clearStatus }
   )(Navbar)
 );
+
+export { Navbar };
