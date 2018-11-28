@@ -1,4 +1,4 @@
-# Flatiron Final Project - Teachr https://travis-ci.com/jensnyder/teachr-frontend.svg?branch=master
+# Flatiron Final Project - Teachr [![Build Status](https://travis-ci.com/jensnyder/teachr-frontend.svg?branch=master)](https://travis-ci.com/jensnyder/teachr-frontend)
 
 This project was created as a streamlined single-page web application for teachers to create and manage their students' assignments.
 Live demo: https://teachr-app.herokuapp.com
