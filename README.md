@@ -1,7 +1,9 @@
 # Flatiron Final Project - Teachr [![Build Status](https://travis-ci.com/jensnyder/teachr-frontend.svg?branch=master)](https://travis-ci.com/jensnyder/teachr-frontend)
 
 This project was created as a streamlined single-page web application for teachers to create and manage their students' assignments.
-Live demo: https://teachr-app.herokuapp.com
+
+- Back end repository: https://github.com/jensnyder/teachr-backend
+- Live demo: https://teachr-app.herokuapp.com
 
 ## Teachers are able to:
 
@@ -28,7 +30,14 @@ Live demo: https://teachr-app.herokuapp.com
 
 ### Run the Back End First
 
-- This front-end app requires the back-end Rails API to run first. Follow the directions to run the back-end at https://github.com/jensnyder/teachr-backend
+```
+git clone git@github.com:jensnyder/teachr-backend.git
+cd teachr-backend
+bundle install
+rails db: setup
+rails server
+```
+
 - Verify that the back-end is running at http://localhost:3000/ You will be able to view all of the teachers in the database at http://localhost:3000/teachers
 
 ### Run the Front End
