@@ -40,6 +40,7 @@ class Sidebar extends React.Component {
     const { user, selectedCourseId, classes } = this.props;
     return (
       <Drawer
+        id="sidebar"
         variant="permanent"
         position="fixed"
         className={classes.drawer}
@@ -137,3 +138,5 @@ export default withRouter(
     { changeCourse }
   )(styledSidebar)
 );
+
+export { Sidebar };
