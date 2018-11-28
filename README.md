@@ -24,6 +24,27 @@ Live demo: https://teachr-app.herokuapp.com
 - submit assignments to their teachers
 - view their grades on graded assignments
 
-Back end repository: https://github.com/jensnyder/teachr-backend
+## Run Locally:
+
+#Run the Back End First
+
+- This front-end app requires the back-end Rails API to run first. Follow the directions to run the back-end at https://github.com/jensnyder/teachr-backend
+- Verify that the back-end is running at http://localhost:3000/ You will be able to view all of the teachers in the database at http://localhost:3000/teachers
+
+#Run the Front End
+
+```
+git clone git@github.com:jensnyder/teachr-frontend.git
+cd teachr-frontend
+yarn start
+```
+
+#Run tests
+
+```
+yarn test
+```
+
+The React app should open automatically in the browser at http://localhost:3001/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
