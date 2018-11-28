@@ -39,12 +39,12 @@ cd teachr-frontend
 yarn start
 ```
 
-### Run tests
+- The React app should open automatically in the browser at http://localhost:3001/
+
+### Run Tests
 
 ```
 yarn test
 ```
-
-The React app should open automatically in the browser at http://localhost:3001/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
